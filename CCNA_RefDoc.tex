@@ -129,7 +129,9 @@
 	IEEE 802.3bt 		& Type 3 UPoE	& 60W (50-57v) 		& 4 wire pairs $\ge$ CAT5\\
 					& Type 4 UPoE+	& 100W (52-57v)		& 4 wire pairs $\ge$ CAT5\\\hline
 	\end{tabular}\end{table}
+	\vspace{8px}
 
+	\textit{Active PoE} negotiates power delivery via LLDP and is standardized by IEEE. \textit{Passive PoE} is \textcolorbf{red}{not} standardized and provides a constant voltage, which may cause damage. \textbf{Mode A} PoE sends voltage only on the 2 data wire pairs; \textbf{Mode B} PoE sends voltage only on the 2 unused wire pairs; \textbf{4Pair} PoE sends voltage on all wire pairs.
 
 
 
@@ -1252,16 +1254,15 @@
 	\begin{table}[H]
 	\centering
 	\textbf{\caption{QoS Fields \label{tab:QOS FIELDS}}}
-	\begin{tabular}{lr}
+	\begin{tabular}{llr}
 	\hline
-	\textbf{QoS Marking Field}	& \textbf{Protocol}\\\hline
-	IEEE 802.1p (CoS / PCP)		& IEEE 802.1Q (Table \ref{tab:802.1Q})\\\hline
-	IEEE 802.11				& QoS Control (Subsection \ref{subsec:802.11 WLANS})\\\hline
-	RFC 791 IPP	(CS)			& OLD IPv4 ToS Byte\\
-	RFC 2474/3168 (DSCP)		& NEW IPv4 ToS Byte\\
-						& (Subsection \ref{subsec:IPV4})\\\hline
-	RFC 2460 Traffic Class (DSCP)	& IPv6 (Subsection \ref{subsec:IPV6})\\\hline
-	EXP					& MPLS\\\hline
+	\textbf{QoS Standard} 	& \textbf{Protocol Field(s)}		& \textbf{Notes}\\\hline
+	IEEE 802.1p (CoS)		& IEEE 802.1Q \texttt{PCP/DEI} 	& Table \ref{tab:802.1Q}\\\hline
+					& IEEE 802.11 \texttt{QoS Control} 	& Subsection \ref{subsec:802.11 WLANS}\\\hline
+	RFC 791 IPP (CS)		& IPv4 \texttt{ToS Byte} (OLD) 	& Subsection \ref{subsec:IPV4}\\
+	RFC 2474/3168 (DSCP)	& IPv4 \texttt{DS Field} (NEW) 	& Subsection \ref{subsec:IPV4}\\\hline
+	RFC 2460 (DSCP)		& IPv6 \texttt{Traffic Class} 		& Subsection \ref{subsec:IPV6}\\\hline
+					& MPLS \texttt{EXP}\\\hline
 	\end{tabular}\end{table}
 
 	\vspace{8px}
