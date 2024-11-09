@@ -1,13 +1,20 @@
 %PREFORMAT
 \documentclass[12pt]{article}
-\title{\vspace{-13mm} CCNA 200-301 Reference Document \vspace{-2cm}}
+\title{\vspace{-13mm} CCNA 200-301 Quick Reference\vspace{-2cm}}
 %\author{Richard J. Goluszka Jr.}
 \date{\vspace{-5px}}
 \setlength\intextsep{0cm}
 
 \usepackage[top=.5in,bottom=.75in,left=.75in,right=.75in]{geometry}
 \usepackage{float}
+\usepackage[justification=raggedright,font=bf,position=bottom]{caption}
 \usepackage[dvipsnames]{xcolor}
+
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{1ex}{0ex}
+\titlespacing*{\subsection}{0pt}{1.5ex}{0ex}
+%\titlespacing*{\section}{0pt}{1ex}{1ex}
+%\titlespacing*{\subsection}{0pt}{1.5ex}{0ex}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -15,8 +22,7 @@
 	linkcolor=blue,
 	filecolor=magenta,
 	urlcolor=cyan,
-	pdftitle={CCNA Reference Material},
-	pdfpagemode=FullScreen,
+	pdftitle={CCNA Quick Reference},
 }
 \counterwithin{table}{section}
 \counterwithin{figure}{section}
@@ -45,7 +51,6 @@
 
 %LAYER 1																										-- sec:L1
 \section{Layer 1 Standards \label{sec:L1}}
-
 	%T568																								-- subsec:T568
 	\subsection{T568A/B Pinout Standards \label{subsec:T568}}
 	\begin{table}[H]
@@ -62,6 +67,7 @@
 	7		& \textcolorbf{Mahogany}{Brown-White}	& \textcolorbf{Mahogany}{Brown-White}\\\hline
 	8		& \textcolorbf{Mahogany}{Brown}		& \textcolorbf{Mahogany}{Brown}\\\hline
 	\end{tabular}\end{table}
+	\vspace{8px}
 	Two standard T568 pinouts exist for the \textit{Medium-Dependent Interface} (MDI) and \textit{MDI Crossover} (MDI-X) port standards. Computers, routers, and Layer 3 devices use the MDI standard; switches, hubs, and other Layer 2 devices use the MDI-X standard. Connections between MDI and MDI-X ports use a \textit{straight-through} cable, where the same T568 standard terminates each end of the cable. Connections between two MDI (or two MDI-X) ports use a \textit{crossover} cable, where different T568 standards terminate each end of the cable. Most new equipment incorporates \textit{Auto-MDIX} circuitry to allow either cable type.\\\\
 	\note{Goldenrod} The T568B standard is more commonly used for straight-through cables in North America.
 
@@ -72,7 +78,7 @@
 	%IEEE 802.3 Copper Standards																				--tab:802.3 COPPER
 	\parbox{.5\linewidth}{
 	\centering
-	\textbf{\caption{IEEE 802.3 Copper Standards \label{tab:802.3 COPPER}}}
+	\caption{IEEE 802.3 Copper Standards \label{tab:802.3 COPPER}}
 	\begin{tabular}{| l | c | r r |}
 	\hline
 	802.3		& 10BASE-T 		& 10 Mbps 		&CAT3\\\hline
@@ -89,7 +95,7 @@
 	%Fiber Standards																							--tab:802.3 FIBER
 	\parbox{.5\linewidth}{
 	\centering
-	\textbf{\caption{Fiber Standards \label{tab:802.3 FIBER}}}
+	\caption{Fiber Standards \label{tab:802.3 FIBER}}
 	\begin{tabular}{| c | c | r |}
 	\hline
 	OM1	& \textcolorbf{orange}{orange}	& 100 Mbps\\\hline
@@ -106,7 +112,7 @@
 	%SFP Transceivers																								--tab:SFP
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{SFP Transceivers \label{tab:SFP}}}
+	\caption{SFP Transceivers \label{tab:SFP}}
 	\begin{tabular}{| c | r | c | r |}
 	\hline
 	SX		& 850 nm		& \textbf{black} MMF				& 550 m\\
@@ -120,7 +126,7 @@
 	%Power over Ethernet (PoE)																						--tab:POE
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{Power over Ethernet (PoE) \label{tab:POE}}}
+	\caption{Power over Ethernet (PoE) \label{tab:POE}}
 	\begin{tabular}{| l  l | c | l |}
 	\hline
 	Cisco Inline Power	& ILP			& 7.5W			& 2 wire pairs\\\hline
@@ -142,7 +148,7 @@
 	%EtherType Values																						tab:ETHERTYPE
 	\parbox{.5\linewidth}{
 	\centering
-	\textbf{\caption{EtherType Values \label{tab:ETHERTYPE}}}
+	\caption{EtherType Values \label{tab:ETHERTYPE}}
 	\begin{tabular}{| c | r |}
 	\hline
 	\texttt{0x0800}	& IPv4 Packet\\\hline
@@ -162,7 +168,7 @@
 	%Layer 2 Multicast																					--tab:MULTICAST L2
 	\parbox{.5\linewidth}{
 	\centering
-	\textbf{\caption{Layer 2 Multicast \label{tab:MULTICAST L2}}}
+	\caption{Layer 2 Multicast \label{tab:MULTICAST L2}}
 	\begin{tabular}{| l | r |}
 	\hline
 	\texttt{0000.0c07.acXX}		& Cisco HSRPv1\\
@@ -200,7 +206,7 @@
 	%IEEE 802.2 Logical Link Control (LLC)																			--tab:802.2 LLC
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{IEEE 802.2 Logical Link Control (LLC) \label{tab:802.2 LLC}}}
+	\caption{IEEE 802.2 Logical Link Control (LLC) \label{tab:802.2 LLC}}
 	\begin{tabular}{| l | c |}
 	\hline
 	Destination Service Access Point (DSAP)	& 1 Byte\\\hline
@@ -224,7 +230,7 @@
 	%IEEE 802.1Q 																								--tab:802.1Q
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{IEEE 802.1Q Tagging \label{tab:802.1Q}}}
+	\caption{IEEE 802.1Q Tagging \label{tab:802.1Q}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Tag Protocol Identifier (TPID)		& 16 bits	& EtherType (\texttt{0x8100}, Table \ref{tab:ETHERTYPE})\\\hline
@@ -237,7 +243,7 @@
 	%Cisco InterSwitch Link (ISL) 																					--tab:CISCO ISL
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{DEPRECATED Cisco InterSwitch Link (ISL) \label{tab:CISCO ISL}}}
+	\caption{DEPRECATED Cisco InterSwitch Link (ISL) \label{tab:CISCO ISL}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Destination Address	& 40 bits	& Multicast (\texttt{01.000c.0000} / \texttt{03.000c.0000})\\\hline
@@ -268,7 +274,7 @@
 	%VTP Summary Advertisements 																			--tab:VTP SUMMARY
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{VTP Summary Advertisement \label{tab:VTP SUMMARY}}}
+	\caption{VTP Summary Advertisement \label{tab:VTP SUMMARY}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Version				& 1 Byte	& VTP Version (1-3)\\\hline
@@ -285,7 +291,7 @@
 	%VTP Subset Advertisements 																					--tab:VTP SUBSET
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{VTP Subset Advertisement \label{tab:VTP SUBSET}}}
+	\caption{VTP Subset Advertisement \label{tab:VTP SUBSET}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Version				& 1 Byte	& VTP Version (1-3)\\\hline
@@ -301,7 +307,7 @@
 	%VTP Subset Advertisements -- VLAN Information 																	--tab:VTP VLAN
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{The VLAN-Info Field \label{tab:VTP VLAN}}}
+	\caption{The VLAN-Info Field \label{tab:VTP VLAN}}
 	\begin{tabular}{| l | c |}
 	\hline
 	V-Info-Len				& 1 Byte\\\hline
@@ -317,7 +323,7 @@
 	%VTP Advertisement Requests 																			--tab:VTP REQUEST
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{Advertisement Requests \label{tab:VTP REQUEST}}}
+	\caption{Advertisement Requests \label{tab:VTP REQUEST}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Version				& 1 Byte	& VTP Version (1-3)\\\hline
@@ -354,7 +360,7 @@
 	%STP BID Format 																								--tab:BID
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{Spanning Tree Bridge ID (BID) Format \label{tab:BID}}}
+	\caption{Spanning Tree Bridge ID (BID) Format \label{tab:BID}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Base Priority		& 4 bits	& Configured bridge priority\\
@@ -366,7 +372,7 @@
 	%STP Port Costs 																						--tab:STP PORT COSTS
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{Spanning Tree Port Costs \label{tab:STP PORT COSTS}}}
+	\caption{Spanning Tree Port Costs \label{tab:STP PORT COSTS}}
 	\begin{tabular}{r | rrr}
 	\hline
 	\textbf{Port Speed}	& \textbf{STP IEEE Cost}	& \textbf{Revised IEEE Cost}	& \textbf{RSTP IEEE Cost}\\
@@ -384,7 +390,7 @@
 	%STP Port States 																						--tab:STP PORT STATES
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{Spanning Tree Port States \label{tab:STP PORT STATES}}}
+	\caption{Spanning Tree Port States \label{tab:STP PORT STATES}}
 	\begin{tabular}{cccccc}
 	\hline
 	\textbf{STP State}	& \textbf{RSTP State}	& \textbf{Send/Receive BPDUs}	& \textbf{Forward Data}		& \textbf{Learn MACs}\\\hline
@@ -443,7 +449,7 @@
 	%ARP Request/Reply Format 																						--tab:ARP
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{ARP Request/Reply Format \label{tab:ARP}}}
+	\caption{ARP Request/Reply Format \label{tab:ARP}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	HTYPE	& 16 bits	& L2 Protocol (1 for Ethernet)\\\hline
@@ -489,7 +495,7 @@
 	%IEEE 802.11 WLAN Standards 																			--tab:802.11 STANDARDS
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{IEEE 802.11 Standards \label{tab:802.11 STANDARDS}}}
+	\caption{IEEE 802.11 Standards \label{tab:802.11 STANDARDS}}
 	\begin{tabular}{ccccl}
 	\hline
 	\textbf{Standard}	& \textbf{Frequency Range}	& \textbf{Bandwidth}	& \textbf{Encoding}	& \textbf{Name}\\\hline
@@ -507,7 +513,7 @@
 	%WLC DEPLOYMENT 																				--tab:WLC DEPLOYMENT
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{WLC Deployment \label{tab:WLC DEPLOYMENT}}}
+	\caption{WLC Deployment \label{tab:WLC DEPLOYMENT}}
 	\begin{tabular}{lccc}
 	\hline
 	\textbf{Deployment}	& \textbf{WLC Location}	& \textbf{Clients}		& \textbf{APs}\\\hline
@@ -520,7 +526,7 @@
 	%WLC PORTS / INTERFACES 																					--tab:WLC PORTS
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{WLC Ports and Interfaces \label{tab:WLC PORTS}}}
+	\caption{WLC Ports and Interfaces \label{tab:WLC PORTS}}
 	\begin{tabular}{llcr}
 	\hline
 	\textbf{WLC Port}	& \textbf{WLC Interface}	& \textbf{VLAN}		& \textbf{Usage}\\\hline
@@ -602,7 +608,7 @@
 	%IPv4 Protocol / IPv6 Next Header Values 																		--tab:L3 PROTOCOL
 	\parbox{.35\linewidth}{
 	\centering
-	\textbf{\caption{IPv4 Protocol / IPv6 Next Header Values \label{tab:L3 PROTOCOL}}}
+	\caption{IPv4 Protocol / IPv6 Next Header Values \label{tab:L3 PROTOCOL}}
 	\begin{tabular}{| c | c | r|}
 	\hline
 	\texttt{0x01}	& 1			& ICMP\\\hline
@@ -626,7 +632,7 @@
 	%Layer 3 Multicast 																					--tab:MULTICAST L3
 	\parbox{.45\linewidth}{
 	\centering
-	\textbf{\caption{Layer 3 Multicast \label{tab:MULTICAST L3}}}
+	\caption{Layer 3 Multicast \label{tab:MULTICAST L3}}
 	\begin{tabular}{| l | c | r|}
 	\hline
 	224.0.0.1		& All-IPv4-Nodes		&\\
@@ -650,7 +656,7 @@
 	%Route Types 																							--tab:ROUTE TYPES
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{Route Types \label{tab:ROUTE TYPES}}}
+	\caption{Route Types \label{tab:ROUTE TYPES}}
 	\begin{tabular}{lcr}
 	\hline
 	\textbf{Route Type}	& \textbf{Administrative Distance}	& \textbf{IGP Type}\\\hline
@@ -697,7 +703,7 @@
 	%RFC 791/1918 Addressing 																				--tab:ADDRESSING IPV4
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{RFC 791 / RFC 1918 Addressing \label{tab:ADDRESSING IPV4}}}
+	\caption{RFC 791 / RFC 1918 Addressing \label{tab:ADDRESSING IPV4}}
 	\begin{tabular}{clcr}
 	\hline
 	\textbf{RFC 791}	& \textbf{First Octet}		& \textbf{Address Block}		& \textbf{RFC 1918 Block}\\\hline
@@ -711,7 +717,7 @@
 	%Subnetting Magic Numbers																					--tab:SUBNETTING
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{IPv4 Subnetting Magic Numbers \label{tab:SUBNETTING}}}	
+	\caption{IPv4 Subnetting Magic Numbers \label{tab:SUBNETTING}}
 	\begin{tabular}{r | cccccccc}
 	\hline
 	\textbf{Bit Position}	& 1	& 2	& 3	& 4	& 5	& 6	& 7 & 8\\\hline
@@ -743,7 +749,7 @@
 	%RFC 2460 Addressing 																					--tab:ADDRESSING IPV6
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{RFC 2460 Addressing \label{tab:ADDRESSING IPV6}}}
+	\caption{RFC 2460 Addressing \label{tab:ADDRESSING IPV6}}
 	\begin{tabular}{rlr}
 	\hline
 	\textbf{Address Class}	& \textbf{Block}		& \textbf{Format}\\\hline
@@ -791,7 +797,7 @@
 	%ICMP Type.Code 																					--tab:ICMP VALUES
 	\parbox{.45\linewidth}{
 	\centering
-	\textbf{\caption{ICMP Type.Code Values \label{tab:ICMP VALUES}}}
+	\caption{ICMP Type.Code Values \label{tab:ICMP VALUES}}
 	\begin{tabular}{| r | r |}
 	\hline
 	\texttt{0.0}	& Echo Reply\\\hline
@@ -805,7 +811,7 @@
 	%ICMPv6 Type.Code 																					--tab:ICMPV6 VALUES
 	\parbox{.45\linewidth}{
 	\centering
-	\textbf{\caption{ICMPv6 Type.Code Values \label{tab:ICMPV6 VALUES}}}
+	\caption{ICMPv6 Type.Code Values \label{tab:ICMPV6 VALUES}}
 	\begin{tabular}{| r | r |}
 	\hline
 	\texttt{1.X}	 	& Destination Unreachable\\\hline
@@ -854,7 +860,7 @@
 	%NDP RS 																								--tab:NDP RS
 	\parbox{.45\linewidth}{
 	\centering
-	\textbf{\caption{NDP RS \label{tab:NDP RS}}}
+	\caption{NDP RS \label{tab:NDP RS}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Type		& 8 bits	& Message Type (133)\\\hline
@@ -867,7 +873,7 @@
 	%NDP NS 																								--tab:NDP NS
 	\parbox{.45\linewidth}{
 	\centering
-	\textbf{\caption{NDP NS \label{tab:NDP NS}}}
+	\caption{NDP NS \label{tab:NDP NS}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Type			& 8 bits	& Message Type (135)\\\hline
@@ -881,7 +887,7 @@
 	%NDP RA																								--tab:NDP RA
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{NDP RA \label{tab:NDP RA}}}
+	\caption{NDP RA \label{tab:NDP RA}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Type				& 8 bits	& Message Type (134)\\\hline
@@ -900,7 +906,7 @@
 	%NDP NA 																								--tab:NDP NA
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{NDP NA \label{tab:NDP NA}}}
+	\caption{NDP NA \label{tab:NDP NA}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Type				& 8 bits	& Message Type (136)\\\hline
@@ -925,7 +931,7 @@
 	%OSPF LSA Types 																					--tab:OSPF LSA TYPES
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{OSPF LSA Types \label{tab:OSPF LSA TYPES}}}
+	\caption{OSPF LSA Types \label{tab:OSPF LSA TYPES}}
 	\begin{tabular}{llr}
 	\hline
 	\textbf{LSA Type}		& \textbf{Source}		& \textbf{Conditions}\\\hline
@@ -938,7 +944,7 @@
 	%OSPF LSA Packet																						--tab:OSPF LSA
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{OSPF Link-State Advertisement (LSA) Header \label{tab:OSPF LSA}}}
+	\caption{OSPF Link-State Advertisement (LSA) Header \label{tab:OSPF LSA}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	LS Age			& 2 Bytes	& Seconds since LSA originated\\\hline
@@ -957,7 +963,7 @@
 	%OSPF Hello Packet 																						--tab:OSPF HELLO
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{OSPF Hello \label{tab:OSPF HELLO}}}
+	\caption{OSPF Hello \label{tab:OSPF HELLO}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Version				& 1 Byte	& OSPF Version Number (2)\\\hline
@@ -988,7 +994,7 @@
 	%OSPF DD Packet 																						--tab:OSPF DD
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{OSPF Database Description (DD) \label{tab:OSPF DD}}}
+	\caption{OSPF Database Description (DD) \label{tab:OSPF DD}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Version			& 1 Byte	& OSPF version number (2)\\\hline
@@ -1015,7 +1021,7 @@
 	%OSPF LSR Packet 																						--tab:OSPF LSR
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{OSPF Link-State Request (LSR) \label{tab:OSPF LSR}}}
+	\caption{OSPF Link-State Request (LSR) \label{tab:OSPF LSR}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Version			& 1 Byte	& OSPF Version Number (2)\\\hline
@@ -1034,7 +1040,7 @@
 	%OSPF LSU Packet 																						--tab:OSPF LSU
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{OSPF Link-State Update (LSU) \label{tab:OSPF LSU}}}
+	\caption{OSPF Link-State Update (LSU) \label{tab:OSPF LSU}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Version		& 1 Byte	& OSPF Version Number (2)\\\hline
@@ -1052,7 +1058,7 @@
 	%OSPF LSAck Packet 																						--tab:OSPF LSAck
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{OSPF Link-State Acknowledgment (LSAck) \label{tab:OSPF LSACK}}}
+	\caption{OSPF Link-State Acknowledgment (LSAck) \label{tab:OSPF LSACK}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Version		& 1 Byte	& OSPF Version Number (2)\\\hline
@@ -1082,7 +1088,7 @@
 	%Well-Known Ports 																					--tab:L4 PORTS KNOWN
 	\parbox{.45\linewidth}{
 	\centering
-	\textbf{\caption{Well-Known Ports \label{tab:L4 PORTS KNOWN}}}
+	\caption{Well-Known Ports \label{tab:L4 PORTS KNOWN}}
 	\begin{tabular}{| rr | r |}
 	\hline
 	TCP	& 20		& FTP Data\\
@@ -1109,7 +1115,7 @@
 	%Registered Ports 																				--tab:L4 PORTS REGISTERED
 	\parbox{.45\linewidth}{
 	\centering
-	\textbf{\caption{Registered Ports \label{tab:L4 PORTS REGISTERED}}}
+	\caption{Registered Ports \label{tab:L4 PORTS REGISTERED}}
 	\begin{tabular}{| cr | r |}
 	\hline
 	UDP	& 1812	& RADIUS Auth\\
@@ -1154,7 +1160,7 @@
 	Urgent		& 2 Bytes	& Last urgent data byte (URG flag)\\\hline
 	Data			& varies	&\\\hline
 	\end{tabular}\end{table}
-%	\vspace{8px}
+	\vspace{8px}
 	\note{Goldenrod} TCP is stateful, while UDP is stateless. Protocols using UDP must implement their own reliability functions. See QUIC over UDP for maintaining state over UDP.
 
 
@@ -1193,7 +1199,7 @@
 	%DHCP Options 																						--tab:DHCP OPTIONS
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{DHCP Options\label{tab:DHCP OPTIONS}}}
+	\caption{DHCP Options\label{tab:DHCP OPTIONS}}
 	\begin{tabular}{r | r}
 	\hline
 	\textbf{Option Code}	& \textbf{Value}\\\hline
@@ -1253,7 +1259,7 @@
 	%QoS Fields 																							-- tab:QOS FIELDS
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{QoS Fields \label{tab:QOS FIELDS}}}
+	\caption{QoS Fields \label{tab:QOS FIELDS}}
 	\begin{tabular}{llr}
 	\hline
 	\textbf{QoS Standard} 	& \textbf{Protocol Field(s)}		& \textbf{Notes}\\\hline
@@ -1282,7 +1288,7 @@
 	%QoS Traffic 																							--tab:QOS TRAFFIC
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{Traffic QoS Requirements \label{tab:QOS TRAFFIC}}}
+	\caption{Traffic QoS Requirements \label{tab:QOS TRAFFIC}}
 	\begin{tabular}{c | c c c}
 	\textbf{Traffic}			&\textbf{One-Way Delay}	& \textbf{Jitter}	&\textbf{Loss}\\\hline
 	\textit{Voice Over IP} (VoIP)	& $<$ 150 ms 			& $<$ 30 ms 	& $<$ 1\%\\
@@ -1301,7 +1307,7 @@
 	\begin{table}[H]
 	\parbox{.45\linewidth}{
 	\centering
-	\textbf{\caption{Protocol Timers \label{tab:DEFAULT TIMERS}}}
+	\caption{Protocol Timers \label{tab:DEFAULT TIMERS}}
 	\begin{tabular}{lrr}
 	\hline
 	\textbf{Protocol}		& \textbf{Timer}	& \textbf{Default Value}\\\hline
@@ -1325,7 +1331,7 @@
 	%Default Priority Values 																			--tab:DEFAULT PRIORITIES
 	\parbox{.45\linewidth}{
 	\centering
-	\textbf{\caption{Protocol Priority Values\label{tab:DEFAULT PRIORITIES}}}
+	\caption{Protocol Priority Values\label{tab:DEFAULT PRIORITIES}}
 	\begin{tabular}{lcr}
 	\hline
 	\textbf{Protocol}		& \textbf{Priority}		& \textbf{Default Value}\\\hline
@@ -1341,7 +1347,7 @@
 	%Cisco Encryption																				--tab:CISCO ENCRYPTION	
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{Cisco Encryption Algorithms\label{tab:CISCO ENCRYPTION}}}
+	\caption{Cisco Encryption Algorithms\label{tab:CISCO ENCRYPTION}}
 	\begin{tabular}{clcr}
 	\hline
 	\textbf{Type}	& \textbf{Algorithm}	& \textbf{Salt}	& \textbf{Secure?}\\\hline
@@ -1358,7 +1364,7 @@
 	\begin{table}[H]
 	\parbox{.45\linewidth}{
 	\centering
-	\textbf{\caption{ASCII Values \label{tab:ASCII}}}
+	\caption{ASCII Values \label{tab:ASCII}}
 	\begin{tabular}{rrr | rrr | ccc}
 	\hline
 	32 & 64 & 96	& \texttt{0x20} & \texttt{0x40} & \texttt{0x60}	& SP		& @	& `\\
@@ -1398,7 +1404,7 @@
 	%SI Prefixes																								--tab:SI Prefixes
 	\parbox{.45\linewidth}{
 	\centering
-	\textbf{\caption{SI Prefixes \label{tab:SI PREFIXES}}}
+	\caption{SI Prefixes \label{tab:SI PREFIXES}}
 	\begin{tabular}{cllr}
 	\hline
 	Z 	& Zetta	& $10^{21}$	& sextillion\\\hline
@@ -1419,7 +1425,7 @@
 	\end{tabular}
 	%Binary Prefixes 																						--tab:Binary Prefixes
 	\centering
-	\textbf{\caption{Binary Prefixes \label{tab:BINARY PREFIXES}}}
+	\caption{Binary Prefixes \label{tab:BINARY PREFIXES}}
 	\begin{tabular}{cll}
 	\hline
 	Yi 	& Yobi	& $2^{80}$\\\hline
@@ -1435,10 +1441,9 @@
 	%IEEE 802.1x / 802.11i Wireless Security 																		--fig:WIRELESS SECURITY
 	\begin{figure}[H]
 	\centering
-	\textbf{\caption{IEEE 802.1x / IEEE 802.11i Extensible Authentication Protocol (EAP) \label{fig:WIRELESS SECURITY}}}
+	\caption{IEEE 802.1x/IEEE 802.11i Extensible Authentication Protocol (EAP) \label{fig:WIRELESS SECURITY}}
 	\includegraphics[width=\textwidth,height=7cm]{Wireless_Security}
 	\end{figure}
-	\vspace{-16px}
 
 	%Official Standards 																					--subsec:STANDARDS
 	\subsection{Official Standards \label{subsec:STANDARDS}}
