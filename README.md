@@ -1,4 +1,6 @@
-# Purpose
+# The CCNA Quick Reference Guide
+
+## Purpose
 
 This GitHub repository hosts a personal project to organize CCNA 200-301 material and IEEE 802 protocols for quick reference and study. It is not a replacement for official CCNA learning material and does not include all topics covered by the current CCNA 200-301 exam.
 
@@ -8,7 +10,7 @@ The project is written with the LaTeX markup language, which results in a search
 
 I created this project shortly after becoming CCNA certified in order to more legibly organize my personal study notes. I am sharing it in the interest of helping others who are pursuing their own interests in networking.
 
-# File Structure
+## File Structure
 
 `CCNA_RefDoc.pdf`: The primary file, a searchable PDF that those pursuing CCNA certification or networking may find useful.
 
