@@ -4,11 +4,25 @@
 
 This GitHub repository hosts a personal project to organize CCNA 200-301 material and IEEE 802 protocols for quick reference and study. It is not a replacement for official CCNA learning material and does not include all topics covered by the current CCNA 200-301 exam.
 
-The project is written with the LaTeX markup language, which results in a searchable PDF document when typeset. This repository primarily exists to share the PDF document with those who find it useful, although those who are curious are welcome to explore the underlying LaTeX code.
+The project is written in the LaTeX markup language, which typesets a searchable PDF document. This repository primarily exists to share the PDF document with those who find it useful, although those who are curious are welcome to explore the underlying LaTeX code.
 
-*Note: The LaTeX code most likely does NOT adhere to best-practices, as I am self-taught in the language and solve issues as they arise. This is not my first LaTeX document, and it will not be my last.*
+*Note: The LaTeX code most likely does NOT adhere to best-practices, as I am self-taught in and solve issues as they arise. This is not my first LaTeX document, and it will not be my last.*
 
-I created this project shortly after becoming CCNA certified in order to more legibly organize my personal study notes. I am sharing it in the interest of helping others who are pursuing their own interests in networking.
+I created this project shortly after becoming CCNA certified in order to more legibly organize my personal study notes. I am sharing it in the hope of helping others who are pursuing their own interests in networking.
+
+# Document Features
+
+- Fully searchable PDF written and compiled using LaTeX, allowing for internal links to each topic section/subsection. Topics are organized according to the TCP/IP Network Model (Layer 1 through Layer 5), plus QoS and Appendix sections.
+
+- Applicable topics include relevant RFC number(s), which serves as formatted hyperlink(s) (via [datatracker.ietf.org](https://datatracker.ietf.org/)) directly to the specified RFC(s). Note that IEEE standards are not linked at this time.
+
+- Includes header formats for common protocols, including field names and lengths. Quick-reference tables list common field values and addresses / address blocks. Color-coding provides visual reference where appropriate.
+
+- Includes common network processes and features, including STP elections; OSPF DR/BDR elections; AP modes; modified EUI-64 address generation and more.
+
+- Includes Cisco IOS configuration examples for CCNA-relevant IOS features.
+
+- The project is fully open-source and comes with a GPL-3.0 license, allowing for modification and redistribution by others. All LaTeX code is published within this repository for easy review.
 
 ## File Structure
 

@@ -6,13 +6,14 @@
 \setlength\intextsep{0cm}
 
 \usepackage[top=.5in,bottom=.75in,left=.75in,right=.75in]{geometry}
+\usepackage{parskip}
 \usepackage{float}
 \usepackage[justification=raggedright,font=bf,position=bottom]{caption}
 \usepackage[dvipsnames]{xcolor}
 
 \usepackage{titlesec}
 \titlespacing*{\section}{0pt}{1ex}{1ex}
-\titlespacing*{\subsection}{0pt}{1.5ex}{0ex}
+\titlespacing*{\subsection}{0pt}{1.5ex}{1ex}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -22,8 +23,6 @@
 	urlcolor=black,
 	pdftitle={CCNA Quick Reference},
 }
-\counterwithin{table}{section}
-\counterwithin{figure}{section}
 
 \usepackage{listings}
 \lstdefinestyle{mystyle}{
@@ -40,8 +39,13 @@
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
 
+\counterwithin{table}{section}
+\counterwithin{figure}{section}
+
 \newcommand{\textcolorbf}[2]{\textcolor{#1} {\textbf{#2}}}
 \newcommand{\note}[1]{\colorbox{#1}{Note:}}
+\newcommand{\rfc}[1]{\href{https://datatracker.ietf.org/doc/html/rfc#1}{#1}}
+\newcommand{\RFC}[1]{\href{https://datatracker.ietf.org/doc/html/rfc#1}{RFC #1}}
 
 %DOCSTART
 \begin{document}
@@ -65,8 +69,8 @@
 	7		& \textcolorbf{Mahogany}{Brown-White}	& \textcolorbf{Mahogany}{Brown-White}\\\hline
 	8		& \textcolorbf{Mahogany}{Brown}		& \textcolorbf{Mahogany}{Brown}\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
-	Two standard T568 pinouts exist for the \textit{Medium-Dependent Interface} (MDI) and \textit{MDI Crossover} (MDI-X) port standards. Computers, routers, and Layer 3 devices use the MDI standard; switches, hubs, and other Layer 2 devices use the MDI-X standard. Connections between MDI and MDI-X ports use a \textit{straight-through} cable, where the same T568 standard terminates each end of the cable. Connections between two MDI (or two MDI-X) ports use a \textit{crossover} cable, where different T568 standards terminate each end of the cable. Most new equipment incorporates \textit{Auto-MDIX} circuitry to allow either cable type.\\\\
+	Two standard T568 pinouts exist for the \textit{Medium-Dependent Interface} (MDI) and \textit{MDI Crossover} (MDI-X) port standards. Computers, routers, and Layer 3 devices use the MDI standard; switches, hubs, and other Layer 2 devices use the MDI-X standard. Connections between MDI and MDI-X ports use a \textit{straight-through} cable, where the same T568 standard terminates each end of the cable. Connections between two MDI (or two MDI-X) ports use a \textit{crossover} cable, where different T568 standards terminate each end of the cable. Most new equipment incorporates \textit{Auto-MDIX} circuitry to allow either cable type.
+
 	\note{Goldenrod} The T568B standard is more commonly used for straight-through cables in North America.
 
 
@@ -74,7 +78,7 @@
 	\subsection{Cabling Standards \label{subsec:CABLING}}
 	\begin{table}[H]
 	%IEEE 802.3 Copper Standards																				--tab:802.3 COPPER
-	\parbox{.5\linewidth}{
+	\begin{minipage}{.6\linewidth}
 	\centering
 	\caption{IEEE 802.3 Copper Standards \label{tab:802.3 COPPER}}
 	\begin{tabular}{| l | c | r r |}
@@ -88,10 +92,9 @@
 	802.3ba 	& 40GBASE-T 		& 40 Gbps 		&CAT8\\\hline
 	802.3bz 	& 2.5GBASE-T 		& 2.5 Gbps 		&CAT5e\\
 			& 5GBASE-T 		& 5 Gbps 		&CAT5e\\\hline
-	\end{tabular}}
-	\hfill
+	\end{tabular}\end{minipage}\hfill
 	%Fiber Standards																							--tab:802.3 FIBER
-	\parbox{.5\linewidth}{
+	\begin{minipage}{.4\linewidth}
 	\centering
 	\caption{Fiber Standards \label{tab:802.3 FIBER}}
 	\begin{tabular}{| c | c | r |}
@@ -105,7 +108,7 @@
 		&						& 40 Gbps\\
 		&						& 100 Gbps\\\hline
 	OM5	& \textcolorbf{LimeGreen}{lime}	& 10 Gbps\\\hline
-	\end{tabular}}\end{table}
+	\end{tabular}\end{minipage}\end{table}
 
 	%SFP Transceivers																								--tab:SFP
 	\begin{table}[H]
@@ -133,8 +136,8 @@
 	IEEE 802.3bt 		& Type 3 UPoE	& 60W (50-57v) 		& 4 wire pairs $\ge$ CAT5\\
 					& Type 4 UPoE+	& 100W (52-57v)		& 4 wire pairs $\ge$ CAT5\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
 	\textit{Active PoE} negotiates power delivery via LLDP and is standardized by IEEE. \textit{Passive PoE} is \textcolorbf{red}{not} standardized and provides a constant voltage, which may cause damage. \textbf{Mode A} PoE sends voltage only on the 2 data wire pairs; \textbf{Mode B} PoE sends voltage only on the 2 unused wire pairs; \textbf{4Pair} PoE sends voltage on all wire pairs.
+
 
 
 
@@ -143,7 +146,7 @@
 \section{Layer 2 Protocols \label{sec:L2}}
 	\begin{table}[H]
 	%EtherType Values																						tab:ETHERTYPE
-	\parbox{.5\linewidth}{
+	\begin{minipage}{.4\linewidth}
 	\centering
 	\caption{EtherType Values \label{tab:ETHERTYPE}}
 	\begin{tabular}{| c | r |}
@@ -160,10 +163,9 @@
 	\texttt{0x8864}	& PPPoE Session\\\hline
 	\texttt{0x88cc}	& LLDP\\\hline
 	\texttt{0x888e}	& IEEE 802.1x EAPOL\\\hline
-	\end{tabular}}
-	\hfill
+	\end{tabular}\end{minipage}\hfill
 	%Layer 2 Multicast																					--tab:MULTICAST L2
-	\parbox{.5\linewidth}{
+	\begin{minipage}{.6\linewidth}
 	\centering
 	\caption{Layer 2 Multicast \label{tab:MULTICAST L2}}
 	\begin{tabular}{| l | r |}
@@ -179,8 +181,7 @@
 	\texttt{0100.0ccc.cccd}		& Cisco PVST+ / PVRST\\\hline
 	\texttt{0180.c200.0000}	 	& IEEE 802.1D STP\\
 						& IEEE 802.1w RSTP\\\hline
-	\end{tabular}}\end{table}
-	\vspace{8px}
+	\end{tabular}\end{minipage}\end{table}
 	\note{Goldenrod} Each Layer 2 multicast address maps to a corresponding Layer 3 multicast address which may be used in the L3PDU. Some Layer 2 protocols do not support multicast.
 
 
@@ -257,14 +258,13 @@
 	Data				& varies	& 8-196000 bit Unmodified original frame\\\hline
 	FCS				& 32 bits	&\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
 	\note{Goldenrod} Industry-standard IEEE 802.1Q supports both \textit{normal-range} VLANs (1-1005) and \textit{extended-range} VLANs (1006-4094); Cisco ISL is deprecated.
 
 	%Cisco VLAN Trunking Protocol (VTP) 																		--subsec:CISCO VTP
 	\subsection{Cisco VLAN Trunking Protocol (VTP) \label{subsec:CISCO VTP}}
-	Cisco VTP dynamically advertises a \textit{VLAN Database} to participating switches over Cisco ISL and IEEE 802.1Q trunk links. Participating switches use either \textit{VTP Server Mode} or \textit{VTP Client Mode}, and default to VTP Server Mode with a \texttt{Config Revision Number} of 0. Each time a VTP Server's VLAN Database is locally updated, the \texttt{Config Revision Number} increments and \textit{VTP Synchronization} occurs.\\
+	Cisco VTP dynamically advertises a \textit{VLAN Database} to participating switches over Cisco ISL and IEEE 802.1Q trunk links. Participating switches use either \textit{VTP Server Mode} or \textit{VTP Client Mode}, and default to VTP Server Mode with a \texttt{Config Revision Number} of 0. Each time a VTP Server's VLAN Database is locally updated, the \texttt{Config Revision Number} increments and \textit{VTP Synchronization} occurs.
 
-	VTP Synchronization uses a \textit{VTP Summary Advertisement} alongside 1 or more \textit{VTP Subset Advertisements} to advertise the revised VLAN Database. VTP Servers also send out a Summary Advertisement (alongside 0 or more Subset Advertisements) every 5 minutes. To participate, newly-connected switches may send a \textit{VTP Advertisement Request} over each trunk link that comes up. A switch only listens to VTP messages in its \texttt{VTP Management Domain} (default NONE). An MD5-encrypted \texttt{VTP Password} (default NONE) can be configured to prevent unauthorized switches from participating in the VTP Management Domain.\\
+	VTP Synchronization uses a \textit{VTP Summary Advertisement} alongside 1 or more \textit{VTP Subset Advertisements} to advertise the revised VLAN Database. VTP Servers also send out a Summary Advertisement (alongside 0 or more Subset Advertisements) every 5 minutes. To participate, newly-connected switches may send a \textit{VTP Advertisement Request} over each trunk link that comes up. A switch only listens to VTP messages in its \texttt{VTP Management Domain} (default NONE). An MD5-encrypted \texttt{VTP Password} (default NONE) can be configured to prevent unauthorized switches from participating in the VTP Management Domain.
 
 	VTP Clients participate in VTP Synchronization but disallow local VLAN configurations. \textit{VTP Transparent Mode} or \textit{VTP Off Mode} switches use a local VLAN configuration instead of the VLAN Database, although they may forward VTP messages.
 
@@ -397,40 +397,39 @@
 	Learning		& Learning			& \textcolorbf{Green}{Yes}		& \textcolorbf{Red}{No}	& \textcolorbf{Green}{Yes}\\\hline
 	Forwarding		& Forwarding		& \textcolorbf{Green}{Yes}		& \textcolorbf{Green}{Yes}	& \textcolorbf{Green}{Yes}\\\hline
 	\end{tabular}\end{table}
-	\vspace{12px}
 
 	%STP ELECTIONS 																					--itm:STP CONVERGENCE
 	\textbf{The \textit{STP Convergence} Process:}
 	\begin{enumerate}
 		\label{itm:STP CONVERGENCE}
 		\item{\textbf{Elect Root Bridge:}}
-		\begin{enumerate}
+		\begin{enumerate} \itemsep -5pt
 			\item{Lowest BPDU \texttt{Root ID: Priority}}
 			\item{Tiebreaker: lowest BPDU \texttt{Root ID: System ID}}
 		\end{enumerate}
 		\item{\textbf{Elect \textit{Root Ports} (RPs):}}
-		\begin{enumerate}
+		\begin{enumerate} \itemsep -5pt
 			\item{Lowest received BPDU \texttt{Root Path Cost} + local \texttt{Port Cost} (Table \ref{tab:STP PORT COSTS})}
 			\item{Tiebreaker: lowest received BPDU \texttt{Sender BID}}
 			\item{Tiebreaker: lowest received BPDU \texttt{Port ID: Prio.Nbr}}
 			\item{Other RSTP link-type point-to-point ports become \textit{Alternate Ports} (APs)}
 		\end{enumerate}
 		\item{\textbf{Elect \textit{Designated Ports} (DPs):}}
-		\begin{enumerate}
+		\begin{enumerate} \itemsep -5pt
 			\item{Lowest advertised BPDU \texttt{Root Path Cost}}
 			\item{Tiebreaker: lowest advertised BPDU \texttt{Sender BID}}
 			\item{Tiebreaker: lowest advertised BPDU \texttt{Port ID: Prio.Nbr}}
 			\item{Other RSTP link-type shared ports on the same bridge become \textit{Backup Ports} (BPs)}
 		\end{enumerate}
 		\item{\textbf{Other Ports:}}
-		\begin{enumerate}
+		\begin{enumerate} \itemsep -5pt
 			\item{Working ports become STP \textit{Nondesignated Ports} (NDs)}
 			\item{Nonworking and disabled ports become STP disabled ports}
 		\end{enumerate}
 	\end{enumerate}
-	
+
 	%STP FEATURES 																						--itm:STP FEATURES
-	\noindent\textbf{Optional STP Features:}
+	\textbf{Optional STP Features:}
 	\begin{itemize}
 		\label{itm:STP FEATURES}
 		\item{\textbf{PortFast:} immediately transitions configured ports to Forwarding state when connected. It can be enabled on access or trunk ports, and continues to send BPDUs. Received BPDUs cause the port to revert to STP behavior.}
@@ -442,7 +441,7 @@
 
 
 	%Address Resolution Protocol (ARP) 																			--subsec:ARP
-	\subsection{RFC 826 Address Resolution Protocol (ARP) \label{subsec:ARP}}
+	\subsection{\RFC{826} Address Resolution Protocol (ARP) \label{subsec:ARP}}
 	%ARP Request/Reply Format 																						--tab:ARP
 	\begin{table}[H]
 	\centering
@@ -459,10 +458,9 @@
 	Target HW 	& 48 bits	& Destination MAC\\\hline
 	Target IP	& 32 bits	& Destination IP\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
-	\note{Goldenrod} As a Layer 2 protocol, all IPv4 ARP messages are encapsulated directly within an Ethernet frame.\\
+	\note{Goldenrod} As a Layer 2 protocol, all IPv4 ARP messages are encapsulated directly within an Ethernet frame.
 	
-	\noindent\textit{Dynamic ARP Inspection} (DAI) is an optional switch security feature to prevent ARP poisoning and ARP DoS. It uses the \textit{DHCP Snooping Binding Table} to filter incoming ARP messages based on their \texttt{Origin IP} and \texttt{Origin HW} fields; an ARP ACL can also be configured for hosts using static IP addresses. Optional verification checks compare the ARP \texttt{Origin/Target HW} fields against the frame \texttt{Source/Destination MAC} and ensure the ARP \texttt{Origin/Target IP} fields contain unicast values. This behavior is disabled on DAI \textit{trusted ports}. DAI uses optional per-interface rate limits to prevent DoS attacks against the switch CPU and ARP table.
+	\textit{Dynamic ARP Inspection} (DAI) is an optional switch security feature to prevent ARP poisoning and ARP DoS. It uses the \textit{DHCP Snooping Binding Table} to filter incoming ARP messages based on their \texttt{Origin IP} and \texttt{Origin HW} fields; an ARP ACL can also be configured for hosts using static IP addresses. Optional verification checks compare the ARP \texttt{Origin/Target HW} fields against the frame \texttt{Source/Destination MAC} and ensure the ARP \texttt{Origin/Target IP} fields contain unicast values. This behavior is disabled on DAI \textit{trusted ports}. DAI uses optional per-interface rate limits to prevent DoS attacks against the switch CPU and ARP table.
 
 
 	%IEEE 802.11 Wireless LANs (WLANs) 																		--subsec:802.11 WLANS
@@ -483,8 +481,7 @@
 	Data				& varies	&\\\hline
 	FCS				& 4 Bytes	&\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
-	The original IEEE 802.11-1997 standard uses \textit{Frequency Hopping Spread Spectrum} (FHSS) encoding within the 2.4-GHz ISM band. Each consecutive transmission uses a slightly different frequency to minimize collision risk; there are no defined discrete channels.\\
+	The original IEEE 802.11-1997 standard uses \textit{Frequency Hopping Spread Spectrum} (FHSS) encoding within the 2.4-GHz ISM band. Each consecutive transmission uses a slightly different frequency to minimize collision risk; there are no defined discrete channels.
 	
 	\textit{Direct Sequence Spread Spectrum} (DSSS) encoding uses 11 overlapping channels within the 2.4-GHz ISM band, three of which are non-overlapping. \textit{Orthogonal Frequency Division Multiplexing} (OFDM) encoding uses 23 overlapping channels within the 5-GHz U-NII band. Both are used by modern IEEE 802.11 standards along with \textit{Carrier Sense Multiple Access / Colision Detection} (CSMA-CD) to minimize and recover from collisions.
 
@@ -536,13 +533,11 @@
 	DS			& Virtual				& Mobility Group		& DHCP Relay, WebAuth\\\hline
 	DS			& Dynamic				& USERS			& Bind WLANs to VLANs (tunnel LAG)\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
-	\noindent\note{Goldenrod} Only Lightweight APs require a \textit{Wireless LAN Controller} (WLC) deployment to support WLANs. Each Autonomous AP can support multiple independent WLANs.
+	\note{Goldenrod} Only Lightweight APs require a \textit{Wireless LAN Controller} (WLC) deployment to support WLANs. Each Autonomous AP can support multiple independent WLANs.
 
-	\vspace{8px}
 	%Autonomous APs 																					--itm:AUTONOMOUS AP
-	\noindent\textbf{Autonomous AP Modes:}
-	\begin{itemize}
+	\textbf{Autonomous AP Modes:}
+	\begin{itemize} \itemsep -5pt
 		\label{itm:AUTONOMOUS AP}
 		\item{\textbf{Infrastructure:} Offer BSS' on an RF Channel}
 		\item{\textbf{Repeater:} Extend a BSA via retransmission}
@@ -552,15 +547,15 @@
 	\end{itemize}
 
 	%Lightweight APs 																					--itm:LIGHTWEIGHT AP
-	\noindent\textbf{Lightweight AP (LAP) Modes:}
-	\begin{itemize}
+	\textbf{Lightweight AP (LAP) Modes:}
+	\begin{itemize} \itemsep -5pt
 		\label{itm:LIGHTWEIGHT AP}
 		\item{\textbf{Local:} Offer BSS' on an RF Channel}
 		\item{\textbf{Monitor:} Monitor for IDS events / rogue APs, determine STA positions}
 		\item{\textbf{FlexConnect:} Locally switch traffic if CAPWAP fails}
 		\item{\textbf{Rogue Detector:} Detect rogue devices (correlate wired and wireless MACs)}
 		\item{\textbf{Sniffer:} Capture WLAN traffic for analysis}
-		\item{\textbf{Bridge:} Form a P2P / P2MP link or a mesh}
+		\item{\textbf{Bridge:} Form a Point-to-Point (P2P) / Point-to-Multipoint (P2MP) link or a mesh}
 		\item{\textbf{Flex+Bridge:} FlexConnect on a mesh LAP}
 		\item{\textbf{SE-Connect:} Detect interference sources (RF spectrum analysis)}
 	\end{itemize}
@@ -581,7 +576,7 @@
 
 
 	%IETF RFC 1661 Point-to-Point Protocol (PPP) / Cisco HDLC (cHDLC) 														--subsec:IETF PPP
-	\subsection{IETF RFC 1661 Point-to-Point Protocol (PPP) / Cisco HDLC (cHDLC) \label{subsec:IETF PPP}}
+	\subsection{IETF \RFC{1661} Point-to-Point Protocol (PPP) / Cisco HDLC (cHDLC) \label{subsec:IETF PPP}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -602,7 +597,7 @@
 \section{Layer 3 Protocols \label{sec:L3}}
 	\begin{table}[H]
 	%IPv4 Protocol / IPv6 Next Header Values 																		--tab:L3 PROTOCOL
-	\parbox{.35\linewidth}{
+	\begin{minipage}{.35\linewidth}
 	\centering
 	\caption{IPv4 Protocol / IPv6 Next Header Values \label{tab:L3 PROTOCOL}}
 	\begin{tabular}{| c | c | r|}
@@ -624,9 +619,9 @@
 	\texttt{0x67}	& 103			& PIM\\\hline
 	\texttt{0x70}	& 112			& VRRP\\\hline
 	\texttt{0x89}	& 137			& MPLS-in-IP\\\hline
-	\end{tabular}}
+	\end{tabular}\end{minipage}%
 	%Layer 3 Multicast 																					--tab:MULTICAST L3
-	\parbox{.45\linewidth}{
+	\begin{minipage}{.6\linewidth}
 	\centering
 	\caption{Layer 3 Multicast \label{tab:MULTICAST L3}}
 	\begin{tabular}{| l | c | r|}
@@ -645,8 +640,7 @@
 	\texttt{ff02::a}	& All-EIGRPv6-Routers	& EIGRPv6\\\hline
 	224.0.0.18		& IETF VRRP		&\\\hline
 	224.0.0.102		& Cisco HSRPv2 / GLBP	&\\\hline
-	\end{tabular}}\end{table}
-	\vspace{8px}
+	\end{tabular}\end{minipage}\end{table}
 	\note{Goldenrod} Each Layer 3 multicast address maps to a corresponding Layer 2 multicast address which may be used in the L2PDU.
 
 	%Route Types 																							--tab:ROUTE TYPES
@@ -669,12 +663,11 @@
 	DHCP			& 254						&\\\hline
 	Invalid			& 255						&\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
-	\noindent\note{Goldenrod} The routing table is populated based on each route's AD value; the route metric is a tiebreaker only for two routes to the same destination learned via the same routing protocol. A route's metric is calculated by the routing protocol. Some routing protocols are capable of multi-path load-balancing, resulting in multiple routes to the same destination under certain conditions.
+	\note{Goldenrod} The routing table is populated based on each route's AD value; the route metric is a tiebreaker only for two routes to the same destination learned via the same routing protocol. A route's metric is calculated by the routing protocol. Some routing protocols are capable of multi-path load-balancing, resulting in multiple routes to the same destination under certain conditions.
 
 
 	%RFC 791 IP Version 4 																						--subsec:IPV4
-	\subsection{RFC 791 IP Version 4 \label{subsec:IPV4}}
+	\subsection{\RFC{791} IP Version 4 \label{subsec:IPV4}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -699,15 +692,15 @@
 	%RFC 791/1918 Addressing 																				--tab:ADDRESSING IPV4
 	\begin{table}[H]
 	\centering
-	\caption{RFC 791 / RFC 1918 Addressing \label{tab:ADDRESSING IPV4}}
+	\caption{\RFC{791} / \RFC{1918} Addressing \label{tab:ADDRESSING IPV4}}
 	\begin{tabular}{clcr}
 	\hline
-	\textbf{RFC 791}	& \textbf{First Octet}		& \textbf{Address Block}		& \textbf{RFC 1918 Block}\\\hline
-	Class A 		& \texttt{01XX XXXX}		& 0.0.0.0 - 127.0.0.0 /8			& 10.0.0.0 /8\\
-	Class B 		& \texttt{10XX XXXX}		& 128.0.0.0 - 191.255.0.0 /16		& 172.16.0.0 /12\\
-	Class C 		& \texttt{110X XXXX}		& 192.0.0.0 - 223.255.255.0 /24 	& 192.168.0.0 /16\\\hline
-	Class D 		& \texttt{1110 XXXX}		& 224.0.0.0 - 239.255.255.255		&\\\hline
-	Class E 		& \texttt{1111 XXXX}		& 240.0.0.0 - 255.255.255.255		&\\\hline
+	\textbf{\RFC{791}}	& \textbf{First Octet}		& \textbf{Address Block}		& \textbf{\RFC{1918} Block}\\\hline
+	Class A 			& \texttt{01XX XXXX}		& 0.0.0.0 - 127.0.0.0 /8			& 10.0.0.0 /8\\
+	Class B 			& \texttt{10XX XXXX}		& 128.0.0.0 - 191.255.0.0 /16		& 172.16.0.0 /12\\
+	Class C 			& \texttt{110X XXXX}		& 192.0.0.0 - 223.255.255.0 /24 	& 192.168.0.0 /16\\\hline
+	Class D 			& \texttt{1110 XXXX}		& 224.0.0.0 - 239.255.255.255		&\\\hline
+	Class E 			& \texttt{1111 XXXX}		& 240.0.0.0 - 255.255.255.255		&\\\hline
 	\end{tabular}\end{table}
 
 	%Subnetting Magic Numbers																					--tab:SUBNETTING
@@ -724,7 +717,7 @@
 
 
 	%RFC 2460 IP Version 6 																						--subsec:IPV6
-	\subsection{RFC 2460 IP Version 6 \label{subsec:IPV6}}
+	\subsection{\RFC{2460} IP Version 6 \label{subsec:IPV6}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -739,13 +732,12 @@
 	Destination Address	& 128 bits	&\\\hline
 	Data				& varies	&\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
 	\note{Goldenrod} IPv6 uses a fixed 40-Byte header by sending separate IPv6 Options headers.
 
 	%RFC 2460 Addressing 																					--tab:ADDRESSING IPV6
 	\begin{table}[H]
 	\centering
-	\caption{RFC 2460 Addressing \label{tab:ADDRESSING IPV6}}
+	\caption{\RFC{2460} Addressing \label{tab:ADDRESSING IPV6}}
 	\begin{tabular}{rlr}
 	\hline
 	\textbf{Address Class}	& \textbf{Block}		& \textbf{Format}\\\hline
@@ -762,20 +754,18 @@
 					& \texttt{ff08::/16}	& Org-Local\\
 					& \texttt{ff0e::/16}	& Global\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
-	\noindent\note{Goldenrod} IPv6 does not support broadcasts, only scoped multicasts.
+	\note{Goldenrod} IPv6 does not support broadcasts, only scoped multicasts.
 
-	\vspace{8px}
 	%Modified EUI-64 																							--itm:EUI64
-	\noindent\textbf{Modified EUI-64 Process for Unique Address Generation:}
-	\begin{enumerate}
+	\textbf{Modified EUI-64 Process for Unique Address Generation:}
+	\begin{enumerate} \itemsep -5pt
 		\label{itm:EUI64}
 		\item{Split the interface MAC into 24-pit parts, inserting \texttt{0xfffe} in-between.}
 		\item{Invert the 7th bit of the resulting address.}
 	\end{enumerate}
 
 	%RFC 792 Internet Control Message Protocol (ICMP) / RFC 4443 ICMPv6 														--subsec:ICMP
-	\subsection{RFC 792 Internet Control Message Protocol (ICMP) / RFC 4443 ICMPv6 \label{subsec:ICMP}}
+	\subsection{\RFC{792} Internet Control Message Protocol (ICMP) / \RFC{4443} ICMPv6 \label{subsec:ICMP}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -791,7 +781,7 @@
 
 	\begin{table}[H]
 	%ICMP Type.Code 																					--tab:ICMP VALUES
-	\parbox{.45\linewidth}{
+	\begin{minipage}{.45\linewidth}
 	\centering
 	\caption{ICMP Type.Code Values \label{tab:ICMP VALUES}}
 	\begin{tabular}{| r | r |}
@@ -802,12 +792,11 @@
 	\texttt{9.0}	& Router Advertisement\\
 	\texttt{10.0}	& Router Solicitation\\\hline
 	\texttt{11.X} & Time Exceeded\\\hline
-	\end{tabular}}
-	\hfill
+	\end{tabular}\end{minipage}\hfill
 	%ICMPv6 Type.Code 																					--tab:ICMPV6 VALUES
-	\parbox{.45\linewidth}{
+	\begin{minipage}{.45\linewidth}
 	\centering
-	\caption{ICMPv6 Type.Code Values \label{tab:ICMPV6 VALUES}}
+	\caption{ICMPv6 Type.Code Values\label{tab:ICMPV6 VALUES}}
 	\begin{tabular}{| r | r |}
 	\hline
 	\texttt{1.X}	 	& Destination Unreachable\\\hline
@@ -820,11 +809,11 @@
 	\texttt{135.0}	& NDP NS\\
 	\texttt{136.0}	& NDP NA\\
 	\texttt{137.0}	& NDP Redirect\\\hline
-	\end{tabular}}\end{table}
+	\end{tabular}\end{minipage}\end{table}
 
 
 	%RFC 4861 NDP 																							--subsec:NDP
-	\subsection{RFC 4861 ICMPv6 Neighbor Discovery Protocol (NDP) \label{subsec:NDP}}
+	\subsection{\RFC{4861} ICMPv6 Neighbor Discovery Protocol (NDP) \label{subsec:NDP}}
 	ICMPv6 NDP offers core functionality for IPv6 networks, including \textit{Neighbor Discovery}, \textit{Router Discovery}, \textit{Stateless Address Autoconfiguration} (SLAAC), and \textit{Duplicate Address Detection} (DAD).
 
 	%NDP Message Types 																					--itm:NDP MESSAGES
@@ -835,8 +824,8 @@
 	\end{itemize}
 
 	%NDP SLAAC 																							--itm:NDP SLAAC
-	\noindent\textbf{The SLAAC Process:}
-	\begin{enumerate}
+	\textbf{The SLAAC Process:}
+	\begin{enumerate} \itemsep -5pt
 		\label{itm:NDP SLAAC}
 		\item{The IPv6 host learns the IPv6 prefix used on the link, from any router, using NDP RS/RA messages.}
 		\item{The IPv6 host builds an IPv6 unicast address using the learned prefix and a (random / EUI-64) generated interface ID.}
@@ -844,17 +833,17 @@
 	\end{enumerate}
 
 	%NDP DAD 																							--itm:NDP DAD
-	\noindent\textbf{The DAD Process:}
-	\begin{enumerate}
+	\textbf{The DAD Process:}
+	\begin{enumerate} \itemsep -5pt
 		\label{itm:NDP DAD}
 		\item{The IPv6 host sends an NDP NS message, listing its own IPv6 unicast address as the \texttt{Target Address}.}
 		\item{If no other IPv6 host uses that address, then no host should reply with an NDP NA message; the host is safe to use that address on the IPv6 network.}
-		\item{If another IPv6 host uses that address, they reply with an NA message. The local host receives an NDP NA message and avoids using that address until the issue 			is resolved.}
+		\item{If another IPv6 host uses that address, they reply with an NA message. The local host receives an NDP NA message and avoids using that address until the issue is resolved.}
 	\end{enumerate}
 
 	\begin{table}[H]
 	%NDP RS 																								--tab:NDP RS
-	\parbox{.45\linewidth}{
+	\begin{minipage}{.48\linewidth}
 	\centering
 	\caption{NDP RS \label{tab:NDP RS}}
 	\begin{tabular}{| l | c | r |}
@@ -864,10 +853,9 @@
 	Checksum	& 16 bits	&\\\hline
 	Reserved	& 32 bits	& Unused (0)\\\hline
 	Options	& varies	&\\\hline
-	\end{tabular}}
-	\hfill
+	\end{tabular}\end{minipage}\hfill
 	%NDP NS 																								--tab:NDP NS
-	\parbox{.45\linewidth}{
+	\begin{minipage}{.52\linewidth}
 	\centering
 	\caption{NDP NS \label{tab:NDP NS}}
 	\begin{tabular}{| l | c | r |}
@@ -878,7 +866,7 @@
 	Reserved		& 32 bits	& Unused (0)\\\hline
 	Target Address	& 128 bits	&\\\hline
 	Options		& varies	&\\\hline
-	\end{tabular}}\end{table}
+	\end{tabular}\end{minipage}\end{table}
 
 	%NDP RA																								--tab:NDP RA
 	\begin{table}[H]
@@ -915,13 +903,11 @@
 	Target Address		& 128 bits	&\\\hline
 	Options			& varies	&\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
-	\noindent\note{Goldenrod} Unlike IPv4 ARP, ICMPv6 NDP messages are encapsulated within an IPv6 packet.
+	\note{Goldenrod} Unlike IPv4 ARP, ICMPv6 NDP messages are encapsulated within an IPv6 packet.
 
 
 	%RFC 2328 OSPFv2 																						--subsec:OSPFv2
-	\subsection{\textbf{Open Shortest Path First (OSPFv2)} \label{subsec:OSPFv2}}
-
+	\subsection{\RFC{2328} Open Shortest Path First (OSPFv2) \label{subsec:OSPFv2}}
 	OSPFv2 is a link-state IGP for dynamic routing which maintains a \textit{Link-State Database} (LSDB) representing the internetwork of connected OSPF routers within an \textit{OSPF area}. Each OSPF router forms OSPF neighbor relationships with connected OSPF routers using a series of OSPF messages and \textit{OSPF neighbor states}, which synchronize their LSDBs.
 
 	%OSPF LSA Types 																					--tab:OSPF LSA TYPES
@@ -952,7 +938,6 @@
 	LS Checksum		& 2 Bytes	& Checksum of LSA (excluding \texttt{LS Age})\\\hline
 	Length			& 2 Bytes	& Length of LSA + header (Bytes)\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
 	Each LSDB is a collection of \textit{OSPF Link-State Advertisements} (LSAs) whose contents describe the internetwork according to their LSA type (Table \ref{tab:OSPF LSA TYPES}). Note that the number of OSPF routers, OSPF areas, and other variables determine the number and type of LSAs within the LSDB.
 
 	%OSPF Hello Packet 																						--tab:OSPF HELLO
@@ -978,10 +963,9 @@
 	Backup Designated Router	& 4 Bytes	& OSPF BDR IP Address\\\hline
 	Neighbor				& varies	& Known Neighbor \texttt{RID}(s)\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
-	OSPF Hello packets are used for neighbor discovery and maintenance. OSPF routers use it to learn each other's \texttt{RID} in neighbor state \textbf{INIT} and determine whether they are OSPF-compatible.\\
+	OSPF Hello packets are used for neighbor discovery and maintenance. OSPF routers use it to learn each other's \texttt{RID} in neighbor state \textbf{INIT} and determine whether they are OSPF-compatible.
 	
-	OSPF routers are compatible if their \texttt{RID}s are unique and if their \texttt{Version}, \texttt{Area ID}, \texttt{Network Mask}, \texttt{Hello Interval}, and \texttt{Router Dead Interval} match. If OSPF authentication is configured, the \texttt{AuType} and \texttt{Authentication} must also match. Two OSPF-compatible routers move on to neighbor state \textbf{2WAY}, are considered OSPF neighbors, and are ready to begin the 2-way LSDB exchange process\\
+	OSPF routers are compatible if their \texttt{RID}s are unique and if their \texttt{Version}, \texttt{Area ID}, \texttt{Network Mask}, \texttt{Hello Interval}, and \texttt{Router Dead Interval} match. If OSPF authentication is configured, the \texttt{AuType} and \texttt{Authentication} must also match. Two OSPF-compatible routers move on to neighbor state \textbf{2WAY}, are considered OSPF neighbors, and are ready to begin the 2-way LSDB exchange process.
 	
 	 DR/BDR elections may take place among OSPF routers connected to the same subnet. One OSPF router is elected the \textit{Designated Router} (DR) and another is elected the \textit{Backup Designated Router} (BDR), with the remaining routers becoming \textit{DROthers}. The router with the highest \texttt{Rtr Pri} value becomes the DR, with the highest \texttt{RID} serving as tiebreaker; the runner-up becomes the BDR and there is no preemption. The DR/BDR routers become fully-adjacent neighbors with all OSPF routers in the subnet; DROther routers remain in 2WAY state with each other.
 
@@ -1008,7 +992,6 @@
 	DD Sequence Number	& 4 Bytes	& sequence number of DD packets\\\hline
 	LSA Headers		& varies	& LSA header(s)\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
 	OSPF DD packets are used by both routers to summarize and compare their local LSDBs. The \textit{master router} (higher \texttt{RID}) enters neigbor state \textbf{EXSTART} by sending an OSPF DD packet, which initializes the LSDB exchange process. The \textit{slave router} (lower \texttt{RID}) enters neighbor state \textbf{EXCHANGE} by responding with its own OSPF DD packet.
 
 	%OSPF LSR Packet 																						--tab:OSPF LSR
@@ -1064,8 +1047,7 @@
 	Authentication	& 8 Bytes	& Determined by \texttt{AuType}\\\hline
 	LSA Headers	& varies	& LSA header(s) to be acknowledged\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
-	Both routers enter the neighbor state \textbf{LOADING} after the LSDB exchange process has been initiated. The master router requests certain LSAs using OSPF LSR packets (Table \ref{tab:OSPF LSR}). The slave router responds with OSPF LSU packets (Table \ref{tab:OSPF LSU}) containing the requested LSAs, which the master router acknowledges using OSPF LSAck packets (Table \ref{tab:OSPF LSACK}). This process then reverses, with the slave router requesting LSAs that the master router supplies. Once the LSDB exchange process has been completed, both routers enter neighbor state \textbf{FULL}, indicating they are \textit{fully-adjacent OSPF neighbors}.\\
+	Both routers enter the neighbor state \textbf{LOADING} after the LSDB exchange process has been initiated. The master router requests certain LSAs using OSPF LSR packets (Table \ref{tab:OSPF LSR}). The slave router responds with OSPF LSU packets (Table \ref{tab:OSPF LSU}) containing the requested LSAs, which the master router acknowledges using OSPF LSAck packets (Table \ref{tab:OSPF LSACK}). This process then reverses, with the slave router requesting LSAs that the master router supplies. Once the LSDB exchange process has been completed, both routers enter neighbor state \textbf{FULL}, indicating they are \textit{fully-adjacent OSPF neighbors}.
 
 	OSPF routers apply \textit{Djistrka's Shortest-Path First} (SPF) algorithm to their LSDB to calculate the best routes to each network, which are dynamically added to the routing table. This calculation depends on the size of the LSDB, and is performed independently for each OSPF area. Each OSPF area must connect to \textit{backbone area} 0 via an OSPF \textit{Area Border Router} (ABR). An OSPF \textit{Autonomous System Border Router} (ASBR) within backbone area 0 connects the local \textit{Autonomous System} to one or more external AS.
 
@@ -1075,10 +1057,9 @@
 
 %LAYER 4 																										--sec:L4
 \section{Layer 4 Protocols \label{sec:L4}}
-	\vspace{-16px}
 	\begin{table}[H]
 	%Well-Known Ports 																					--tab:L4 PORTS KNOWN
-	\parbox{.45\linewidth}{
+	\begin{minipage}{.45\linewidth}
 	\centering
 	\caption{Well-Known Ports \label{tab:L4 PORTS KNOWN}}
 	\begin{tabular}{| rr | r |}
@@ -1102,10 +1083,9 @@
 	UDP	& 514		& Syslog\\\hline
 	TCP	& 989		& FTPS Data\\
 	TCP	& 990		& FTPS Control\\\hline
-	\end{tabular}}
-	\hfill
+	\end{tabular}\end{minipage}\hfill
 	%Registered Ports 																				--tab:L4 PORTS REGISTERED
-	\parbox{.45\linewidth}{
+	\begin{minipage}{.45\linewidth}
 	\centering
 	\caption{Registered Ports \label{tab:L4 PORTS REGISTERED}}
 	\begin{tabular}{| cr | r |}
@@ -1115,13 +1095,12 @@
 	TCP	& 1985	& Cisco HSRP\\\hline
 	UDP	& 5246	& CAPWAP Control\\
 	UDP	& 5247	& CAPWAP Data\\\hline
-	\end{tabular}}\end{table}
-	\vspace{8px}
-	\note{Goldenrod} \textit{Well-Known Ports} range from 0-1023, \textit{Registered Ports} range from 1024-49151, and \textit{Ephemeral Ports} range from 49152-65535.
+	\end{tabular}\end{minipage}\end{table}
+	\note{Goldenrod}\textit{Well-Known Ports} range from 0-1023, \textit{Registered Ports} range from 1024-49151, and \textit{Ephemeral Ports} range from 49152-65535.
 
 
 	%RFC 768 UDP 																							--subsec:UDP
-	\subsection{RFC 768 User Datagram Protocol (UDP) \label{subsec:UDP}}
+	\subsection{\RFC{768} User Datagram Protocol (UDP) \label{subsec:UDP}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -1135,7 +1114,7 @@
 
 
 	%RFC 793 TCP 																							--subsec:TCP
-	\subsection{RFC 793 Transmission Control Protocol (TCP) \label{subsec:TCP}}
+	\subsection{\RFC{793} Transmission Control Protocol (TCP) \label{subsec:TCP}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -1152,7 +1131,6 @@
 	Urgent		& 2 Bytes	& Last urgent data byte (URG flag)\\\hline
 	Data			& varies	&\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
 	\note{Goldenrod} TCP is stateful, while UDP is stateless. Protocols using UDP must implement their own reliability functions. See QUIC over UDP for maintaining state over UDP.
 
 
@@ -1163,7 +1141,7 @@
 \section{Layer 5 Applications \label{sec:L5}}
 
 	%RFC 2131 DHCP 																						--subsec:DHCP
-	\subsection{RFC 2131 Dynamic Host Configuration Protocol (DHCP) \label{subsec:DHCP}}
+	\subsection{\RFC{2131} Dynamic Host Configuration Protocol (DHCP) \label{subsec:DHCP}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -1212,17 +1190,16 @@
 	150				& TFTP Server List\\\hline
 	255				& End\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
-	\textit{DHCP Snooping} is an optional switch security feature to prevent DHCP Poisoning and DHCP DoS attacks. It generates the \textit{DHCP Snooping Binding Table} by observing DHCP flows and mapping observed DHCP \texttt{CHADDR} to the corresponding packet \texttt{Source IP}, frame \texttt{Source MAC}, VLAN, and local incoming switchport. It ensures consistency between table entries and subsequent DHCP client messages, additionally filtering all DHCP server messages by default. This behavior is disabled on DHCP Snooping \textit{trusted ports}. DHCP Snooping uses optional per-interface rate limits to prevent DoS attacks against the switch CPU and DHCP Servers.\\
+	\textit{DHCP Snooping} is an optional switch security feature to prevent DHCP Poisoning and DHCP DoS attacks. It generates the \textit{DHCP Snooping Binding Table} by observing DHCP flows and mapping observed DHCP \texttt{CHADDR} to the corresponding packet \texttt{Source IP}, frame \texttt{Source MAC}, VLAN, and local incoming switchport. It ensures consistency between table entries and subsequent DHCP client messages, additionally filtering all DHCP server messages by default. This behavior is disabled on DHCP Snooping \textit{trusted ports}. DHCP Snooping uses optional per-interface rate limits to prevent DoS attacks against the switch CPU and DHCP Servers.
 
 	\textit{DHCP Relay} is optionally configured on the default gateway's LAN interface when the DHCP server exists in a non-local subnet. This feature causes the default gateway to insert DHCP Option 82 into received DHCP client messages, forwarding them to the DHCP server (and vice versa) as unicast packets. It is automatically enabled alongside DHCP Snooping (called the \textit{DHCP Snooping Information Option}.
 
 
 	%RFC 7230 HTTP 																							--subsec:HTTP
-	\subsection{RFC 7230 HyperText Transport Protocol (HTTP) \label{subsec:HTTP}}
-	\note{Goldenrod} See RFCs 9110/9111 plus the \href{https://www.iana.org/assignments/http-fields/http-fields.xhtml#field-names}{IANA Field Name Registry} and \href{https://www.iana.org/assignments/message-headers/message-headers.xml#perm-headers}{IANA Message Headers} for HTTP header fields and their names.\\
+	\subsection{\RFC{7230} HyperText Transport Protocol (HTTP) \label{subsec:HTTP}}
+	\note{Goldenrod} See RFCs \rfc{9110}/\rfc{9111} plus the \href{https://www.iana.org/assignments/http-fields/http-fields.xhtml#field-names}{IANA Field Name Registry} and \href{https://www.iana.org/assignments/message-headers/message-headers.xml#perm-headers}{IANA Message Headers} for HTTP header fields and their names.
 
-	\noindent HTTP manages the transfer of files between web clients (browsers) and web servers over TCP. Client requests specify a \textit{Uniform Resource Identifier} (URI, RFC 7595) adhering to the \texttt{SCHEME://AUTHORITY/PATH} format (typically \texttt{PROTOCOL://SERVER\_NAME/OBJECT} for web pages). Requests also specify an \textit{HTTP Verb}, typically corresponding to a \textit{CRUD} action. Web servers respond to client requests with an \textit{HTTP Return Code} and any relevant data.
+	HTTP manages file transfers between web clients (browsers) and web servers over TCP. Client requests specify a \textit{Uniform Resource Identifier} (URI, \RFC{7595}) adhering to the \texttt{SCHEME://AUTHORITY/PATH} format (typically \texttt{PROTOCOL://SERVER\_NAME/OBJECT} for web pages). Requests also specify an \textit{HTTP Verb}, typically corresponding to a \textit{CRUD} action. Web servers respond to client requests with an \textit{HTTP Return Code} and any relevant data.
 
 	%HTTP CRUD Verbs 																						--tab:HTTP VERBS
 	\begin{table}[H]
@@ -1250,17 +1227,16 @@
 	\texttt{4XX}			& Client Error			& Request contains bad syntax or cannot be fulfilled\\\hline
 	\texttt{5XX}			& Server Error			& Server failed to fulfill an (apparently) valid request\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
-	Modern web browsers support \textit{HTTP Secure} (HTTPS) using TLS (RFC 7568) to dynamically secure a connection between the client and server. Initializing a TLS session creates a client VPN tunnel which authenticates the user and encrypts the data transfer between that client and server only.
+	Modern web browsers support \textit{HTTP Secure} (HTTPS) using TLS (\RFC{5246}) to dynamically secure a connection between the client and server. Initializing a TLS session creates a client VPN tunnel which authenticates the user and encrypts the data transfer between that client and server only.
 
 
 	%RFC 959 FTP 																							--subsec:FTP
-	\subsection{RFC 959 File Transfer Protocol \label{subsec:FTP}}
-	FTP manages the transfer of files between FTP clients and FTP servers in clear-text over TCP. It uses a persistent \textit{FTP Control Connection} over TCP port 21, which defines the available FTP client functions for remotely managing and transferring files. The \textit{FTP Data Connection} is established only when a file is transferred; it is established by the server in \textit{FTP Active Mode}, or by the client in \textit{FTP Passive Mode}. Passive mode makes file transfer possible when the client sits behind a firewall or NAT, as the server is unable to establish the data connection. The FTP Data Connection officially uses TCP port 20, but often uses other port numbers in practice.\\
+	\subsection{\RFC{959} File Transfer Protocol \label{subsec:FTP}}
+	FTP manages the transfer of files between FTP clients and FTP servers in clear-text over TCP. It uses a persistent \textit{FTP Control Connection} over TCP port 21, which defines the available FTP client functions for remotely managing and transferring files. The \textit{FTP Data Connection} is established only when a file is transferred; it is established by the server in \textit{FTP Active Mode}, or by the client in \textit{FTP Passive Mode}. Passive mode makes file transfer possible when the client sits behind a firewall or NAT, as the server is unable to establish the data connection. The FTP Data Connection officially uses TCP port 20, but often uses other port numbers in practice.
 
-	\noindent\note{Goldenrod} The client issues the \texttt{FTP PORT} command for FTP Active mode and the \texttt{FTP PASV} command for FTP Passive mode. The client issues the \texttt{FTP AUTH} command for FTPS Explicit mode\\
+	\note{Goldenrod} The client issues the \texttt{FTP PORT} command for FTP Active mode and the \texttt{FTP PASV} command for FTP Passive mode. The client issues the \texttt{FTP AUTH} command for FTPS Explicit mode.
 	
-	\textit{FTP Secure} (FTPS) improves upon FTP by implementing TLS, providing secure authentication and data encryption. FTPS clients using \textit{FTPS Explicit Mode} must explicitly initialize a TLS tunnel after establishing each FTP connection. FTPS clients using \textit{FTPS Implicit Mode} begin each FTP connection with a TLS connection automatically using TCP ports 989 and 990.\\
+	\textit{FTP Secure} (FTPS) improves upon FTP by implementing TLS, providing secure authentication and data encryption. FTPS clients using \textit{FTPS Explicit Mode} must explicitly initialize a TLS tunnel after establishing each FTP connection. FTPS clients using \textit{FTPS Implicit Mode} begin each FTP connection with a TLS connection automatically using TCP ports 989 and 990.
 
 	\textit{SSH FTP} (SFTP) is different from FTPS, as it encrypts file transfers over an SSH connection instead of using TLS. \textit{Trivial FTP} is a lightweight version of FTP using UDP with built-in error detection and minimal FTP functions.
 
@@ -1269,7 +1245,7 @@
 
 
 %RFC 2475 Quality-of-Service (QoS) 																					--sec:QOS
-\section{RFC 2475 Quality of Service (QoS) \label{sec:QOS}}
+\section{\RFC{2475} Quality of Service (QoS) \label{sec:QOS}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{ l r r r r }
@@ -1291,7 +1267,6 @@
 	\textit{Best Effort}			& 0 \texttt{0x00} &			&			&\\
 	\end{tabular}
 	\end{table}
-	\vspace{8pt}
 	\note{Goldenrod} \texttt{CS} values use bit-pattern \texttt{XXX000}, resulting in an $8X$ DSCP value. \texttt{AF} values use bit-pattern \texttt{XXXYY0}, resulting in an $8X+2Y$ DSCP value.
 
 	%QoS Fields 																							-- tab:QOS FIELDS
@@ -1300,15 +1275,14 @@
 	\caption{QoS Fields \label{tab:QOS FIELDS}}
 	\begin{tabular}{llr}
 	\hline
-	\textbf{QoS Standard} 	& \textbf{Protocol Field(s)}		& \textbf{Notes}\\\hline
-	IEEE 802.1p (CoS)		& IEEE 802.1Q \texttt{PCP/DEI} 	& Table \ref{tab:802.1Q}\\\hline
-					& IEEE 802.11 \texttt{QoS Control} 	& Subsection \ref{subsec:802.11 WLANS}\\\hline
-	RFC 791 IPP (CS)		& IPv4 \texttt{ToS Byte} (OLD) 	& Subsection \ref{subsec:IPV4}\\
-	RFC 2474/3168 (DSCP)	& IPv4 \texttt{DS Field} (NEW) 	& Subsection \ref{subsec:IPV4}\\\hline
-	RFC 2460 (DSCP)		& IPv6 \texttt{Traffic Class} 		& Subsection \ref{subsec:IPV6}\\\hline
-					& MPLS \texttt{EXP}\\\hline
+	\textbf{QoS Standard} 			& \textbf{Protocol Field(s)}		& \textbf{Notes}\\\hline
+	IEEE 802.1p (CoS)				& IEEE 802.1Q \texttt{PCP/DEI} 	& Table \ref{tab:802.1Q}\\\hline
+							& IEEE 802.11 \texttt{QoS Control} 	& Subsection \ref{subsec:802.11 WLANS}\\\hline
+	\RFC{791} IPP (CS)			& IPv4 \texttt{ToS Byte} (OLD) 	& Subsection \ref{subsec:IPV4}\\
+	RFC \rfc{2474}/\rfc{3168} (DSCP)	& IPv4 \texttt{DS Field} (NEW) 	& Subsection \ref{subsec:IPV4}\\\hline
+	\RFC{2460} (DSCP)			& IPv6 \texttt{Traffic Class} 		& Subsection \ref{subsec:IPV6}\\\hline
+							& MPLS \texttt{EXP}\\\hline
 	\end{tabular}\end{table}
-	\vspace{8px}
 	\textit{Quality of Service} (QoS) is defined across several standards to provide preferential treatment for certain traffic. They define groups of QoS markings (shown above) as well as header fields used to mark QoS traffic. QoS-configured devices employ \textit{Classification} to identify QoS traffic and apply specifically configured actions, including \textit{Marking}, \textit{Queuing}, \textit{Policing}, \textit{Shaping}, and/or \textit{Congestion Avoidance} features. Marking is typically done by an initial device, simplifying Classification for downstream devices. QoS characterizes network traffic according to the following metrics:
 
 	%QOS METRICS 																						--itm:QOS METRICS
@@ -1320,7 +1294,7 @@
 		\item{\textbf{Jitter:} The variation in one-way delay between any consecutive packets sent by the same application.}
 		\item{\textbf{Loss:} The number of lost messages expressed as a percentage of sent packets.}
 	\end{itemize}
-	\noindent Certain types of traffic have strict requirements for these metrics, which must be met in order to ensure a good end-user experience. Technical limitations may also require much higher bandwidth per-flow for certain traffic (e.g. video).
+	Certain types of traffic have strict requirements for these metrics, which must be met in order to ensure a good end-user experience. Technical limitations may also require much higher bandwidth per-flow for certain traffic (e.g. video).
 	
 	%QoS Traffic 																							--tab:QOS TRAFFIC
 	\begin{table}[H]
@@ -1332,7 +1306,7 @@
 	\textit{Video}			& 200-400 ms 			& 30-50 ms 	& 0.1-1\%\\
 	\end{tabular}
 	\end{table}
-	\noindent\note{Goldenrod} A majority of loss occurs due to normal network operations, but may involve faulty hardware or network congestion.
+	\note{Goldenrod} A majority of loss occurs due to normal network operations, but may involve faulty hardware or network congestion.
 
 
 
@@ -1342,7 +1316,7 @@
 \section{Appendix \label{sec:APPENDIX}}
 	%Default Timer Values 																					--tab:DEFAULT TIMERS
 	\begin{table}[H]
-	\parbox{.45\linewidth}{
+	\begin{minipage}{.55\linewidth}
 	\centering
 	\caption{Protocol Timers \label{tab:DEFAULT TIMERS}}
 	\begin{tabular}{lrr}
@@ -1363,10 +1337,9 @@
 	OSPF				& Hello		& 10 s\\
 					& Dead		& 40 s ($4*$ \texttt{Hello})\\
 					& LSA Age		& 30 mins per-LSA\\\hline
-	\end{tabular}}
-	\hfill
+	\end{tabular}\end{minipage}\hfill
 	%Default Priority Values 																			--tab:DEFAULT PRIORITIES
-	\parbox{.45\linewidth}{
+	\begin{minipage}{.45\linewidth}
 	\centering
 	\caption{Protocol Priority Values\label{tab:DEFAULT PRIORITIES}}
 	\begin{tabular}{lcr}
@@ -1377,8 +1350,7 @@
 	HSRP				& 1 - 255			& 100\\\hline
 	VRRP				& 1 - 254			& 100\\\hline
 	NTP				& 1 - 15			& 8\\\hline
-	\end{tabular}}\end{table}
-	\vspace{8pt}
+	\end{tabular}\end{minipage}\end{table}
 	\note{Goldenrod} The MAC Table is also referred to as the \textit{Forwarding Information Base} (FIB) or \textit{Content Addressable Memory} (CAM) table.
 
 	%Cisco Encryption																				--tab:CISCO ENCRYPTION	
@@ -1399,7 +1371,7 @@
 
 	%ASCII																									--tab:ASCII
 	\begin{table}[H]
-	\parbox{.45\linewidth}{
+	\begin{minipage}{.55\linewidth}
 	\centering
 	\caption{ASCII Values \label{tab:ASCII}}
 	\begin{tabular}{rrr | rrr | ccc}
@@ -1436,10 +1408,9 @@
 	61 & 93 & 125	& \texttt{0x3d} & \texttt{0x5d} & \texttt{0x7d}	& =		& ]	& \}\\
 	62 & 94 & 126	& \texttt{0x3e} & \texttt{0x5e} & \texttt{0x7e}	& $>$	& \^{}	& \~{}\\
 	63 & 95 & 127	& \texttt{0x3f} & \texttt{0x5f} & \texttt{0x7f}	& ?		& \_	& DEL\\
-	\end{tabular}}
-	\hfill
+	\end{tabular}\end{minipage}\hfill
 	%SI Prefixes																								--tab:SI Prefixes
-	\parbox{.45\linewidth}{
+	\begin{minipage}{.45\linewidth}
 	\centering
 	\caption{SI Prefixes \label{tab:SI PREFIXES}}
 	\begin{tabular}{cllr}
@@ -1473,7 +1444,7 @@
 	Gi	& Gibi	& $2^{30}$\\\hline
 	Mi 	& Mebi	& $2^{20}$\\\hline
 	Ki	& Kibi	& $2^{10}$\\\hline
-	\end{tabular}}\end{table}
+	\end{tabular}\end{minipage}\end{table}
 
 	%IEEE 802.1x / 802.11i Wireless Security 																		--fig:WIRELESS SECURITY
 	\begin{figure}[H]
@@ -1488,7 +1459,7 @@
 	\centering
 	\begin{tabular}{llr}
 	\textbf{OFFICIAL STANDARD}	& \textbf{ALTERNATIVE}		& \textbf{REFERENCE}\\\hline
-	RFC 1661 PPP			& ITU HDLC / Cisco HDLC	& Subsections \ref{subsec:ITU HDLC} + \ref{subsec:IETF PPP}\\\hline
+	\RFC{1661} PPP			& ITU HDLC / Cisco HDLC	& Subsections \ref{subsec:ITU HDLC} + \ref{subsec:IETF PPP}\\\hline
 	IEEE 802.3 Ethernet		&					& Subsection \ref{subsec:802.3 ETHERNET}\\
 	IEEE 802.2 LLC/SNAP		&					& Tables \ref{tab:802.2 LLC} + \ref{tab:802.2 SNAP}\\
 	IEEE 802.3u FastEthernet		&					& Subsection \ref{subsec:CABLING}\\
@@ -1501,22 +1472,22 @@
 	IEEE 802.11 WLAN			& Wi-Fi Alliance			& Subsection \ref{subsec:802.11 WLANS}\\
 	IEEE 802.11i EAP			& 					&Figure \ref{fig:WIRELESS SECURITY}\\
 	IEEE 802.1x Access Control	&					& Figure \ref{fig:WIRELESS SECURITY}\\\hline
-	RFC 791/1918 IPv4		& RFC 2460 IPv6			& Subsections \ref{subsec:IPV4} + \ref{subsec:IPV6}\\
-	RFC 792 ICMP			& RFC 4443 ICMPv6		& Subsection \ref{subsec:ICMP}\\
-	RFC 826 ARP			& RFC 4861 NDP			& Subsections \ref{subsec:ARP} + \ref{subsec:NDP}\\
-	RFC 1631/3022 NAT		&					&\\
-	RFC 2328 OSPF			& EIGRP / RIP / ...			& Subsection \ref{subsec:OSPFv2}\\
-	RFC 5798 VRRP			& Cisco HSRP/GLBP		&\\
-	RFC 2475 QoS			&					& Section \ref{sec:QOS}\\\hline
-	RFC 768 UDP			& RFC 793 TCP			& Subsections \ref{subsec:UDP} + \ref{subsec:TCP}\\\hline
-	RFC 959 FTP			& TFTP / SFTP / FTPS / ....	& Subsection \ref{subsec:FTP}\\
-	RFC 1305/5905 NTP		&					&\\
-	RFC 1065 SNMP			&					&\\
-	RFC 5424 Syslog			&					&\\
-	RFC 2131 DHCP			&					& Subsection \ref{subsec:DHCP}\\
-	RFC 3046 DHCP Relay		&					& Subsection \ref{subsec:DHCP}\\
-	RFC 7230 HTTP			&					& Subsection \ref{subsec:HTTP}\\
-	RFC 4301 IPSec			& RFC 7568 TLS			&\\\hline
+	RFC \rfc{791}/\rfc{1918} IPv4	& \RFC{2460} IPv6		& Subsections \ref{subsec:IPV4} + \ref{subsec:IPV6}\\
+	\RFC{792} ICMP			& \RFC{4443} ICMPv6		& Subsection \ref{subsec:ICMP}\\
+	\RFC{826} ARP			& \RFC{4861} NDP		& Subsections \ref{subsec:ARP} + \ref{subsec:NDP}\\
+	RFC \rfc{1631}/\rfc{3022} NAT	&					&\\
+	\RFC{2328} OSPF			& EIGRP / RIP / ...			& Subsection \ref{subsec:OSPFv2}\\
+	\RFC{5798} VRRP			& Cisco HSRP/GLBP		&\\
+	\RFC{2475} QoS			&					& Section \ref{sec:QOS}\\\hline
+	\RFC{768} UDP			& \RFC{793} TCP			& Subsections \ref{subsec:UDP} + \ref{subsec:TCP}\\\hline
+	\RFC{959} FTP			& TFTP / SFTP / FTPS / ....	& Subsection \ref{subsec:FTP}\\
+	RFC \rfc{1305}/\rfc{5905} NTP	&					&\\
+	\RFC{1065} SNMP			&					&\\
+	\RFC{5424} Syslog			&					&\\
+	\RFC{2131} DHCP			&					& Subsection \ref{subsec:DHCP}\\
+	\RFC{3046} DHCP Relay		&					& Subsection \ref{subsec:DHCP}\\
+	\RFC{7230} HTTP			&					& Subsection \ref{subsec:HTTP}\\
+	\RFC{4301} IPSec			& \RFC{5246} TLS			&\\\hline
 	\end{tabular}\end{table}
 
 
@@ -1535,9 +1506,8 @@ configure terminal
 		
 show interface [INT] [status | switchport]
 	\end{lstlisting}
-	\vspace{8px}
 
-	\noindent\textbf{VLAN Configuration:}
+	\textbf{VLAN Configuration:}
 	\begin{lstlisting}
 configure terminal
 	vlan VLAN_ID
@@ -1568,9 +1538,8 @@ show vlan brief
 show vlan id VLAN_ID
 show vtp {status | password}
 	\end{lstlisting}
-	\vspace{8px}
 
-	\noindent\textbf{Link Aggregation Configuration:}
+	\textbf{Link Aggregation Configuration:}
 	\begin{lstlisting}
 configure terminal
 	port-channel load-balance {src-mac | dst-mac | src-dst-mac | src-ip | dst-ip | src-dst-ip | src-port | dst-port | src-dst-port}
@@ -1586,9 +1555,8 @@ show etherchannel [CHANNEL] {summary | port-channel}
 show etherchannel load-balance
 test etherchannel load-balance interface INT mac SRC_MAC DST_MAC
 	\end{lstlisting}
-	\vspace{8px}
 
-	\noindent\textbf{Port Security Configuration:}
+	\textbf{Port Security Configuration:}
 	\begin{lstlisting}
 configure terminal
 	errdisable recovery cause psecure-violation
@@ -1611,9 +1579,8 @@ clear mac address-table dynamic [vlan VLAN_ID | interface INT | address MAC]
 show mac address-table aging-time
 show errdisable recovery
 	\end{lstlisting}
-	\vspace{8px}
 
-	\noindent\textbf{CDP / LLDP Configuration:}
+	\textbf{CDP / LLDP Configuration:}
 	\begin{lstlisting}
 configure terminal
 	[no] {cdp | lldp} run
@@ -1629,9 +1596,8 @@ show {cdp | lldp} interface [INT]
 show {cdp | lldp} neighbors [detail] [INT]
 show {cdp | lldp} entry NEIGHBOR
 	\end{lstlisting}
-	\vspace{8px}
 
-	\noindent\textbf{Spanning Tree Configuration:}
+	\textbf{Spanning Tree Configuration:}
 	\begin{lstlisting}
 configure terminal
 	errdisable recovery cause bpduguard
@@ -1652,9 +1618,8 @@ configure terminal
 show spanning-tree [bridge | summary]
 show spanning-tree [vlan VLAN_LIST | interface INT]
 	\end{lstlisting}
-	\vspace{8px}
 
-	\noindent\textbf{Authenticated NTP Configuration:}
+	\textbf{Authenticated NTP Configuration:}
 	\begin{lstlisting}
 configure terminal
 	clock timezone CST -6 0
@@ -1674,9 +1639,8 @@ show ntp status
 show ntp associations [detail]
 show {clock | calendar} [detail]
 	\end{lstlisting}
-	\vspace{8px}
 
-	\noindent\textbf{Logging and SNMP Configuration:}
+	\textbf{Logging and SNMP Configuration:}
 	\begin{lstlisting}
 terminal monitor
 configure terminal
@@ -1695,9 +1659,8 @@ configure terminal
 {show | clear} logging
 show snmp {community | contact | location | host}
 	\end{lstlisting}
-	\vspace{8px}
 
-	\noindent\textbf{DHCP Snooping and DAI Configuration:}
+	\textbf{DHCP Snooping and DAI Configuration:}
 	\begin{lstlisting}
 configure terminal
 	errdisable recovery cause dhcp-rate-limit
@@ -1719,9 +1682,8 @@ configure terminal
 show ip dhcp snooping [binding]
 show ip arp inspection [statistics | interfaces]
 	\end{lstlisting}
-	\vspace{8px}
 
-	\noindent\textbf{Layer 3 Interface Configuration:}
+	\textbf{Layer 3 Interface Configuration:}
 	\begin{lstlisting}
 configure terminal
 	sdm prefer lanbase-routing
@@ -1751,9 +1713,8 @@ show dhcp lease
 show ip default-gateway
 show vlans
 	\end{lstlisting}
-	\vspace{8px}
-	
-	\noindent\textbf{IP Routing Configuration:}
+
+	\textbf{IP Routing Configuration:}
 	\begin{lstlisting}
 configure terminal
 	router ospf 1
@@ -1807,9 +1768,8 @@ show {ip | ipv6} route [connected | local | static | ospf | ...] [ADDR]
 show ip arp
 show ipv6 neighbors
 	\end{lstlisting}
-	\vspace{8px}
-	
-	\noindent\textbf{VRF Configuration:}
+
+	\textbf{VRF Configuration:}
 	\begin{lstlisting}
 configure terminal
 	ip vrf VRF_NAME
@@ -1821,9 +1781,8 @@ show ip vrf
 show ip route vrf VRF_NAME
 ping vrf VRF_NAME [ADDRESS]
 	\end{lstlisting}
-	\vspace{8px}
 
-	\noindent\textbf{FHRP Configuration:}
+	\textbf{FHRP Configuration:}
 	\begin{lstlisting}
 configure terminal
 	int F0/0
@@ -1842,9 +1801,8 @@ show standby neighbors [INT]
 show vrrp [brief | GROUP_ID]
 show vrrp interface INT [brief]
 	\end{lstlisting}
-	\vspace{8px}
 
-	\noindent\textbf{DHCP Services Configuration:}
+	\textbf{DHCP Services Configuration:}
 	\begin{lstlisting}
 configure terminal
 	service dhcp
@@ -1861,9 +1819,8 @@ configure terminal
 show ip dhcp pool POOL_NAME
 show ip dhcp binding
 	\end{lstlisting}
-	\vspace{8px}
 
-	\noindent\textbf{ACL Configuration:}
+	\textbf{ACL Configuration:}
 	\begin{lstlisting}
 configure terminal
 	access-list {1-99 | 1300-1999} {permit | deny} {[host] SRC_IP | SRC_IP SRC_WC | any} [log]
@@ -1887,9 +1844,8 @@ configure terminal
 show access-lists
 show ip access-lists
 	\end{lstlisting}
-	\vspace{8px}
 
-	\noindent\textbf{NAT Services Configuration:}
+	\textbf{NAT Services Configuration:}
 	\begin{lstlisting}
 configure terminal
 	int F0/0
@@ -1905,9 +1861,8 @@ configure terminal
 show ip nat translations
 show ip nat statistics
 	\end{lstlisting}
-	\vspace{8px}
-	
-	\noindent\textbf{QoS Configuration:}
+
+	\textbf{QoS Configuration:}
 	\begin{lstlisting}
 configure terminal
 	class-map [match-all | match-any] CMAP_NAME
@@ -1922,29 +1877,28 @@ configure terminal
 		
 show run | section policy-map
 	\end{lstlisting}
-	\vspace{8px}
-	
-	\noindent\textbf{WLC WLAN Configuration:}
+
+	\textbf{WLC WLAN Configuration:}
 	\begin{enumerate}
 		\item{Create a new WLC Dynamic Interface:}
-		\begin{itemize}
+		\begin{itemize} \itemsep -5pt
 			\item{\texttt{Name}\hfill(31 or fewer ASCII characters)}
 			\item{\texttt{VLAN ID}\hfill(Integer value 1-1001, 1007-4094 inclusive)}
 		\end{itemize}
 		\item{Create a new WLC WLAN:}
-		\begin{itemize}
+		\begin{itemize} \itemsep -5pt
 			\item{\texttt{Profile Name}\hfill(32 or fewer ASCII characters)}
 			\item{\texttt{SSID}\hfill(32 or fewer ASCII characters)}
 			\item{\texttt{WLAN ID}\hfill(Integer value 1-512 inclusive)}
 		\end{itemize}
 		\item{Configure the new WLAN:}
-		\begin{itemize}
+		\begin{itemize} \itemsep -5pt
 			\item{Bind the Dynamic Interface to the WLAN.}
 			\item{Enable the WLAN on the WLC.}
 			\item{Enable broadcasting of the WLAN SSID by APs.}
 		\end{itemize}
 		\item{Secure the new WLAN:}
-		\begin{itemize}
+		\begin{itemize} \itemsep -5pt
 			\item{Set \texttt{Layer 2 Security} to \textbf{WPA+WPA2}, enabling the \texttt{WPA2} checkbox.}
 			\item{Set \texttt{WPA2 Encryption} to \textbf{AES/TKIP/CCMP/GCMP}.}
 			\item{Enable the \texttt{PSK} checkbox.}
