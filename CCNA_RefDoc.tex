@@ -120,7 +120,7 @@
 	SR		&			&							& 300 m\\\hline
 	LX/LR		& 1310 nm		& \textcolorbf{Cyan}{blue} SMF		& 10-20 km\\\hline
 	----- 		& 1490 nm		& \textcolorbf{Orchid}{purple} SMF 		& -----\\\hline
-	EX/ER 	& 1550 nm		& \textcolorbf{Goldenrod}{yellow} SMF 	& 40 km\\
+	EX/ER 	& 1550 nm		& \textcolorbf{Dandelion}{yellow} SMF 	& 40 km\\
 	ZX/ZR	&			&							& 80 km\\\hline
 	\end{tabular}\end{table}
 
@@ -161,8 +161,8 @@
 	\texttt{0x8848}	& MPLS Multicast\\\hline
 	\texttt{0x8863}	& PPPoE Discovery\\
 	\texttt{0x8864}	& PPPoE Session\\\hline
-	\texttt{0x88cc}	& LLDP\\\hline
 	\texttt{0x888e}	& IEEE 802.1x EAPOL\\\hline
+	\texttt{0x88cc}	& LLDP\\\hline
 	\end{tabular}\end{minipage}\hfill
 	%Layer 2 Multicast																					--tab:MULTICAST L2
 	\begin{minipage}{.6\linewidth}
@@ -264,7 +264,7 @@
 	\subsection{Cisco VLAN Trunking Protocol (VTP) \label{subsec:CISCO VTP}}
 	Cisco VTP dynamically advertises a \textit{VLAN Database} to participating switches over Cisco ISL and IEEE 802.1Q trunk links. Participating switches use either \textit{VTP Server Mode} or \textit{VTP Client Mode}, and default to VTP Server Mode with a \texttt{Config Revision Number} of 0. Each time a VTP Server's VLAN Database is locally updated, the \texttt{Config Revision Number} increments and \textit{VTP Synchronization} occurs.
 
-	VTP Synchronization uses a \textit{VTP Summary Advertisement} alongside 1 or more \textit{VTP Subset Advertisements} to advertise the revised VLAN Database. VTP Servers also send out a Summary Advertisement (alongside 0 or more Subset Advertisements) every 5 minutes. To participate, newly-connected switches may send a \textit{VTP Advertisement Request} over each trunk link that comes up. A switch only listens to VTP messages in its \texttt{VTP Management Domain} (default NONE). An MD5-encrypted \texttt{VTP Password} (default NONE) can be configured to prevent unauthorized switches from participating in the VTP Management Domain.
+	VTP Synchronization uses a \textit{VTP Summary Advertisement} (Table \ref{tab:VTP SUMMARY}) alongside 1 or more \textit{VTP Subset Advertisements} (Table \ref{tab:VTP SUBSET}) to advertise the revised VLAN Database. VTP Servers also send out a Summary Advertisement (alongside 0 or more Subset Advertisements) every 5 minutes. To participate, newly-connected switches may send a \textit{VTP Advertisement Request} (Table \ref{tab:VTP REQUEST}) over each trunk link that comes up. A switch only listens to VTP messages in its \texttt{VTP Management Domain} (default NONE). An MD5-encrypted \texttt{VTP Password} (default NONE) can be configured to prevent unauthorized switches from participating in the VTP Management Domain.
 
 	VTP Clients participate in VTP Synchronization but disallow local VLAN configurations. \textit{VTP Transparent Mode} or \textit{VTP Off Mode} switches use a local VLAN configuration instead of the VLAN Database, although they may forward VTP messages.
 
@@ -392,7 +392,7 @@
 	\hline
 	\textbf{STP State}	& \textbf{RSTP State}	& \textbf{Send/Receive BPDUs}	& \textbf{Forward Data}		& \textbf{Learn MACs}\\\hline
 	Disabled		& Discarding		& \textcolorbf{Red}{No}		& \textcolorbf{Red}{No}	& \textcolorbf{Red}{No}\\\hline
-	Blocking		& Discarding		& \textcolorbf{Goldenrod}{Receive}	& \textcolorbf{Red}{No}	& \textcolorbf{Red}{No}\\\hline
+	Blocking		& Discarding		& \textcolorbf{Dandelion}{Receive}	& \textcolorbf{Red}{No}	& \textcolorbf{Red}{No}\\\hline
 	Listening		& ----- 			& \textcolorbf{Green}{Yes}		& \textcolorbf{Red}{No}	& \textcolorbf{Red}{No}\\\hline
 	Learning		& Learning			& \textcolorbf{Green}{Yes}		& \textcolorbf{Red}{No}	& \textcolorbf{Green}{Yes}\\\hline
 	Forwarding		& Forwarding		& \textcolorbf{Green}{Yes}		& \textcolorbf{Green}{Yes}	& \textcolorbf{Green}{Yes}\\\hline
@@ -404,20 +404,20 @@
 		\label{itm:STP CONVERGENCE}
 		\item{\textbf{Elect Root Bridge:}}
 		\begin{enumerate} \itemsep -5pt
-			\item{Lowest BPDU \texttt{Root ID: Priority}}
-			\item{Tiebreaker: lowest BPDU \texttt{Root ID: System ID}}
+			\item{Lowest received BPDU \texttt{Root ID: Priority}}
+			\item{Tiebreaker: lowest received BPDU \texttt{Root ID: System ID}}
 		\end{enumerate}
 		\item{\textbf{Elect \textit{Root Ports} (RPs):}}
 		\begin{enumerate} \itemsep -5pt
 			\item{Lowest received BPDU \texttt{Root Path Cost} + local \texttt{Port Cost} (Table \ref{tab:STP PORT COSTS})}
-			\item{Tiebreaker: lowest received BPDU \texttt{Sender BID}}
+			\item{Tiebreaker: lowest received BPDU \texttt{BID}}
 			\item{Tiebreaker: lowest received BPDU \texttt{Port ID: Prio.Nbr}}
 			\item{Other RSTP link-type point-to-point ports become \textit{Alternate Ports} (APs)}
 		\end{enumerate}
 		\item{\textbf{Elect \textit{Designated Ports} (DPs):}}
 		\begin{enumerate} \itemsep -5pt
 			\item{Lowest advertised BPDU \texttt{Root Path Cost}}
-			\item{Tiebreaker: lowest advertised BPDU \texttt{Sender BID}}
+			\item{Tiebreaker: lowest advertised BPDU \texttt{BID}}
 			\item{Tiebreaker: lowest advertised BPDU \texttt{Port ID: Prio.Nbr}}
 			\item{Other RSTP link-type shared ports on the same bridge become \textit{Backup Ports} (BPs)}
 		\end{enumerate}
@@ -458,7 +458,7 @@
 	Target HW 	& 48 bits	& Destination MAC\\\hline
 	Target IP	& 32 bits	& Destination IP\\\hline
 	\end{tabular}\end{table}
-	\note{Goldenrod} As a Layer 2 protocol, all IPv4 ARP messages are encapsulated directly within an Ethernet frame.
+	\note{Goldenrod} As a Layer 2 protocol, all ARP messages are encapsulated directly within an Ethernet frame.
 	
 	\textit{Dynamic ARP Inspection} (DAI) is an optional switch security feature to prevent ARP poisoning and ARP DoS. It uses the \textit{DHCP Snooping Binding Table} to filter incoming ARP messages based on their \texttt{Origin IP} and \texttt{Origin HW} fields; an ARP ACL can also be configured for hosts using static IP addresses. Optional verification checks compare the ARP \texttt{Origin/Target HW} fields against the frame \texttt{Source/Destination MAC} and ensure the ARP \texttt{Origin/Target IP} fields contain unicast values. This behavior is disabled on DAI \textit{trusted ports}. DAI uses optional per-interface rate limits to prevent DoS attacks against the switch CPU and ARP table.
 
@@ -542,7 +542,7 @@
 		\item{\textbf{Infrastructure:} Offer BSS' on an RF Channel}
 		\item{\textbf{Repeater:} Extend a BSA via retransmission}
 		\item{\textbf{WorkGroup Bridge (WGB):} Bridge wired device(s) to a WLAN}
-		\item{\textbf{Bridge:} Form a P2P / P2MP link between LANs}
+		\item{\textbf{Bridge:} Form a Point-to-Point (P2P) / Point-to-Multipoint (P2MP) link between LANs}
 		\item{\textbf{Mesh:} Bridge traffic across APs in a large service area}
 	\end{itemize}
 
@@ -643,6 +643,8 @@
 	\end{tabular}\end{minipage}\end{table}
 	\note{Goldenrod} Each Layer 3 multicast address maps to a corresponding Layer 2 multicast address which may be used in the L2PDU.
 
+	The routing table is populated based on each route's AD value; the route metric is a tiebreaker only for two routes to the same destination learned via the same routing protocol. A route's metric is calculated by the routing protocol. Some routing protocols are capable of multi-path load-balancing, resulting in multiple routes to the same destination under certain conditions.
+
 	%Route Types 																							--tab:ROUTE TYPES
 	\begin{table}[H]
 	\centering
@@ -663,7 +665,6 @@
 	DHCP			& 254						&\\\hline
 	Invalid			& 255						&\\\hline
 	\end{tabular}\end{table}
-	\note{Goldenrod} The routing table is populated based on each route's AD value; the route metric is a tiebreaker only for two routes to the same destination learned via the same routing protocol. A route's metric is calculated by the routing protocol. Some routing protocols are capable of multi-path load-balancing, resulting in multiple routes to the same destination under certain conditions.
 
 
 	%RFC 791 IP Version 4 																						--subsec:IPV4
@@ -732,7 +733,7 @@
 	Destination Address	& 128 bits	&\\\hline
 	Data				& varies	&\\\hline
 	\end{tabular}\end{table}
-	\note{Goldenrod} IPv6 uses a fixed 40-Byte header by sending separate IPv6 Options headers.
+	\note{Goldenrod} IPv6 uses a fixed 40-Byte header; IPv6 Options headers are sent separately.
 
 	%RFC 2460 Addressing 																					--tab:ADDRESSING IPV6
 	\begin{table}[H]
@@ -760,8 +761,9 @@
 	\textbf{Modified EUI-64 Process for Unique Address Generation:}
 	\begin{enumerate} \itemsep -5pt
 		\label{itm:EUI64}
-		\item{Split the interface MAC into 24-pit parts, inserting \texttt{0xfffe} in-between.}
-		\item{Invert the 7th bit of the resulting address.}
+		\item{Split the interface MAC into two 24-bit parts.}
+		\item{Insert \texttt{0xfffe} between the two parts, creating a 48-bit address.}
+		\item{Invert the 7th bit (the \textit{Universal/Local bit}) of the resulting address.}
 	\end{enumerate}
 
 	%RFC 792 Internet Control Message Protocol (ICMP) / RFC 4443 ICMPv6 														--subsec:ICMP
@@ -816,12 +818,9 @@
 	\subsection{\RFC{4861} ICMPv6 Neighbor Discovery Protocol (NDP) \label{subsec:NDP}}
 	ICMPv6 NDP offers core functionality for IPv6 networks, including \textit{Neighbor Discovery}, \textit{Router Discovery}, \textit{Stateless Address Autoconfiguration} (SLAAC), and \textit{Duplicate Address Detection} (DAD).
 
-	%NDP Message Types 																					--itm:NDP MESSAGES
-	\begin{itemize}
-		\label{itm:NDP MESSAGES}
-		\item{\textbf{Router Solicitation (RS) / Router Advertisement (RA):} Layer 3 default gateway discovery request/reply (replaces DHCP / DHCPv6). RS messages are sent to All-IPv6-Routers multicast; RA messages are sent to a unicast target address or to All-IPv6-Hosts multicast.}
-		\item{\textbf{Neighbor Solicitation (NS) / Neighbor Advertisement (NA):} Layer 2 address discovery request/reply (replaces IPv4 ARP requests). NS messages are sent to a solicited-node multicast target address; NA messages are sent to a unicast target address or to All-IPv6-Hosts multicast.}
-	\end{itemize}
+	\textit{Router Solicitation} (RS) and \textit{Router Advertisement} (RA) messages (Tables \ref{tab:NDP RS} and \ref{tab:NDP RA}) replace DHCP/DHCPv6 default gateway discovery. RS messages are sent to All-IPv6-Routers multicast; RA messages are sent either to a unicast target address or to All-IPv6-Hosts multicast.
+
+	\textit{Neighbor Solicitation} (NS) and \textit{Neighbor Advertisement} (NA) messages (Tables \ref{tab:NDP NS} and \ref{tab:NDP NA}) replace ARP. NS messages are sent to a solicited-node multicast target address; NA messages are sent either to a unicast target address or to All-IPv6-Hosts multicast.
 
 	%NDP SLAAC 																							--itm:NDP SLAAC
 	\textbf{The SLAAC Process:}
@@ -990,7 +989,7 @@
 	More				& 1 bit 	& 1 indicates more DD packets follow\\\hline
 	Master/Slave		& 1 bit 	& 1 indicates master, 0 indicates slave\\\hline
 	DD Sequence Number	& 4 Bytes	& sequence number of DD packets\\\hline
-	LSA Headers		& varies	& LSA header(s)\\\hline
+	LSA Headers		& varies	& LSA header(s) (Table \ref{tab:OSPF LSA})\\\hline
 	\end{tabular}\end{table}
 	OSPF DD packets are used by both routers to summarize and compare their local LSDBs. The \textit{master router} (higher \texttt{RID}) enters neigbor state \textbf{EXSTART} by sending an OSPF DD packet, which initializes the LSDB exchange process. The \textit{slave router} (lower \texttt{RID}) enters neighbor state \textbf{EXCHANGE} by responding with its own OSPF DD packet.
 
@@ -1045,11 +1044,11 @@
 	Checksum		& 2 Bytes	&\\\hline
 	AuType		& 2 Bytes	& OSPF Authentication Type (0-2)\\\hline
 	Authentication	& 8 Bytes	& Determined by \texttt{AuType}\\\hline
-	LSA Headers	& varies	& LSA header(s) to be acknowledged\\\hline
+	LSA Headers	& varies	& Acknowledged LSA header(s) (Table \ref{tab:OSPF LSA})\\\hline
 	\end{tabular}\end{table}
 	Both routers enter the neighbor state \textbf{LOADING} after the LSDB exchange process has been initiated. The master router requests certain LSAs using OSPF LSR packets (Table \ref{tab:OSPF LSR}). The slave router responds with OSPF LSU packets (Table \ref{tab:OSPF LSU}) containing the requested LSAs, which the master router acknowledges using OSPF LSAck packets (Table \ref{tab:OSPF LSACK}). This process then reverses, with the slave router requesting LSAs that the master router supplies. Once the LSDB exchange process has been completed, both routers enter neighbor state \textbf{FULL}, indicating they are \textit{fully-adjacent OSPF neighbors}.
 
-	OSPF routers apply \textit{Djistrka's Shortest-Path First} (SPF) algorithm to their LSDB to calculate the best routes to each network, which are dynamically added to the routing table. This calculation depends on the size of the LSDB, and is performed independently for each OSPF area. Each OSPF area must connect to \textit{backbone area} 0 via an OSPF \textit{Area Border Router} (ABR). An OSPF \textit{Autonomous System Border Router} (ASBR) within backbone area 0 connects the local \textit{Autonomous System} to one or more external AS.
+	OSPF routers apply \textit{Djistrka's Shortest-Path First} (SPF) algorithm to their LSDB to calculate the best routes to each network, which are dynamically added to the routing table. This calculation depends on the size of the LSDB and is performed independently for each OSPF area. Each OSPF area must connect to \textit{backbone area} 0 via an OSPF \textit{Area Border Router} (ABR). An OSPF \textit{Autonomous System Border Router} (ASBR) within backbone area 0 connects the local \textit{Autonomous System} to one or more external AS.
 
 
 
@@ -1111,6 +1110,7 @@
 	Checksum		& 2 Bytes	&\\\hline
 	Data			& varies	&\\\hline
 	\end{tabular}\end{table}
+	UDP is a \textit{connectionless} protocol offering port-based multiplexing without any delivery guarantee. This is optimal for latency-sensitive applications which are fault-tolerant or implement their own error recovery mechanisms, such as VoIP, DNS, DHCP, TFTP, SNMP, Syslog, QUIC, and others.
 
 
 	%RFC 793 TCP 																							--subsec:TCP
@@ -1131,7 +1131,10 @@
 	Urgent		& 2 Bytes	& Last urgent data byte (URG flag)\\\hline
 	Data			& varies	&\\\hline
 	\end{tabular}\end{table}
-	\note{Goldenrod} TCP is stateful, while UDP is stateless. Protocols using UDP must implement their own reliability functions. See QUIC over UDP for maintaining state over UDP.
+	TCP is a \textit{connection-oriented} protocol offering \textbf{error recovery}, \textbf{flow control}, \textbf{connection establishment/termination}, and \textbf{ordered data transfer / segmentation} features at the cost of additional overhead.
+
+	The TCP \textit{3-way handshake} (\texttt{SYN SYN-ACK ACK}) sets up the connection \texttt{SEQ Number} and \texttt{ACK Number} for ordered data transfer. The \texttt{Window} determines how much data can be sent before requiring an acknowledgement. It increases when no errors occur and decreases for each missed acknowledgement, providing flow control and error recovery. Data is assumed lost/errored if not acknowledged within a certain time interval. The TCP \textit{4-way termination} process (\texttt{FIN-ACK ACK FIN-ACK ACK}) closes the connection after data transfer is complete.
+%	\note{Goldenrod} TCP is stateful, while UDP is stateless. Protocols using UDP must implement their own reliability functions. See QUIC over UDP for maintaining state over UDP.
 
 
 
@@ -1139,6 +1142,17 @@
 
 %LAYER 5 																										--sec:L5
 \section{Layer 5 Applications \label{sec:L5}}
+
+	%RFC 959 FTP 																							--subsec:FTP
+	\subsection{\RFC{959} File Transfer Protocol \label{subsec:FTP}}
+	FTP manages file transfers between FTP clients and FTP servers in clear-text over TCP. A persistent \textit{FTP Control Connection} over port 21 defines the available FTP client functions for remotely managing/transferring files. An \textit{FTP Data Connection} is established only when a file is transferred and often uses a nonstandard port. It is established by the server in \textit{FTP Active Mode}, or by the client in \textit{FTP Passive Mode}; passive mode is required when the client sits behind a firewall or NAT.
+
+	\note{Goldenrod} The client issues the \texttt{FTP PORT} command for FTP Active mode and the \texttt{FTP PASV} command for FTP Passive mode. The client issues the \texttt{FTP AUTH} command for FTPS Explicit mode.
+
+	\textit{FTP Secure} (FTPS) implements TLS to provide secure authentication and data encryption. FTPS clients using \textit{FTPS Explicit Mode} must explicitly initialize a TLS tunnel after establishing each FTP connection. FTPS clients using \textit{FTPS Implicit Mode} begin each FTP connection with a TLS connection automatically.
+
+	\textit{SSH FTP} (SFTP) encrypts file transfers over an SSH connection instead of using TLS. \textit{Trivial FTP} (TFTP) uses UDP with built-in error detection and offers minimal functionality.
+
 
 	%RFC 2131 DHCP 																						--subsec:DHCP
 	\subsection{\RFC{2131} Dynamic Host Configuration Protocol (DHCP) \label{subsec:DHCP}}
@@ -1166,33 +1180,46 @@
 	Options			& varies	& One or more option headers (Table \ref{tab:DHCP OPTIONS})\\\hline
 	\end{tabular}\end{table}
 
+	\begin{minipage}{.4\linewidth}
 	%DHCP Options 																						--tab:DHCP OPTIONS
 	\begin{table}[H]
 	\centering
 	\caption{DHCP Options \label{tab:DHCP OPTIONS}}
 	\begin{tabular}{r | r}
 	\hline
-	\textbf{Option Code}	& \textbf{Value}\\\hline
-	1				& Subnet Mask\\\hline
-	3				& Default Router\\\hline
-	6				& DNS Server\\\hline
-	28				& Broadcast Address\\\hline
-	43				& WLC IP Address\\\hline
-	50				& Requested IP Address\\\hline
-	51				& Address Lease Time\\\hline
-	53				& DHCP Message Type\\\hline
-	54				& DHCP Server ID\\\hline
-	55				& Parameter Requests\\\hline
-	58				& Renewal Time Value\\\hline
-	59				& Rebinding Time Value\\\hline
-	66				& TFTP Server IP Address\\\hline
-	82				& Relay Agent Information\\\hline
-	150				& TFTP Server List\\\hline
-	255				& End\\\hline
-	\end{tabular}\end{table}
-	\textit{DHCP Snooping} is an optional switch security feature to prevent DHCP Poisoning and DHCP DoS attacks. It generates the \textit{DHCP Snooping Binding Table} by observing DHCP flows and mapping observed DHCP \texttt{CHADDR} to the corresponding packet \texttt{Source IP}, frame \texttt{Source MAC}, VLAN, and local incoming switchport. It ensures consistency between table entries and subsequent DHCP client messages, additionally filtering all DHCP server messages by default. This behavior is disabled on DHCP Snooping \textit{trusted ports}. DHCP Snooping uses optional per-interface rate limits to prevent DoS attacks against the switch CPU and DHCP Servers.
+	\textbf{Option}	& \textbf{Value}\\\hline
+	1			& Subnet Mask\\\hline
+	3			& Default Router\\\hline
+	6			& DNS Server\\\hline
+	28			& Broadcast Address\\\hline
+	43			& WLC IP Address\\\hline
+	50			& Requested IP Address\\\hline
+	51			& Address Lease Time\\\hline
+	53			& DHCP Message Type\\\hline
+	54			& DHCP Server ID\\\hline
+	55			& Parameter Requests\\\hline
+	58			& Renewal Time Value\\\hline
+	59			& Rebinding Time Value\\\hline
+	66			& TFTP Server IP Address\\\hline
+	82			& Relay Agent Information\\\hline
+	150			& TFTP Server List\\\hline
+	255			& End\\\hline
+	\end{tabular}\end{table}\end{minipage}%
+	\hfill
+	\begin{minipage}{.6\linewidth}
+	\centering
+	\textbf{The DHCP Lease Process:}
+	\begin{enumerate} \itemsep 5pt
+		\item{The DHCP client broadcasts a \texttt{DHCP Discover} message to any local DHCP servers.}
+		\item{The DHCP server replies with a \texttt{DHCP Offer} message containing configuration information.}
+		\item{The client broadcasts a \texttt{DHCP Request} message to accept or a \texttt{DHCP Decline} message deny an offer.}
+		\item{The server replies to a successful request with a \texttt{DHCP Acknowledge} message.}
+		\item{The client can send a \texttt{DHCP Release} message any time to release its current DHCP lease.}
+	\end{enumerate}\end{minipage}%
 
-	\textit{DHCP Relay} is optionally configured on the default gateway's LAN interface when the DHCP server exists in a non-local subnet. This feature causes the default gateway to insert DHCP Option 82 into received DHCP client messages, forwarding them to the DHCP server (and vice versa) as unicast packets. It is automatically enabled alongside DHCP Snooping (called the \textit{DHCP Snooping Information Option}.
+	\textit{DHCP Relay} can be configured on the default gateway LAN interface when the DHCP server exists in another subnet. This causes the default gateway to insert \texttt{DHCP Option 82} into received DHCP client messages and forward them to the DHCP server as unicast packets. \textit{DHCP Snooping} automatically enables this feature as the \textit{DHCP Snooping Information Option}.
+
+	\textit{DHCP Snooping} is an optional switch security feature to prevent DHCP Poisoning and DHCP DoS attacks. It generates the \textit{DHCP Snooping Binding Table} by observing DHCP flows and mapping observed DHCP \texttt{CHADDR} to the corresponding packet \texttt{Source IP}, frame \texttt{Source MAC}, VLAN, and local incoming switchport. It ensures consistency between table entries and subsequent DHCP client messages, additionally filtering all DHCP server messages by default. This behavior is disabled on DHCP Snooping \textit{trusted ports}. DHCP Snooping uses optional per-interface rate limits to prevent DoS attacks against the switch CPU and DHCP Servers.
 
 
 	%RFC 7230 HTTP 																							--subsec:HTTP
@@ -1230,15 +1257,26 @@
 	Modern web browsers support \textit{HTTP Secure} (HTTPS) using TLS (\RFC{5246}) to dynamically secure a connection between the client and server. Initializing a TLS session creates a client VPN tunnel which authenticates the user and encrypts the data transfer between that client and server only.
 
 
-	%RFC 959 FTP 																							--subsec:FTP
-	\subsection{\RFC{959} File Transfer Protocol \label{subsec:FTP}}
-	FTP manages the transfer of files between FTP clients and FTP servers in clear-text over TCP. It uses a persistent \textit{FTP Control Connection} over TCP port 21, which defines the available FTP client functions for remotely managing and transferring files. The \textit{FTP Data Connection} is established only when a file is transferred; it is established by the server in \textit{FTP Active Mode}, or by the client in \textit{FTP Passive Mode}. Passive mode makes file transfer possible when the client sits behind a firewall or NAT, as the server is unable to establish the data connection. The FTP Data Connection officially uses TCP port 20, but often uses other port numbers in practice.
+	%RFC 5424 Syslog 																						--subsec:SYSLOG
+	\subsection{\RFC{5424} System Logging (Syslog) \label{subsec:SYSLOG}}
+	Cisco IOS generates system event logs categorized based on \textit{severity level} (Table \ref{tab:LOGGING}). Log messages use the \texttt{TIMESTAMP SEQ\_NUM \%FACILITY-SEVERITY-MNEMONIC: DESCRIPTION} format and may be stored locally for review. Logging can be configured to use Syslog, enabling centralized logging to a Syslog server over UDP based on severity level. This frees local device RAM for other tasks and simplifies event correlation among devices.
 
-	\note{Goldenrod} The client issues the \texttt{FTP PORT} command for FTP Active mode and the \texttt{FTP PASV} command for FTP Passive mode. The client issues the \texttt{FTP AUTH} command for FTPS Explicit mode.
-	
-	\textit{FTP Secure} (FTPS) improves upon FTP by implementing TLS, providing secure authentication and data encryption. FTPS clients using \textit{FTPS Explicit Mode} must explicitly initialize a TLS tunnel after establishing each FTP connection. FTPS clients using \textit{FTPS Implicit Mode} begin each FTP connection with a TLS connection automatically using TCP ports 989 and 990.
-
-	\textit{SSH FTP} (SFTP) is different from FTPS, as it encrypts file transfers over an SSH connection instead of using TLS. \textit{Trivial FTP} is a lightweight version of FTP using UDP with built-in error detection and minimal FTP functions.
+	%Logging Keywords																						--tab:LOGGING
+	\begin{table}[H]
+	\centering
+	\caption{Logging Keywords \label{tab:LOGGING}}
+	\begin{tabular}{l c r}
+	\hline
+	\textbf{Keyword} 	& \textbf{Severity}	& \textbf{Description}\\\hline
+	Emergency		& 0				& System Unusable\\
+	Alert			& 1				& Immediate Action Required\\\hline
+	Critical		& 2				& Critical Conditions\\
+	Error			& 3				& Error Conditions\\
+	Warning		& 4				& Warning Conditions\\\hline
+	Notification		& 5				& Significant Conditions\\
+	Informational	& 6				& Information\\\hline
+	Debug		& 7				& \texttt{debug} Messages\\\hline
+	\end{tabular}\end{table}
 
 
 
@@ -1362,7 +1400,7 @@
 	\textbf{Type}	& \textbf{Algorithm}	& \textbf{Salt}	& \textbf{Secure?}\\\hline
 	0			& cleartext			& 			& \textcolorbf{Red}{NO}\\\hline
 	4			& PBKDF2-SHA-256	& 			& \textcolorbf{Red}{NO}\\\hline
-	5			& MD5			& 32 bits		& \textcolorbf{Goldenrod}{WEAK}\\\hline
+	5			& MD5			& 32 bits		& \textcolorbf{Dandelion}{WEAK}\\\hline
 	6			& AES-128			& 			& \textcolorbf{Green}{YES}\\\hline
 	7			& Vigenere			& 			& \textcolorbf{Red}{NO}\\\hline
 	8			& PBKDF2-SHA-256	& 80 bits		& \textcolorbf{Green}{YES}\\\hline
@@ -1483,7 +1521,7 @@
 	\RFC{959} FTP			& TFTP / SFTP / FTPS / ....	& Subsection \ref{subsec:FTP}\\
 	RFC \rfc{1305}/\rfc{5905} NTP	&					&\\
 	\RFC{1065} SNMP			&					&\\
-	\RFC{5424} Syslog			&					&\\
+	\RFC{5424} Syslog			&					& Subsection \ref{subsec:SYSLOG}\\
 	\RFC{2131} DHCP			&					& Subsection \ref{subsec:DHCP}\\
 	\RFC{3046} DHCP Relay		&					& Subsection \ref{subsec:DHCP}\\
 	\RFC{7230} HTTP			&					& Subsection \ref{subsec:HTTP}\\

@@ -10,7 +10,7 @@ The project is written in the LaTeX markup language, which typesets a searchable
 
 I created this project shortly after becoming CCNA certified in order to more legibly organize my personal study notes. I am sharing it in the hope of helping others who are pursuing their own interests in networking.
 
-# Document Features
+## Document Features
 
 - Fully searchable PDF written and compiled using LaTeX, allowing for internal links to each topic section/subsection. Topics are organized according to the TCP/IP Network Model (Layer 1 through Layer 5), plus QoS and Appendix sections.
 
