@@ -234,7 +234,7 @@
 	Tag Protocol Identifier (TPID)		& 16 bits	& EtherType (\texttt{0x8100}, Table \ref{tab:ETHERTYPE})\\\hline
 	TCI: Priority Code Point (PCP)		& 3 bits	& QoS Class-of-Service (CoS) Marking\\
 							&		& (Section \ref{sec:QOS})\\\hline
-	TCI: Drop Eligible Indicator (DEI)	& 1 bit 	& QoS Drop Eligiblity\\\hline
+	TCI: Drop Eligible Indicator (DEI)	& 1 bit 	& QoS Drop Eligibility\\\hline
 	VLAN ID 					& 12 bits	&\\\hline
 	\end{tabular}\end{table}
 
@@ -481,9 +481,9 @@
 	Data				& varies	&\\\hline
 	FCS				& 4 Bytes	&\\\hline
 	\end{tabular}\end{table}
-	The original IEEE 802.11-1997 standard uses \textit{Frequency Hopping Spread Spectrum} (FHSS) encoding within the 2.4-GHz ISM band. Each consecutive transmission uses a slightly different frequency to minimize collision risk; there are no defined discrete channels.
+	In America, the 2.4-GHz ISM band has 11 overlapping channels (1/6/11 nonoverlapping) and the 5-GHz U-NII band has 23 nonoverlapping channels. WLANs operate at half duplex with \textit{Carrier Sense Multiple Access / Collision Avoidance} (CSMA/CA) to minimize collisions.
 	
-	\textit{Direct Sequence Spread Spectrum} (DSSS) encoding uses 11 overlapping channels within the 2.4-GHz ISM band, three of which are non-overlapping. \textit{Orthogonal Frequency Division Multiplexing} (OFDM) encoding uses 23 overlapping channels within the 5-GHz U-NII band. Both are used by modern IEEE 802.11 standards along with \textit{Carrier Sense Multiple Access / Colision Detection} (CSMA-CD) to minimize and recover from collisions.
+	The original IEEE 802.11-1997 standard uses \textit{Frequency Hopping Spread Spectrum} (FHSS) encoding in the 2.4-GHz band without channels; each consecutive transmission uses a slightly different frequency to minimize collision risk. Modern IEEE 802.11 standards use either \textit{Direct Sequence Spread Spectrum} (DSSS) or \textit{Orthogonal Frequency Division Multiplexing} (OFDM) encoding. DSSS uses the 2.4-GHz band with a 22 MHz channel width; OFDM uses either band with a 20 MHz channel width.
 
 	%IEEE 802.11 WLAN Standards 																			--tab:802.11 STANDARDS
 	\begin{table}[H]
@@ -896,7 +896,7 @@
 	Code				& 8 bits	& Message Subtype (0)\\\hline
 	Checksum			& 16 bits	&\\\hline
 	From Router Flag		& 1 bit 	& Identifies sender as router\\\hline
-	Solicited Flag		& 1 bit 	& Indicates soliciation by NDP NS\\\hline
+	Solicited Flag		& 1 bit 	& Indicates solicitation by NDP NS\\\hline
 	Override Flag		& 1 bit 	& Overrides existing cache entry\\\hline
 	Reserved			& 29 bits	& Unused (0)\\\hline
 	Target Address		& 128 bits	&\\\hline
@@ -991,7 +991,7 @@
 	DD Sequence Number	& 4 Bytes	& sequence number of DD packets\\\hline
 	LSA Headers		& varies	& LSA header(s) (Table \ref{tab:OSPF LSA})\\\hline
 	\end{tabular}\end{table}
-	OSPF DD packets are used by both routers to summarize and compare their local LSDBs. The \textit{master router} (higher \texttt{RID}) enters neigbor state \textbf{EXSTART} by sending an OSPF DD packet, which initializes the LSDB exchange process. The \textit{slave router} (lower \texttt{RID}) enters neighbor state \textbf{EXCHANGE} by responding with its own OSPF DD packet.
+	OSPF DD packets are used by both routers to summarize and compare their local LSDBs. The \textit{master router} (higher \texttt{RID}) enters neighbor state \textbf{EXSTART} by sending an OSPF DD packet, which initializes the LSDB exchange process. The \textit{slave router} (lower \texttt{RID}) enters neighbor state \textbf{EXCHANGE} by responding with its own OSPF DD packet.
 
 	%OSPF LSR Packet 																						--tab:OSPF LSR
 	\begin{table}[H]
@@ -1048,7 +1048,7 @@
 	\end{tabular}\end{table}
 	Both routers enter the neighbor state \textbf{LOADING} after the LSDB exchange process has been initiated. The master router requests certain LSAs using OSPF LSR packets (Table \ref{tab:OSPF LSR}). The slave router responds with OSPF LSU packets (Table \ref{tab:OSPF LSU}) containing the requested LSAs, which the master router acknowledges using OSPF LSAck packets (Table \ref{tab:OSPF LSACK}). This process then reverses, with the slave router requesting LSAs that the master router supplies. Once the LSDB exchange process has been completed, both routers enter neighbor state \textbf{FULL}, indicating they are \textit{fully-adjacent OSPF neighbors}.
 
-	OSPF routers apply \textit{Djistrka's Shortest-Path First} (SPF) algorithm to their LSDB to calculate the best routes to each network, which are dynamically added to the routing table. This calculation depends on the size of the LSDB and is performed independently for each OSPF area. Each OSPF area must connect to \textit{backbone area} 0 via an OSPF \textit{Area Border Router} (ABR). An OSPF \textit{Autonomous System Border Router} (ASBR) within backbone area 0 connects the local \textit{Autonomous System} to one or more external AS.
+	OSPF routers apply \textit{Dijkstra's Shortest-Path First} (SPF) algorithm to their LSDB to calculate the best routes to each network, which are dynamically added to the routing table. This calculation depends on the size of the LSDB and is performed independently for each OSPF area. Each OSPF area must connect to \textit{backbone area} 0 via an OSPF \textit{Area Border Router} (ABR). An OSPF \textit{Autonomous System Border Router} (ASBR) within backbone area 0 connects the local \textit{Autonomous System} to one or more external AS.
 
 
 
@@ -1328,7 +1328,7 @@
 		\label{itm:QOS METRICS}
 		\item{\textbf{Bandwidth:} The speed of a link in \textit{bits-per-second} (bps), or the capacity of the link to send a number of bits per-second.}
 		\item{\textbf{One-Way Delay:} The time between sending one packet and that same packet arriving at the destination host.}
-		\item{\textbf{Round-Trip Delay:} One-way delay plus the time for the receiveer to send a packet back; the time to send one packet between two hosts and receive 					one back.}
+		\item{\textbf{Round-Trip Delay:} One-way delay plus the time for the receiver to send a packet back; the time to send one packet between two hosts and receive 					one back.}
 		\item{\textbf{Jitter:} The variation in one-way delay between any consecutive packets sent by the same application.}
 		\item{\textbf{Loss:} The number of lost messages expressed as a percentage of sent packets.}
 	\end{itemize}
@@ -1447,7 +1447,7 @@
 	62 & 94 & 126	& \texttt{0x3e} & \texttt{0x5e} & \texttt{0x7e}	& $>$	& \^{}	& \~{}\\
 	63 & 95 & 127	& \texttt{0x3f} & \texttt{0x5f} & \texttt{0x7f}	& ?		& \_	& DEL\\
 	\end{tabular}\end{minipage}\hfill
-	%SI Prefixes																								--tab:SI Prefixes
+	%SI Prefixes																								--tab:SI PREFIXES
 	\begin{minipage}{.45\linewidth}
 	\centering
 	\caption{SI Prefixes \label{tab:SI PREFIXES}}
@@ -1469,7 +1469,7 @@
 	n 	& nano	& $10^{-9}$	& billionth\\\hline
 	p 	& pico	& $10^{-12}$	& trillionth\\\hline
 	\end{tabular}
-	%Binary Prefixes 																						--tab:Binary Prefixes
+	%Binary Prefixes 																						--tab:BINARY PREFIXES
 	\centering
 	\caption{Binary Prefixes \label{tab:BINARY PREFIXES}}
 	\begin{tabular}{cll}
