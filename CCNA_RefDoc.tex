@@ -22,6 +22,9 @@
 	filecolor=magenta,
 	urlcolor=black,
 	pdftitle={CCNA Quick Reference},
+	pdfauthor={Richard J. Goluszka Jr.},
+	pdfsubject={github.com/richgol/CCNA-Quick-Reference},
+	pdfkeywords={CCNA; Networking; Switch; Router; Cisco; IEEE; RFC; Reference},
 }
 
 \usepackage{listings}
@@ -54,7 +57,7 @@
 %LAYER 1																										-- sec:L1
 \section{Layer 1 Standards \label{sec:L1}}
 	%T568																								-- subsec:T568
-	\subsection{T568A/B Pinout Standards \label{subsec:T568}}
+	\subsection[ANSI/TIA T568]{ANSI/TIA T568 Pinout Standards \label{subsec:T568}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{cll cc}
@@ -136,7 +139,7 @@
 	IEEE 802.3bt 		& Type 3 UPoE	& 60W (50-57v) 		& 4 wire pairs $\ge$ CAT5\\
 					& Type 4 UPoE+	& 100W (52-57v)		& 4 wire pairs $\ge$ CAT5\\\hline
 	\end{tabular}\end{table}
-	\textit{Active PoE} negotiates power delivery via LLDP and is standardized by IEEE. \textit{Passive PoE} is \textcolorbf{red}{not} standardized and provides a constant voltage, which may cause damage. \textbf{Mode A} PoE sends voltage only on the 2 data wire pairs; \textbf{Mode B} PoE sends voltage only on the 2 unused wire pairs; \textbf{4Pair} PoE sends voltage on all wire pairs.
+	IEEE \textit{Active PoE} negotiates power delivery via LLDP. Nonstandard \textit{Passive PoE} provides a constant voltage that may \textcolorbf{Red}{damage} equipment. \textbf{Mode A} PoE energizes the 2 data wire pairs; \textbf{Mode B} PoE energizes the 2 spare wire pairs; \textbf{4Pair} PoE energizes all 4 wire pairs.
 
 
 
@@ -145,7 +148,7 @@
 %LAYER 2																										--sec:L2
 \section{Layer 2 Protocols \label{sec:L2}}
 	\begin{table}[H]
-	%EtherType Values																						tab:ETHERTYPE
+	%EtherType Values																						--tab:ETHERTYPE
 	\begin{minipage}{.4\linewidth}
 	\centering
 	\caption{EtherType Values \label{tab:ETHERTYPE}}
@@ -162,7 +165,7 @@
 	\texttt{0x8863}	& PPPoE Discovery\\
 	\texttt{0x8864}	& PPPoE Session\\\hline
 	\texttt{0x888e}	& IEEE 802.1x EAPOL\\\hline
-	\texttt{0x88cc}	& LLDP\\\hline
+	\texttt{0x88cc}	& IEEE 802.1AB LLDP\\\hline
 	\end{tabular}\end{minipage}\hfill
 	%Layer 2 Multicast																					--tab:MULTICAST L2
 	\begin{minipage}{.6\linewidth}
@@ -182,7 +185,7 @@
 	\texttt{0180.c200.0000}	 	& IEEE 802.1D STP\\
 						& IEEE 802.1w RSTP\\\hline
 	\end{tabular}\end{minipage}\end{table}
-	\note{Goldenrod} Each Layer 2 multicast address maps to a corresponding Layer 3 multicast address which may be used in the L3PDU. Some Layer 2 protocols do not support multicast.
+	\note{Goldenrod} \texttt{0180.c200.000X} multicast addresses are not forwarded by 802.1D-compliant bridges. Not all Layer 2 protocols support multicast.
 
 
 	%Ethernet II / IEEE 802.3																				--subsec:802.3 ETHERNET
@@ -260,8 +263,9 @@
 	\end{tabular}\end{table}
 	\note{Goldenrod} Industry-standard IEEE 802.1Q supports both \textit{normal-range} VLANs (1-1005) and \textit{extended-range} VLANs (1006-4094); Cisco ISL is deprecated.
 
+
 	%Cisco VLAN Trunking Protocol (VTP) 																		--subsec:CISCO VTP
-	\subsection{Cisco VLAN Trunking Protocol (VTP) \label{subsec:CISCO VTP}}
+	\subsection[Cisco VTP]{Cisco VLAN Trunking Protocol (VTP) \label{subsec:CISCO VTP}}
 	Cisco VTP dynamically advertises a \textit{VLAN Database} to participating switches over Cisco ISL and IEEE 802.1Q trunk links. Participating switches use either \textit{VTP Server Mode} or \textit{VTP Client Mode}, and default to VTP Server Mode with a \texttt{Config Revision Number} of 0. Each time a VTP Server's VLAN Database is locally updated, the \texttt{Config Revision Number} increments and \textit{VTP Synchronization} occurs.
 
 	VTP Synchronization uses a \textit{VTP Summary Advertisement} (Table \ref{tab:VTP SUMMARY}) alongside 1 or more \textit{VTP Subset Advertisements} (Table \ref{tab:VTP SUBSET}) to advertise the revised VLAN Database. VTP Servers also send out a Summary Advertisement (alongside 0 or more Subset Advertisements) every 5 minutes. To participate, newly-connected switches may send a \textit{VTP Advertisement Request} (Table \ref{tab:VTP REQUEST}) over each trunk link that comes up. A switch only listens to VTP messages in its \texttt{VTP Management Domain} (default NONE). An MD5-encrypted \texttt{VTP Password} (default NONE) can be configured to prevent unauthorized switches from participating in the VTP Management Domain.
@@ -332,8 +336,60 @@
 	\end{tabular}\end{table}
 
 
+	%Cisco CDP / IEEE 802.1AB LLDP 																			--subsec:CDP/802.1AB
+	\subsection[Cisco CDP / IEEE 802.1AB LLDP]{Cisco Discovery Protocol (CDP) /\\IEEE 802.1AB Link-Layer Discovery Protocol (LLDP) \label{subsec:CDP/802.1AB}}
+	%Cisco CDP Header 																							--tab:CDP
+	\begin{table}[H]
+	\begin{minipage}{.6\linewidth}
+	\centering
+	\caption{CDP Header Format \label{tab:CDP}}
+	\begin{tabular}{| l | c | r |}
+	\hline
+	Version			& 1 Byte	& CDP Version (1-2)\\\hline
+	Time-to-Live (TTL)	& 1 Byte	& CDP \texttt{Hold} timer\\\hline
+	Checksum			& 2 Bytes	&\\\hline
+	TLV List 			& varies	& CDP TLV(s)\\\hline
+	\end{tabular}\end{minipage}\hfill
+	%CDP TLVs 																								--tab:CDP TLV
+	\begin{minipage}{.3\linewidth}
+	\centering
+	\caption{CDP TLVs \label{tab:CDP TLV}}
+	\begin{tabular}{| l | c |}
+	\hline
+	Type		& 2 Bytes\\\hline
+	Length	& 2 Bytes\\\hline
+	Value		& varies\\\hline
+	\end{tabular}\end{minipage}\end{table}
+	CDPv2 is used by default to advertise Cisco device information to directly-connected neighbors. Each device maintains a \textit{CDP Neighbor Table} based on received CDP messages.
+
+	%IEEE 802.1AB LLDP Header 																					--tab:802.1AB
+	\begin{table}[H]
+	\begin{minipage}{.75\linewidth}
+	\centering
+	\caption{IEEE 802.1AB LLDP Header Format \label{tab:802.1AB}}
+	\begin{tabular}{| l | c | r |}
+	\hline
+	Chassis ID TLV	& 9 Bytes	& Source MAC (Type 1)\\\hline
+	Port ID TLV		& 6 Bytes	& Source Interface (Type 2)\\\hline
+	Time-to-Live TLV	& 4 Bytes	& LLDP \texttt{Hold} timer (Type 3)\\\hline
+	Optional TLVs	& varies	& Optional LLDP TLV(s) (Types 4-127)\\\hline
+	End TLV		& 2 Bytes	& End of LLDPPDU (Type 0)\\\hline
+	\end{tabular}\end{minipage}\hfill
+	%LLDP TLVs 																							--tab:LLDP TLV
+	\begin{minipage}{.24\linewidth}
+	\centering
+	\caption{LLDP TLVs \label{tab:LLDP TLV}}
+	\begin{tabular}{| l | c |}
+	\hline
+	Type		& 7 bits\\\hline
+	Length	& 9 bits\\\hline
+	Value		& 0-511 Bytes\\\hline
+	\end{tabular}\end{minipage}\end{table}
+	LLDP is used to advertise vendor-neutral device information to directly-connected neighbors. Each device maintains a \textit{LLDP Neighbor Table} based on received LLDP messages. LLDP devices can autonegotiate the use of ANSI/TIA-1057 \textit{LLDP Media Endpoint Discovery} (LLDP-MED), providing advanced autodiscovery, VoIP, PoE, and other features.
+
+
 	%IEEE 802.1D STP / 802.1w RSTP 																				--subsec:802.1D/w
-	\subsection{IEEE 802.1D Spanning-Tree Protocol / IEEE 802.1w Rapid STP (RSTP) \label{subsec:802.1D/w}}
+	\subsection[IEEE 802.1D STP / IEEE 802.1w RSTP]{IEEE 802.1D Spanning-Tree Protocol (STP) /\\IEEE 802.1w Rapid STP (RSTP) \label{subsec:802.1D/w}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -441,11 +497,9 @@
 
 
 	%Address Resolution Protocol (ARP) 																			--subsec:ARP
-	\subsection{\RFC{826} Address Resolution Protocol (ARP) \label{subsec:ARP}}
-	%ARP Request/Reply Format 																						--tab:ARP
+	\subsection[RFC 826 ARP]{\RFC{826} Address Resolution Protocol (ARP) \label{subsec:ARP}}
 	\begin{table}[H]
 	\centering
-	\caption{ARP Request/Reply Format \label{tab:ARP}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	HTYPE	& 16 bits	& L2 Protocol (1 for Ethernet)\\\hline
@@ -459,12 +513,12 @@
 	Target IP	& 32 bits	& Destination IP\\\hline
 	\end{tabular}\end{table}
 	\note{Goldenrod} As a Layer 2 protocol, all ARP messages are encapsulated directly within an Ethernet frame.
-	
+
 	\textit{Dynamic ARP Inspection} (DAI) is an optional switch security feature to prevent ARP poisoning and ARP DoS. It uses the \textit{DHCP Snooping Binding Table} to filter incoming ARP messages based on their \texttt{Origin IP} and \texttt{Origin HW} fields; an ARP ACL can also be configured for hosts using static IP addresses. Optional verification checks compare the ARP \texttt{Origin/Target HW} fields against the frame \texttt{Source/Destination MAC} and ensure the ARP \texttt{Origin/Target IP} fields contain unicast values. This behavior is disabled on DAI \textit{trusted ports}. DAI uses optional per-interface rate limits to prevent DoS attacks against the switch CPU and ARP table.
 
 
 	%IEEE 802.11 Wireless LANs (WLANs) 																		--subsec:802.11 WLANS
-	\subsection{IEEE 802.11 Wireless LANs (WLANs) \label{subsec:802.11 WLANS}}
+	\subsection[IEEE 802.11 WLANs]{IEEE 802.11 Wireless LANs (WLANs) \label{subsec:802.11 WLANS}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -562,7 +616,7 @@
 
 
 	%ITU High-Level Data-Link Control (HDLC) 																		--subsec:ITU HDLC
-	\subsection{ITU High-Level Data-Link Control (HDLC) \label{subsec:ITU HDLC}}
+	\subsection[ITU HDLC]{ITU High-Level Data-Link Control (HDLC) \label{subsec:ITU HDLC}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -576,7 +630,7 @@
 
 
 	%IETF RFC 1661 Point-to-Point Protocol (PPP) / Cisco HDLC (cHDLC) 														--subsec:IETF PPP
-	\subsection{IETF \RFC{1661} Point-to-Point Protocol (PPP) / Cisco HDLC (cHDLC) \label{subsec:IETF PPP}}
+	\subsection[IETF RFC 1661 PPP / Cisco HDLC (cHDLC)]{IETF \RFC{1661} Point-to-Point Protocol (PPP) /\\Cisco HDLC (cHDLC) \label{subsec:IETF PPP}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -668,7 +722,7 @@
 
 
 	%RFC 791 IP Version 4 																						--subsec:IPV4
-	\subsection{\RFC{791} IP Version 4 \label{subsec:IPV4}}
+	\subsection[RFC 791 IPv4]{\RFC{791} IP Version 4 \label{subsec:IPV4}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -718,7 +772,7 @@
 
 
 	%RFC 2460 IP Version 6 																						--subsec:IPV6
-	\subsection{\RFC{2460} IP Version 6 \label{subsec:IPV6}}
+	\subsection[RFC 2460 IPv6]{\RFC{2460} IP Version 6 \label{subsec:IPV6}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -767,7 +821,7 @@
 	\end{enumerate}
 
 	%RFC 792 Internet Control Message Protocol (ICMP) / RFC 4443 ICMPv6 														--subsec:ICMP
-	\subsection{\RFC{792} Internet Control Message Protocol (ICMP) / \RFC{4443} ICMPv6 \label{subsec:ICMP}}
+	\subsection[RFC 792 ICMP / RFC 4443 ICMPv6]{\RFC{792} Internet Control Message Protocol (ICMP) /\\\RFC{4443} ICMPv6 \label{subsec:ICMP}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -815,7 +869,7 @@
 
 
 	%RFC 4861 NDP 																							--subsec:NDP
-	\subsection{\RFC{4861} ICMPv6 Neighbor Discovery Protocol (NDP) \label{subsec:NDP}}
+	\subsection[RFC 4861 ICMPv6 NDP]{\RFC{4861} ICMPv6 Neighbor Discovery Protocol (NDP) \label{subsec:NDP}}
 	ICMPv6 NDP offers core functionality for IPv6 networks, including \textit{Neighbor Discovery}, \textit{Router Discovery}, \textit{Stateless Address Autoconfiguration} (SLAAC), and \textit{Duplicate Address Detection} (DAD).
 
 	\textit{Router Solicitation} (RS) and \textit{Router Advertisement} (RA) messages (Tables \ref{tab:NDP RS} and \ref{tab:NDP RA}) replace DHCP/DHCPv6 default gateway discovery. RS messages are sent to All-IPv6-Routers multicast; RA messages are sent either to a unicast target address or to All-IPv6-Hosts multicast.
@@ -905,8 +959,8 @@
 	\note{Goldenrod} Unlike IPv4 ARP, ICMPv6 NDP messages are encapsulated within an IPv6 packet.
 
 
-	%RFC 2328 OSPFv2 																						--subsec:OSPFv2
-	\subsection{\RFC{2328} Open Shortest Path First (OSPFv2) \label{subsec:OSPFv2}}
+	%RFC 2328 OSPFv2 																						--subsec:OSPF
+	\subsection[RFC 2328 OSPFv2]{\RFC{2328} Open Shortest Path First (OSPFv2) \label{subsec:OSPF}}
 	OSPFv2 is a link-state IGP for dynamic routing which maintains a \textit{Link-State Database} (LSDB) representing the internetwork of connected OSPF routers within an \textit{OSPF area}. Each OSPF router forms OSPF neighbor relationships with connected OSPF routers using a series of OSPF messages and \textit{OSPF neighbor states}, which synchronize their LSDBs.
 
 	%OSPF LSA Types 																					--tab:OSPF LSA TYPES
@@ -1030,7 +1084,7 @@
 	LSAs			& varies	& LSA(s)\\\hline
 	\end{tabular}\end{table}
 
-	%OSPF LSAck Packet 																						--tab:OSPF LSAck
+	%OSPF LSAck Packet 																						--tab:OSPF LSACK
 	\begin{table}[H]
 	\centering
 	\caption{OSPF Link-State Acknowledgment (LSAck) \label{tab:OSPF LSACK}}
@@ -1099,7 +1153,7 @@
 
 
 	%RFC 768 UDP 																							--subsec:UDP
-	\subsection{\RFC{768} User Datagram Protocol (UDP) \label{subsec:UDP}}
+	\subsection[RFC 768 UDP]{\RFC{768} User Datagram Protocol (UDP) \label{subsec:UDP}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -1114,7 +1168,7 @@
 
 
 	%RFC 793 TCP 																							--subsec:TCP
-	\subsection{\RFC{793} Transmission Control Protocol (TCP) \label{subsec:TCP}}
+	\subsection[RFC 793 TCP]{\RFC{793} Transmission Control Protocol (TCP) \label{subsec:TCP}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -1134,7 +1188,6 @@
 	TCP is a \textit{connection-oriented} protocol offering \textbf{error recovery}, \textbf{flow control}, \textbf{connection establishment/termination}, and \textbf{ordered data transfer / segmentation} features at the cost of additional overhead.
 
 	The TCP \textit{3-way handshake} (\texttt{SYN SYN-ACK ACK}) sets up the connection \texttt{SEQ Number} and \texttt{ACK Number} for ordered data transfer. The \texttt{Window} determines how much data can be sent before requiring an acknowledgement. It increases when no errors occur and decreases for each missed acknowledgement, providing flow control and error recovery. Data is assumed lost/errored if not acknowledged within a certain time interval. The TCP \textit{4-way termination} process (\texttt{FIN-ACK ACK FIN-ACK ACK}) closes the connection after data transfer is complete.
-%	\note{Goldenrod} TCP is stateful, while UDP is stateless. Protocols using UDP must implement their own reliability functions. See QUIC over UDP for maintaining state over UDP.
 
 
 
@@ -1144,7 +1197,7 @@
 \section{Layer 5 Applications \label{sec:L5}}
 
 	%RFC 959 FTP 																							--subsec:FTP
-	\subsection{\RFC{959} File Transfer Protocol \label{subsec:FTP}}
+	\subsection[RFC 959 FTP]{\RFC{959} File Transfer Protocol (FTP) \label{subsec:FTP}}
 	FTP manages file transfers between FTP clients and FTP servers in clear-text over TCP. A persistent \textit{FTP Control Connection} over port 21 defines the available FTP client functions for remotely managing/transferring files. An \textit{FTP Data Connection} is established only when a file is transferred and often uses a nonstandard port. It is established by the server in \textit{FTP Active Mode}, or by the client in \textit{FTP Passive Mode}; passive mode is required when the client sits behind a firewall or NAT.
 
 	\note{Goldenrod} The client issues the \texttt{FTP PORT} command for FTP Active mode and the \texttt{FTP PASV} command for FTP Passive mode. The client issues the \texttt{FTP AUTH} command for FTPS Explicit mode.
@@ -1155,7 +1208,7 @@
 
 
 	%RFC 2131 DHCP 																						--subsec:DHCP
-	\subsection{\RFC{2131} Dynamic Host Configuration Protocol (DHCP) \label{subsec:DHCP}}
+	\subsection[RFC 2131 DHCP]{\RFC{2131} Dynamic Host Configuration Protocol (DHCP) \label{subsec:DHCP}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | c | r |}
@@ -1223,7 +1276,7 @@
 
 
 	%RFC 7230 HTTP 																							--subsec:HTTP
-	\subsection{\RFC{7230} HyperText Transport Protocol (HTTP) \label{subsec:HTTP}}
+	\subsection[RFC 7230 HTTP]{\RFC{7230} HyperText Transport Protocol (HTTP) \label{subsec:HTTP}}
 	\note{Goldenrod} See RFCs \rfc{9110}/\rfc{9111} plus the \href{https://www.iana.org/assignments/http-fields/http-fields.xhtml#field-names}{IANA Field Name Registry} and \href{https://www.iana.org/assignments/message-headers/message-headers.xml#perm-headers}{IANA Message Headers} for HTTP header fields and their names.
 
 	HTTP manages file transfers between web clients (browsers) and web servers over TCP. Client requests specify a \textit{Uniform Resource Identifier} (URI, \RFC{7595}) adhering to the \texttt{SCHEME://AUTHORITY/PATH} format (typically \texttt{PROTOCOL://SERVER\_NAME/OBJECT} for web pages). Requests also specify an \textit{HTTP Verb}, typically corresponding to a \textit{CRUD} action. Web servers respond to client requests with an \textit{HTTP Return Code} and any relevant data.
@@ -1231,7 +1284,7 @@
 	%HTTP CRUD Verbs 																						--tab:HTTP VERBS
 	\begin{table}[H]
 	\centering
-	\caption{Common HTTP Verbs \label{tab:HTTP Verbs}}
+	\caption{Common HTTP Verbs \label{tab:HTTP VERBS}}
 	\begin{tabular}{r | c | l}
 	\hline
 	\textbf{HTTP VERB}		& \textbf{CRUD Action}	& \textbf{Description}\\\hline
@@ -1258,7 +1311,7 @@
 
 
 	%RFC 5424 Syslog 																						--subsec:SYSLOG
-	\subsection{\RFC{5424} System Logging (Syslog) \label{subsec:SYSLOG}}
+	\subsection[RFC 5424 Syslog]{\RFC{5424} System Logging (Syslog) \label{subsec:SYSLOG}}
 	Cisco IOS generates system event logs categorized based on \textit{severity level} (Table \ref{tab:LOGGING}). Log messages use the \texttt{TIMESTAMP SEQ\_NUM \%FACILITY-SEVERITY-MNEMONIC: DESCRIPTION} format and may be stored locally for review. Logging can be configured to use Syslog, enabling centralized logging to a Syslog server over UDP based on severity level. This frees local device RAM for other tasks and simplifies event correlation among devices.
 
 	%Logging Keywords																						--tab:LOGGING
@@ -1283,7 +1336,7 @@
 
 
 %RFC 2475 Quality-of-Service (QoS) 																					--sec:QOS
-\section{\RFC{2475} Quality of Service (QoS) \label{sec:QOS}}
+\section[RFC 2475 QoS]{\RFC{2475} Quality of Service (QoS) \label{sec:QOS}}
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{ l r r r r }
@@ -1503,7 +1556,7 @@
 	IEEE 802.3u FastEthernet		&					& Subsection \ref{subsec:CABLING}\\
 	IEEE 802.3af/at/bt PoE/UPoE	& Cisco ILP				& Table \ref{tab:POE}\\\hline
 	IEEE 802.1Q VLAN Trunking	& Cisco ISL/DTP/VTP		& Subsections \ref{subsec:VLAN TAGGING} + \ref{subsec:CISCO VTP}\\
-	IEEE 802.1AB LLDP		& Cisco CDP			&\\
+	IEEE 802.1AB LLDP		& Cisco CDP			& Subsection \ref{subsec:CDP/802.1AB}\\
 	IEEE 802.1D/w STP/RSTP		& Cisco PVST/PVRST		& Subsection \ref{subsec:802.1D/w}\\
 	IEEE 802.1s MSTP			&					&\\
 	IEEE 802.3AD LACP		& Cisco PAgP			&\\\hline
@@ -1514,7 +1567,7 @@
 	\RFC{792} ICMP			& \RFC{4443} ICMPv6		& Subsection \ref{subsec:ICMP}\\
 	\RFC{826} ARP			& \RFC{4861} NDP		& Subsections \ref{subsec:ARP} + \ref{subsec:NDP}\\
 	RFC \rfc{1631}/\rfc{3022} NAT	&					&\\
-	\RFC{2328} OSPF			& EIGRP / RIP / ...			& Subsection \ref{subsec:OSPFv2}\\
+	\RFC{2328} OSPF			& EIGRP / RIP / ...			& Subsection \ref{subsec:OSPF}\\
 	\RFC{5798} VRRP			& Cisco HSRP/GLBP		&\\
 	\RFC{2475} QoS			&					& Section \ref{sec:QOS}\\\hline
 	\RFC{768} UDP			& \RFC{793} TCP			& Subsections \ref{subsec:UDP} + \ref{subsec:TCP}\\\hline
