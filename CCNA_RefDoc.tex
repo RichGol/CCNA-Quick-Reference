@@ -218,12 +218,13 @@
 	%IEEE Subnetwork Access Protocol (SNAP)																		--tab:802.2 SNAP
 	\begin{table}[H]
 	\centering
-	\textbf{\caption{IEEE SubNetwork Access Protocol (SNAP) \label{tab:802.2 SNAP}}}
+	\textbf{\caption{IEEE SubNetwork Access Protocol (SNAP) Header \label{tab:802.2 SNAP}}}
 	\begin{tabular}{| l | c | r |}
 	\hline
-	Organizationally Unique Identifier (OUI)	& 3 Bytes	&\\\hline
-	Type							& 2 Bytes	& EtherType (Table \ref{tab:ETHERTYPE})\\\hline
+	Organizationally Unique ID (OUI) 	& 3 Bytes	& \texttt{0x000000} or Vendor OUI\\\hline
+	Type	& 2 Bytes	& EtherType (Table \ref{tab:ETHERTYPE})\\\hline
 	\end{tabular}\end{table}
+	\note{Goldenrod} Each 802.3 frame includes an 802.2 LLC header for process multiplexing. Per \RFC{1042}, an 802.2 LLC header with value \texttt{0xaaaa03} includes a SNAP header identifying the EtherType.
 
 
 	%VLAN Tagging																						--subsec:VLAN TAGGING
@@ -244,7 +245,7 @@
 	%Cisco InterSwitch Link (ISL) 																					--tab:CISCO ISL
 	\begin{table}[H]
 	\centering
-	\caption{DEPRECATED Cisco InterSwitch Link (ISL) \label{tab:CISCO ISL}}
+	\caption{Cisco InterSwitch Link (ISL) \label{tab:CISCO ISL}}
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Destination Address	& 40 bits	& Multicast (\texttt{01.000c.0000} / \texttt{03.000c.0000})\\\hline
@@ -268,7 +269,7 @@
 	\subsection[Cisco VTP]{Cisco VLAN Trunking Protocol (VTP) \label{subsec:CISCO VTP}}
 	Cisco VTP dynamically advertises a \textit{VLAN Database} to participating switches over Cisco ISL and IEEE 802.1Q trunk links. Participating switches use either \textit{VTP Server Mode} or \textit{VTP Client Mode}, and default to VTP Server Mode with a \texttt{Config Revision Number} of 0. Each time a VTP Server's VLAN Database is locally updated, the \texttt{Config Revision Number} increments and \textit{VTP Synchronization} occurs.
 
-	VTP Synchronization uses a \textit{VTP Summary Advertisement} (Table \ref{tab:VTP SUMMARY}) alongside 1 or more \textit{VTP Subset Advertisements} (Table \ref{tab:VTP SUBSET}) to advertise the revised VLAN Database. VTP Servers also send out a Summary Advertisement (alongside 0 or more Subset Advertisements) every 5 minutes. To participate, newly-connected switches may send a \textit{VTP Advertisement Request} (Table \ref{tab:VTP REQUEST}) over each trunk link that comes up. A switch only listens to VTP messages in its \texttt{VTP Management Domain} (default NONE). An MD5-encrypted \texttt{VTP Password} (default NONE) can be configured to prevent unauthorized switches from participating in the VTP Management Domain.
+	VTP Synchronization uses a \textit{VTP Summary Advertisement} (Table \ref{tab:VTP SUMMARY}) alongside 1 or more \textit{VTP Subset Advertisements} (Table \ref{tab:VTP SUBSET}) to advertise the revised VLAN Database. VTP Servers also send out a Summary Advertisement (alongside 0 or more Subset Advertisements) every 5 minutes. To participate, newly-connected switches may send a \textit{VTP Advertisement Request} (Table \ref{tab:VTP REQUEST}) over each trunk link that comes up. A switch only listens to VTP messages in its \texttt{VTP Management Domain} (default NONE). An MD5-hashed \texttt{VTP Password} (default NONE) can be configured to prevent unauthorized switches from participating in the VTP Management Domain.
 
 	VTP Clients participate in VTP Synchronization but disallow local VLAN configurations. \textit{VTP Transparent Mode} or \textit{VTP Off Mode} switches use a local VLAN configuration instead of the VLAN Database, although they may forward VTP messages.
 
@@ -360,7 +361,7 @@
 	Length	& 2 Bytes\\\hline
 	Value		& varies\\\hline
 	\end{tabular}\end{minipage}\end{table}
-	CDPv2 is used by default to advertise Cisco device information to directly-connected neighbors. Each device maintains a \textit{CDP Neighbor Table} based on received CDP messages.
+	CDPv2 advertises Cisco device information to directly-connected neighbors. Each device maintains a \textit{CDP Neighbor Table} based on received CDP messages. It is necessary for Cisco IP Telephony and some other features.
 
 	%IEEE 802.1AB LLDP Header 																					--tab:802.1AB
 	\begin{table}[H]
@@ -385,7 +386,7 @@
 	Length	& 9 bits\\\hline
 	Value		& 0-511 Bytes\\\hline
 	\end{tabular}\end{minipage}\end{table}
-	LLDP is used to advertise vendor-neutral device information to directly-connected neighbors. Each device maintains a \textit{LLDP Neighbor Table} based on received LLDP messages. LLDP devices can autonegotiate the use of ANSI/TIA-1057 \textit{LLDP Media Endpoint Discovery} (LLDP-MED), providing advanced autodiscovery, VoIP, PoE, and other features.
+	LLDP advertises vendor-neutral device information to directly-connected neighbors. Each device maintains a \textit{LLDP Neighbor Table} based on received LLDP messages. LLDP devices can autonegotiate the use of ANSI/TIA-1057 \textit{LLDP Media Endpoint Discovery} (LLDP-MED), providing advanced autodiscovery, VoIP, PoE, and other features.
 
 
 	%IEEE 802.1D STP / 802.1w RSTP 																				--subsec:802.1D/w
@@ -465,7 +466,7 @@
 		\end{enumerate}
 		\item{\textbf{Elect \textit{Root Ports} (RPs):}}
 		\begin{enumerate} \itemsep -5pt
-			\item{Lowest received BPDU \texttt{Root Path Cost} + local \texttt{Port Cost} (Table \ref{tab:STP PORT COSTS})}
+			\item{Lowest received BPDU \texttt{Root Path Cost} + local Port Cost (Table \ref{tab:STP PORT COSTS})}
 			\item{Tiebreaker: lowest received BPDU \texttt{BID}}
 			\item{Tiebreaker: lowest received BPDU \texttt{Port ID: Prio.Nbr}}
 			\item{Other RSTP link-type point-to-point ports become \textit{Alternate Ports} (APs)}
@@ -697,7 +698,7 @@
 	\end{tabular}\end{minipage}\end{table}
 	\note{Goldenrod} Each Layer 3 multicast address maps to a corresponding Layer 2 multicast address which may be used in the L2PDU.
 
-	The routing table is populated based on each route's AD value; the route metric is a tiebreaker only for two routes to the same destination learned via the same routing protocol. A route's metric is calculated by the routing protocol. Some routing protocols are capable of multi-path load-balancing, resulting in multiple routes to the same destination under certain conditions.
+	The routing table is populated based on each route's \textit{Administrative Distance} (AD); route metric is a tiebreaker for multiple routes to the same destination learned via the same routing protocol. Route metric is calculated by the routing protocol. Some routing protocols are capable of multi-path load-balancing, resulting in multiple valid routes to the same destination under certain conditions.
 
 	%Route Types 																							--tab:ROUTE TYPES
 	\begin{table}[H]
@@ -751,7 +752,7 @@
 	\begin{tabular}{clcr}
 	\hline
 	\textbf{\RFC{791}}	& \textbf{First Octet}		& \textbf{Address Block}		& \textbf{\RFC{1918} Block}\\\hline
-	Class A 			& \texttt{01XX XXXX}		& 0.0.0.0 - 127.0.0.0 /8			& 10.0.0.0 /8\\
+	Class A 			& \texttt{0XXX XXXX}		& 0.0.0.0 - 127.0.0.0 /8			& 10.0.0.0 /8\\
 	Class B 			& \texttt{10XX XXXX}		& 128.0.0.0 - 191.255.0.0 /16		& 172.16.0.0 /12\\
 	Class C 			& \texttt{110X XXXX}		& 192.0.0.0 - 223.255.255.0 /24 	& 192.168.0.0 /16\\\hline
 	Class D 			& \texttt{1110 XXXX}		& 224.0.0.0 - 239.255.255.255		&\\\hline
@@ -815,7 +816,7 @@
 	\textbf{Modified EUI-64 Process for Unique Address Generation:}
 	\begin{enumerate} \itemsep -5pt
 		\label{itm:EUI64}
-		\item{Split the interface MAC into two 24-bit parts.}
+		\item{Split the interface MAC address into two 24-bit parts.}
 		\item{Insert \texttt{0xfffe} between the two parts, creating a 48-bit address.}
 		\item{Invert the 7th bit (the \textit{Universal/Local bit}) of the resulting address.}
 	\end{enumerate}
@@ -881,7 +882,7 @@
 	\begin{enumerate} \itemsep -5pt
 		\label{itm:NDP SLAAC}
 		\item{The IPv6 host learns the IPv6 prefix used on the link, from any router, using NDP RS/RA messages.}
-		\item{The IPv6 host builds an IPv6 unicast address using the learned prefix and a (random / EUI-64) generated interface ID.}
+		\item{The IPv6 host builds an IPv6 unicast address using the learned prefix and a random/EUI-64 generated interface ID.}
 		\item{Before using the address, the IPv6 host uses DAD to ensure that no other IPv6 host is already using the same address.}
 	\end{enumerate}
 
@@ -989,7 +990,7 @@
 	Advertising Router	& 4 Bytes	& Advertising Router \texttt{RID}\\\hline
 	LS Sequence Number	& 4 Bytes	& Used by routers to judge LSAs\\\hline
 	LS Checksum		& 2 Bytes	& Checksum of LSA (excluding \texttt{LS Age})\\\hline
-	Length			& 2 Bytes	& Length of LSA + header (Bytes)\\\hline
+	Length			& 2 Bytes	& LSA + Header Length in Bytes\\\hline
 	\end{tabular}\end{table}
 	Each LSDB is a collection of \textit{OSPF Link-State Advertisements} (LSAs) whose contents describe the internetwork according to their LSA type (Table \ref{tab:OSPF LSA TYPES}). Note that the number of OSPF routers, OSPF areas, and other variables determine the number and type of LSAs within the LSDB.
 
@@ -999,7 +1000,7 @@
 	\caption{OSPF Hello \label{tab:OSPF HELLO}}
 	\begin{tabular}{| l | c | r |}
 	\hline
-	Version				& 1 Byte	& OSPF Version Number (2)\\\hline
+	Version				& 1 Byte	& OSPF Version (2)\\\hline
 	Type					& 1 Byte	& OSPF Packet Type (1)\\\hline
 	Packet Length			& 2 Bytes	& Header + Packet Length in Bytes\\\hline
 	Router ID				& 4 Bytes	& Advertising Router \texttt{RID}\\\hline
@@ -1028,7 +1029,7 @@
 	\caption{OSPF Database Description (DD) \label{tab:OSPF DD}}
 	\begin{tabular}{| l | c | r |}
 	\hline
-	Version			& 1 Byte	& OSPF version number (2)\\\hline
+	Version			& 1 Byte	& OSPF Version (2)\\\hline
 	Type				& 1 Byte	& OSPF Packet Type (2)\\\hline
 	Packet Length		& 2 Bytes	& Header + Packet Length in Bytes\\\hline
 	Router ID			& 4 Bytes	& Advertising Router \texttt{RID}\\\hline
@@ -1053,7 +1054,7 @@
 	\caption{OSPF Link-State Request (LSR) \label{tab:OSPF LSR}}
 	\begin{tabular}{| l | c | r |}
 	\hline
-	Version			& 1 Byte	& OSPF Version Number (2)\\\hline
+	Version			& 1 Byte	& OSPF Version (2)\\\hline
 	Type				& 1 Byte	& OSPF Packet Type (3)\\\hline
 	Packet Length		& 2 Bytes	& Header + Packet Length in Bytes\\\hline
 	Router ID			& 4 Bytes	& Advertising Router \texttt{RID}\\\hline
@@ -1072,7 +1073,7 @@
 	\caption{OSPF Link-State Update (LSU) \label{tab:OSPF LSU}}
 	\begin{tabular}{| l | c | r |}
 	\hline
-	Version		& 1 Byte	& OSPF Version Number (2)\\\hline
+	Version		& 1 Byte	& OSPF Version (2)\\\hline
 	Type			& 1 Byte	& OSPF Packet Type (4)\\\hline
 	Packet Length	& 2 Bytes	& Header + Packet Length in Bytes\\\hline
 	Router ID		& 4 Bytes	& Advertising Router \texttt{RID}\\\hline
@@ -1090,7 +1091,7 @@
 	\caption{OSPF Link-State Acknowledgment (LSAck) \label{tab:OSPF LSACK}}
 	\begin{tabular}{| l | c | r |}
 	\hline
-	Version		& 1 Byte	& OSPF Version Number (2)\\\hline
+	Version		& 1 Byte	& OSPF Version (2)\\\hline
 	Type			& 1 Byte	& OSPF Packet Type (5)\\\hline
 	Packet Length	& 2 Bytes	& Header + Packet Length in Bytes\\\hline
 	Router ID		& 4 Bytes	& Advertising Router \texttt{RID}\\\hline
@@ -1276,7 +1277,7 @@
 
 
 	%RFC 7230 HTTP 																							--subsec:HTTP
-	\subsection[RFC 7230 HTTP]{\RFC{7230} HyperText Transport Protocol (HTTP) \label{subsec:HTTP}}
+	\subsection[RFC 7230 HTTP]{\RFC{7230} HyperText Transfer Protocol (HTTP) \label{subsec:HTTP}}
 	\note{Goldenrod} See RFCs \rfc{9110}/\rfc{9111} plus the \href{https://www.iana.org/assignments/http-fields/http-fields.xhtml#field-names}{IANA Field Name Registry} and \href{https://www.iana.org/assignments/message-headers/message-headers.xml#perm-headers}{IANA Message Headers} for HTTP header fields and their names.
 
 	HTTP manages file transfers between web clients (browsers) and web servers over TCP. Client requests specify a \textit{Uniform Resource Identifier} (URI, \RFC{7595}) adhering to the \texttt{SCHEME://AUTHORITY/PATH} format (typically \texttt{PROTOCOL://SERVER\_NAME/OBJECT} for web pages). Requests also specify an \textit{HTTP Verb}, typically corresponding to a \textit{CRUD} action. Web servers respond to client requests with an \textit{HTTP Return Code} and any relevant data.
@@ -1287,7 +1288,7 @@
 	\caption{Common HTTP Verbs \label{tab:HTTP VERBS}}
 	\begin{tabular}{r | c | l}
 	\hline
-	\textbf{HTTP VERB}		& \textbf{CRUD Action}	& \textbf{Description}\\\hline
+	\textbf{HTTP Verb}		& \textbf{CRUD Action}	& \textbf{Description}\\\hline
 	\texttt{HTTP POST}		& Create			& Create/initialize new data structures/variables\\\hline
 	\texttt{HTTP GET}			& Read			& Read variable names/structures/values\\\hline
 	\texttt{HTTP PATCH/PUT}	& Update			& Update/replace some variable values\\\hline
@@ -1312,7 +1313,7 @@
 
 	%RFC 5424 Syslog 																						--subsec:SYSLOG
 	\subsection[RFC 5424 Syslog]{\RFC{5424} System Logging (Syslog) \label{subsec:SYSLOG}}
-	Cisco IOS generates system event logs categorized based on \textit{severity level} (Table \ref{tab:LOGGING}). Log messages use the \texttt{TIMESTAMP SEQ\_NUM \%FACILITY-SEVERITY-MNEMONIC: DESCRIPTION} format and may be stored locally for review. Logging can be configured to use Syslog, enabling centralized logging to a Syslog server over UDP based on severity level. This frees local device RAM for other tasks and simplifies event correlation among devices.
+	Cisco IOS generates system event logs categorized based on \textit{severity level} (Table \ref{tab:LOGGING}). Log messages use the \texttt{TIMESTAMP SEQ\_NUM \%FACILITY-SEVERITY-MNEMONIC: DESCRIPTION} format and may be stored locally for review. Devices can be configured for centralized logging to a Syslog server over UDP based on severity level, freeing local device RAM for other tasks and simplifying event correlation among devices.
 
 	%Logging Keywords																						--tab:LOGGING
 	\begin{table}[H]
@@ -1550,14 +1551,14 @@
 	\centering
 	\begin{tabular}{llr}
 	\textbf{OFFICIAL STANDARD}	& \textbf{ALTERNATIVE}		& \textbf{REFERENCE}\\\hline
-	\RFC{1661} PPP			& ITU HDLC / Cisco HDLC	& Subsections \ref{subsec:ITU HDLC} + \ref{subsec:IETF PPP}\\\hline
-	IEEE 802.3 Ethernet		&					& Subsection \ref{subsec:802.3 ETHERNET}\\
+	\RFC{1661} PPP			& ITU HDLC / Cisco HDLC	& Subsections \ref{subsec:ITU HDLC} + \ref{subsec:IETF PPP}\\
+	Ethernet II / IEEE 802.3		&					& Subsection \ref{subsec:802.3 ETHERNET}\\
 	IEEE 802.2 LLC/SNAP		&					& Tables \ref{tab:802.2 LLC} + \ref{tab:802.2 SNAP}\\
 	IEEE 802.3u FastEthernet		&					& Subsection \ref{subsec:CABLING}\\
-	IEEE 802.3af/at/bt PoE/UPoE	& Cisco ILP				& Table \ref{tab:POE}\\\hline
+	IEEE 802.3af/at/bt PoE		& Cisco ILP				& Table \ref{tab:POE}\\\hline
 	IEEE 802.1Q VLAN Trunking	& Cisco ISL/DTP/VTP		& Subsections \ref{subsec:VLAN TAGGING} + \ref{subsec:CISCO VTP}\\
 	IEEE 802.1AB LLDP		& Cisco CDP			& Subsection \ref{subsec:CDP/802.1AB}\\
-	IEEE 802.1D/w STP/RSTP		& Cisco PVST/PVRST		& Subsection \ref{subsec:802.1D/w}\\
+	IEEE 802.1D/w STP/RSTP		& Cisco PVST+/PVRST		& Subsection \ref{subsec:802.1D/w}\\
 	IEEE 802.1s MSTP			&					&\\
 	IEEE 802.3AD LACP		& Cisco PAgP			&\\\hline
 	IEEE 802.11 WLAN			& Wi-Fi Alliance			& Subsection \ref{subsec:802.11 WLANS}\\
@@ -1571,7 +1572,7 @@
 	\RFC{5798} VRRP			& Cisco HSRP/GLBP		&\\
 	\RFC{2475} QoS			&					& Section \ref{sec:QOS}\\\hline
 	\RFC{768} UDP			& \RFC{793} TCP			& Subsections \ref{subsec:UDP} + \ref{subsec:TCP}\\\hline
-	\RFC{959} FTP			& TFTP / SFTP / FTPS / ....	& Subsection \ref{subsec:FTP}\\
+	\RFC{959} FTP			& FTPS / TFTP / SFTP / ....	& Subsection \ref{subsec:FTP}\\
 	RFC \rfc{1305}/\rfc{5905} NTP	&					&\\
 	\RFC{1065} SNMP			&					&\\
 	\RFC{5424} Syslog			&					& Subsection \ref{subsec:SYSLOG}\\
@@ -1588,14 +1589,14 @@
 	\textbf{Layer 2 Interface Configuration:}
 	\begin{lstlisting}
 configure terminal
-	int F0/1
+	interface F0/1
 		mac-address MAC
 		bandwidth KBPS
 		duplex {half | full | auto}
 		speed {MBPS | auto}
 		description TEXT
-		
-show interface [INT] [status | switchport]
+
+show interfaces [INT] [status | switchport]
 	\end{lstlisting}
 
 	\textbf{VLAN Configuration:}
@@ -1605,14 +1606,14 @@ configure terminal
 		name TEXT
 		[no] shutdown
 	[no] shutdown vlan VLAN_ID
-	int F0/1
-		switchport trunk encapsulation {ISL | dot1Q}
+	interface F0/1
+		switchport trunk encapsulation {dot1Q | isl | negotiate}
 		switchport mode {trunk | dynamic {desirable | auto}}
 		switchport nonegotiate
 		switchport trunk allowed vlan VLAN_LIST
 		switchport trunk native vlan VLAN_ID
 		[no] shutdown
-	int range F0/2 - 12
+	interface range F0/2 - 12
 		switchport mode access
 		switchport {access | voice} vlan VLAN_ID
 		[no] shutdown
@@ -1622,9 +1623,7 @@ configure terminal
 	[no] vtp pruning
 	vtp version 2
 
-show int [INT] status
-show int [INT] switchport
-show int [INT] trunk
+show interfaces [INT] [status | switchport | trunk]
 show vlan brief
 show vlan id VLAN_ID
 show vtp {status | password}
@@ -1634,11 +1633,11 @@ show vtp {status | password}
 	\begin{lstlisting}
 configure terminal
 	port-channel load-balance {src-mac | dst-mac | src-dst-mac | src-ip | dst-ip | src-dst-ip | src-port | dst-port | src-dst-port}
-	int range F0/13 - 16
+	interface range F0/13 - 16
 		[no] switchport
 		[no] shutdown
 		channel-group 1 mode {on | desirable | auto | active | passive}
-	int Po1
+	interface Po1
 		[no] switchport
 		[no] shutdown
 
@@ -1652,7 +1651,7 @@ test etherchannel load-balance interface INT mac SRC_MAC DST_MAC
 configure terminal
 	errdisable recovery cause psecure-violation
 	errdisable recovery interval SECS
-	int range F0/2 - 12
+	interface range F0/2 - 12
 		switchport mode {access | trunk}
 		switchport port-security violation {protect | restrict | shutdown}
 		switchport port-security maximum MAX
@@ -1663,12 +1662,12 @@ configure terminal
 		switchport port-security
 	mac address-table aging-time SECS [vlan VLAN_ID]
 
-show int [INT] [status]
+show errdisable recovery
+show interfaces [INT] [status]
 show port-security [interface INT]
+show mac address-table aging-time
 show mac address-table [static | secure] [vlan VLAN_ID | interface INT]
 clear mac address-table dynamic [vlan VLAN_ID | interface INT | address MAC]
-show mac address-table aging-time
-show errdisable recovery
 	\end{lstlisting}
 
 	\textbf{CDP / LLDP Configuration:}
@@ -1677,7 +1676,8 @@ configure terminal
 	[no] {cdp | lldp} run
 	{cdp | lldp} timer SECS
 	{cdp | lldp} holdtime SECS
-	int range F0/2 - 12
+	[no] cdp advertise-v2
+	interface range F0/2 - 12
 		[no] cdp enable
 		[no] lldp {transmit | receive}
 
@@ -1698,7 +1698,7 @@ configure terminal
 	spanning-tree [vlan VLAN_ID] priority {32768 | 28672 | 24576 | ...}
 	spanning-tree portfast [edge | network] [bpduguard | bpdufilter] default
 	spanning-tree loopguard default
-	int Po1
+	interface Po1
 		spanning-tree [vlan VLAN_ID] cost PORT_COST
 		spanning-tree [vlan VLAN_ID] port-priority PORT_PRIO
 		spanning-tree [vlan VLAN_ID] link-type {point-to-point | shared}
@@ -1761,12 +1761,12 @@ configure terminal
 	[no] ip dhcp snooping information option
 	ip arp inspection vlan VLAN_LIST
 	ip arp inspection validate {[src-mac] [dst-mac] [ip]}
-	int Po1
+	interface Po1
 		ip dhcp snooping trust
 		ip arp inspection trust
-	int F0/1
+	interface F0/1
 		ip arp inspection trust
-	int range F0/2 - 12
+	interface range F0/2 - 12
 		ip dhcp snooping limit rate MAX
 		ip arp inspection limit rate MAX [burst-interval SECS]
 
@@ -1780,16 +1780,16 @@ configure terminal
 	sdm prefer lanbase-routing
 	ip routing
 	ipv6 unicast-routing
-	int F0/0.SUBINT
+	interface F0/0.SUBINT
 		encapsulation dot1q VLAN_ID [native]
 		ip address {A.B.C.D M.M.M.M | dhcp}
 		{ipv6 enable | ipv6 address {ADDRESS/PREFIX_LENGTH [link-local | anycast] | PREFIX/64 eui-64 | dhcp | autoconfig}}
 		[no] shutdown
-	int vlan VLAN_ID
+	interface vlan VLAN_ID
 		ip address {A.B.C.D M.M.M.M | dhcp}
 		{ipv6 enable | ipv6 address {ADDRESS/PREFIX_LENGTH [link-local | anycast] | PREFIX/64 eui-64 | dhcp | autoconfig}}
 		[no] shutdown
-	int F0/1
+	interface F0/1
 		[no] switchport
 		ip address {A.B.C.D M.M.M.M | dhcp}
 		{ipv6 enable | ipv6 address {ADDRESS/PREFIX_LENGTH [link-local | anycast] | PREFIX/64 eui-64 | dhcp | autoconfig}}
@@ -1798,7 +1798,7 @@ configure terminal
 
 show sdm prefer
 show {ip | ipv6} interface [brief | INT]
-show interfaces [INT] [status | switchport]
+show interfaces [INT] [switchport | trunk]
 show protocols [INT]
 show dhcp lease
 show ip default-gateway
@@ -1817,7 +1817,7 @@ configure terminal
 		[no] passive-interface {INT | default}
 		[no] network A.B.C.D W.W.W.W area AREA
 		[no] shutdown
-	int S0/0/0
+	interface S0/0/0
 		ip ospf 1 area AREA
 		ip ospf network {point-to-point | broadcast}
 		ip ospf cost PORT_COST
@@ -1864,7 +1864,7 @@ show ipv6 neighbors
 	\begin{lstlisting}
 configure terminal
 	ip vrf VRF_NAME
-	int F0/0
+	interface F0/0
 		ip vrf forwarding VRF_NAME
 		ip address {A.B.C.D M.M.M.M | dhcp}
 		[no] shutdown
@@ -1876,7 +1876,7 @@ ping vrf VRF_NAME [ADDRESS]
 	\textbf{FHRP Configuration:}
 	\begin{lstlisting}
 configure terminal
-	int F0/0
+	interface F0/0
 		standby version 1-2
 		standby GROUP_ID ip A.B.C.D
 		standby GROUP_ID priority 1-255
@@ -1927,7 +1927,7 @@ configure terminal
 		[no] [SEQ] {permit | deny} {tcp | udp} {host SRC_IP | SRC_IP SRC_WC | any} [{eq | neq | lt | gt | range} SRC_PORT] {host DST_IP | DST_IP DST_WC | any} [{eq | neq | lt | gt | range} DST_PORT] [log]
 		[no] [SEQ] remark TEXT
 		no SEQ
-	int S0/0/0
+	interface S0/0/0
 		ip access-group {ACL_ID | ACL_NAME} {in | out}
 	line vty 0 15
 		access-class {ACL_ID | ACL_NAME} {in | out}
@@ -1939,9 +1939,9 @@ show ip access-lists
 	\textbf{NAT Services Configuration:}
 	\begin{lstlisting}
 configure terminal
-	int F0/0
+	interface F0/0
 		ip nat inside
-	int S0/0/0
+	interface S0/0/0
 		ip nat outside
 	ip nat inside source static INSIDE_LOCAL INSIDE_GLOBAL
 	ip nat pool POOL_NAME FIRST_IP LAST_IP netmask M.M.M.M
@@ -1963,7 +1963,7 @@ configure terminal
 			set ip dscp {EF | AFXY | CSX | BINARY}
 			priority percent BANDWIDTH
 			bandwidth percent BANDWIDTH
-	int F0/0
+	interface F0/0
 		service-policy {input | output} PMAP_NAME
 		
 show run | section policy-map
