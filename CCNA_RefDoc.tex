@@ -5,17 +5,17 @@
 \date{\vspace{-5px}}
 \setlength\intextsep{0cm}
 
-\usepackage[top=.5in,bottom=.75in,left=.75in,right=.75in]{geometry}
-\usepackage{parskip}
-\usepackage{float}
-\usepackage[justification=raggedright,font=bf,position=bottom]{caption}
-\usepackage[dvipsnames]{xcolor}
+\usepackage[top=.5in,bottom=.75in,left=.75in,right=.75in]{geometry}		% set page margins
+\usepackage{parskip}										% left-align texts with no indentation
+\usepackage{float}										% provide [H] option to table/figure/graphics environments
+\usepackage[justification=raggedright,font=bf,position=bottom]{caption}	% provide caption formatting
+\usepackage[dvipsnames]{xcolor}								% provide \textcolor, \colorbox, and predefined colors
 
-\usepackage{titlesec}
+\usepackage{titlesec}										% provide title formatting
 \titlespacing*{\section}{0pt}{1ex}{1ex}
 \titlespacing*{\subsection}{0pt}{1.5ex}{1ex}
 
-\usepackage{hyperref}
+\usepackage{hyperref}										% provide TOC and \href link formatting
 \hypersetup{
 	colorlinks=true,
 	linkcolor=blue,
@@ -26,8 +26,9 @@
 	pdfsubject={github.com/richgol/CCNA-Quick-Reference},
 	pdfkeywords={CCNA; Networking; Switch; Router; Cisco; IEEE; RFC; Reference},
 }
+\usepackage{cleveref}										% provide smart label references
 
-\usepackage{listings}
+\usepackage{listings}										% provide \listings environment
 \lstdefinestyle{mystyle}{
 	basicstyle=\ttfamily\footnotesize,
 	frame=topline,
@@ -39,11 +40,11 @@
 }
 \lstset{style=mystyle}
 
-\usepackage{graphicx}
+\usepackage{graphicx}										% provide static graphics integration
 \graphicspath{ {./images/} }
 
-\counterwithin{table}{section}
-\counterwithin{figure}{section}
+\counterwithin{table}{section}									% reset table counters per-section
+\counterwithin{figure}{section}								% reset figure counters per-section
 
 \newcommand{\textcolorbf}[2]{\textcolor{#1} {\textbf{#2}}}
 \newcommand{\note}[1]{\colorbox{#1}{Note:}}
@@ -102,6 +103,8 @@
 	\caption{Fiber Standards \label{tab:802.3 FIBER}}
 	\begin{tabular}{| c | c | r |}
 	\hline
+	OS1	& \textcolorbf{Dandelion}{yellow}	& indoor\\
+	OS2	&						& outdoor\\\hline
 	OM1	& \textcolorbf{orange}{orange}	& 100 Mbps\\\hline
 	OM2	& \textcolorbf{orange}{orange}	& 1 Gbps\\\hline
 	OM3	& \textcolorbf{Aquamarine}{aqua} 	& 10 Gbps\\
@@ -122,7 +125,7 @@
 	SX		& 850 nm		& \textbf{black} MMF				& 550 m\\
 	SR		&			&							& 300 m\\\hline
 	LX/LR		& 1310 nm		& \textcolorbf{Cyan}{blue} SMF		& 10-20 km\\\hline
-	----- 		& 1490 nm		& \textcolorbf{Orchid}{purple} SMF 		& -----\\\hline
+	----- 		& 1490 nm		& \textcolorbf{Orchid}{violet} SMF 		& -----\\\hline
 	EX/ER 	& 1550 nm		& \textcolorbf{Dandelion}{yellow} SMF 	& 40 km\\
 	ZX/ZR	&			&							& 80 km\\\hline
 	\end{tabular}\end{table}
@@ -198,7 +201,7 @@
 	SFD 			& 1 Byte	& 10101011\\\hline
 	Destination MAC	& 6 Bytes	&\\\hline
 	Source MAC	& 6 Bytes	&\\\hline
-	Type (Ethernet II)	& 2 Bytes	& EtherType (Table \ref{tab:ETHERTYPE})\\
+	Type (Ethernet II)	& 2 Bytes	& EtherType (\Cref{tab:ETHERTYPE})\\
 	Length (802.3)	&		& Payload Length in Bytes\\\hline
 	Data			& varies	& 46-1500 Bytes based on MTU\\\hline
 	FCS			& 4 Bytes	&\\\hline
@@ -222,7 +225,7 @@
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Organizationally Unique ID (OUI) 	& 3 Bytes	& \texttt{0x000000} or Vendor OUI\\\hline
-	Type	& 2 Bytes	& EtherType (Table \ref{tab:ETHERTYPE})\\\hline
+	Type	& 2 Bytes	& EtherType (\Cref{tab:ETHERTYPE})\\\hline
 	\end{tabular}\end{table}
 	\note{Goldenrod} Each 802.3 frame includes an 802.2 LLC header for process multiplexing. Per \RFC{1042}, an 802.2 LLC header with value \texttt{0xaaaa03} includes a SNAP header identifying the EtherType.
 
@@ -235,9 +238,9 @@
 	\caption{IEEE 802.1Q Tagging \label{tab:802.1Q}}
 	\begin{tabular}{| l | c | r |}
 	\hline
-	Tag Protocol Identifier (TPID)		& 16 bits	& EtherType (\texttt{0x8100}, Table \ref{tab:ETHERTYPE})\\\hline
+	Tag Protocol Identifier (TPID)		& 16 bits	& EtherType (\texttt{0x8100}, \Cref{tab:ETHERTYPE})\\\hline
 	TCI: Priority Code Point (PCP)		& 3 bits	& QoS Class-of-Service (CoS) Marking\\
-							&		& (Section \ref{sec:QOS})\\\hline
+							&		& (\Cref{sec:QOS})\\\hline
 	TCI: Drop Eligible Indicator (DEI)	& 1 bit 	& QoS Drop Eligibility\\\hline
 	VLAN ID 					& 12 bits	&\\\hline
 	\end{tabular}\end{table}
@@ -269,7 +272,7 @@
 	\subsection[Cisco VTP]{Cisco VLAN Trunking Protocol (VTP) \label{subsec:CISCO VTP}}
 	Cisco VTP dynamically advertises a \textit{VLAN Database} to participating switches over Cisco ISL and IEEE 802.1Q trunk links. Participating switches use either \textit{VTP Server Mode} or \textit{VTP Client Mode}, and default to VTP Server Mode with a \texttt{Config Revision Number} of 0. Each time a VTP Server's VLAN Database is locally updated, the \texttt{Config Revision Number} increments and \textit{VTP Synchronization} occurs.
 
-	VTP Synchronization uses a \textit{VTP Summary Advertisement} (Table \ref{tab:VTP SUMMARY}) alongside 1 or more \textit{VTP Subset Advertisements} (Table \ref{tab:VTP SUBSET}) to advertise the revised VLAN Database. VTP Servers also send out a Summary Advertisement (alongside 0 or more Subset Advertisements) every 5 minutes. To participate, newly-connected switches may send a \textit{VTP Advertisement Request} (Table \ref{tab:VTP REQUEST}) over each trunk link that comes up. A switch only listens to VTP messages in its \texttt{VTP Management Domain} (default NONE). An MD5-hashed \texttt{VTP Password} (default NONE) can be configured to prevent unauthorized switches from participating in the VTP Management Domain.
+	VTP Synchronization uses a \textit{VTP Summary Advertisement} (\Cref{tab:VTP SUMMARY}) alongside 1 or more \textit{VTP Subset Advertisements} (\Cref{tab:VTP SUBSET}) to advertise the revised VLAN Database. VTP Servers also send out a Summary Advertisement (alongside 0 or more Subset Advertisements) every 5 minutes. To participate, newly-connected switches may send a \textit{VTP Advertisement Request} (\Cref{tab:VTP REQUEST}) over each trunk link that comes up. A switch only listens to VTP messages in its \texttt{VTP Management Domain} (default NONE). An MD5-hashed \texttt{VTP Password} (default NONE) can be configured to prevent unauthorized switches from participating in the VTP Management Domain.
 
 	VTP Clients participate in VTP Synchronization but disallow local VLAN configurations. \textit{VTP Transparent Mode} or \textit{VTP Off Mode} switches use a local VLAN configuration instead of the VLAN Database, although they may forward VTP messages.
 
@@ -303,7 +306,7 @@
 	MgmtD Len				& 1 Byte	&\\\hline
 	Management Domain		& 32 Bytes	& VTP Domain Name\\\hline
 	Config Revision Number	& 4 Bytes	&\\\hline
-	VLAN-Info Field(s)		& 4 Bytes	& Advertised VLAN(s) (Table \ref{tab:VTP VLAN})\\\hline
+	VLAN-Info Field(s)		& 4 Bytes	& Advertised VLAN(s) (\Cref{tab:VTP VLAN})\\\hline
 	\end{tabular}\end{table}
 
 	%VTP Subset Advertisements -- VLAN Information 																	--tab:VTP VLAN
@@ -401,9 +404,9 @@
 	Message Type		& 1 Byte	& Identify Configuration / TCN BPDUs\\
 					&		& (\texttt{0x02} for RSTP/MSTP)\\\hline
 	Flags				& 1 Byte	& Signals TC / TCA bits\\\hline
-	Root ID			& 8 Bytes	& The sender's Root BID (Table \ref{tab:BID})\\\hline
+	Root ID			& 8 Bytes	& The sender's Root BID (\Cref{tab:BID})\\\hline
 	Root Path Cost		& 4 Bytes	& The sender's cost to Root\\\hline
-	Bridge ID			& 8 Bytes	& The sender's BID (Table \ref{tab:BID})\\\hline
+	Bridge ID			& 8 Bytes	& The sender's BID (\Cref{tab:BID})\\\hline
 	Port ID			& 2 Bytes	& The sender's \texttt{Port Prio.Nbr}\\\hline
 	Message Age		& 2 Bytes	& Time since Root sent this BPDU\\\hline
 	Max Age			& 2 Bytes	& Time until BPDU expires\\\hline
@@ -466,7 +469,7 @@
 		\end{enumerate}
 		\item{\textbf{Elect \textit{Root Ports} (RPs):}}
 		\begin{enumerate} \itemsep -5pt
-			\item{Lowest received BPDU \texttt{Root Path Cost} + local Port Cost (Table \ref{tab:STP PORT COSTS})}
+			\item{Lowest received BPDU \texttt{Root Path Cost} + local Port Cost (\Cref{tab:STP PORT COSTS})}
 			\item{Tiebreaker: lowest received BPDU \texttt{BID}}
 			\item{Tiebreaker: lowest received BPDU \texttt{Port ID: Prio.Nbr}}
 			\item{Other RSTP link-type point-to-point ports become \textit{Alternate Ports} (APs)}
@@ -489,11 +492,11 @@
 	\textbf{Optional STP Features:}
 	\begin{itemize}
 		\label{itm:STP FEATURES}
-		\item{\textbf{PortFast:} immediately transitions configured ports to Forwarding state when connected. It can be enabled on access or trunk ports, and continues to send BPDUs. Received BPDUs cause the port to revert to STP behavior.}
-		\item{\textbf{BPDU Guard:} err-disables configured ports which receive a BPDU, preventing unauthorized devices from altering the STP topology. It can be globally enabled on all PortFast ports, and continues to send BPDUs.}
-		\item{\textbf{BPDU Filter:} stops configured ports from sending BPDUs when configured globally; locally configured ports also ignore received BPDUs (effectively disabling STP). It can be globally enabled on all PortFast ports alongside BPDU Guard without issue; local configuration effectively disables BPDU Guard.}
-		\item{\textbf{Root Guard:} protects the STP topology by disabling configured ports which receive a superior BPDU. This prevents DPs from becoming RPs. Affected ports enter the Broken (Root Inconsistent) state and are disabled by STP; they are automatically enabled when the issue is resolved. Incompatible with Loop Guard.}
-		\item{\textbf{Loop Guard:} protects against undetected \textit{Unidirectional Links} by disabling configured ports whose \texttt{Max Age} timer reaches 0. This prevents RPs and NDs from becoming DPs. Affected ports enter the Broken (Loop Inconsistent) state and are disabled by STP; they are automatically enabled when the issue is resolved. Incompatible with Root Guard.}
+		\item{\textbf{PortFast:} Locally or globally configured ports immediately enter Forwarding state on edge ports. BPDUs are sent, but received BPDUs disable the feature.}
+		\item{\textbf{BPDU Guard:} Locally or globally configured (PortFast) ports prevent unauthorized devices from altering the STP topology. BPDUs are sent, but received BPDUs err-disable the port. Compatible with globally-configured BPDU Filter.}
+		\item{\textbf{BPDU Filter:} Locally configured ports ignore STP; globally configured (PortFast) ports do not send BPDUs. Compatible with BPDU Guard.}
+		\item{\textbf{Root Guard:} Locally configured ports protect the STP Root Bridge. BPDUs are sent, but received superior BPDUs err-disable the port (Root Inconsistent state). Incompatible with Loop Guard.}
+		\item{\textbf{Loop Guard:} Locally or globally configured (point-to-point ports) protect against unidirectional links, preventing RPs and NDs from becoming DPs. Ports whose \texttt{Max Age} reaches 0 err-disable (Loop Inconsistent state). Incompatible with Root Guard.}
 	\end{itemize}
 
 
@@ -504,7 +507,7 @@
 	\begin{tabular}{| l | c | r |}
 	\hline
 	HTYPE	& 16 bits	& L2 Protocol (1 for Ethernet)\\\hline
-	PTYPE	& 16 bits	& L3 Protocol (EtherType Table \ref{tab:ETHERTYPE})\\\hline
+	PTYPE	& 16 bits	& L3 Protocol (EtherType, \Cref{tab:ETHERTYPE})\\\hline
 	HLEN		& 8 bits	& L2 Address Length in Bytes\\\hline
 	PLEN		& 8 bits	& L3 Address Length in Bytes\\\hline
 	Operation	& 16 bits	& Message Type (1 for Request, 2 for Reply)\\\hline
@@ -515,7 +518,7 @@
 	\end{tabular}\end{table}
 	\note{Goldenrod} As a Layer 2 protocol, all ARP messages are encapsulated directly within an Ethernet frame.
 
-	\textit{Dynamic ARP Inspection} (DAI) is an optional switch security feature to prevent ARP poisoning and ARP DoS. It uses the \textit{DHCP Snooping Binding Table} to filter incoming ARP messages based on their \texttt{Origin IP} and \texttt{Origin HW} fields; an ARP ACL can also be configured for hosts using static IP addresses. Optional verification checks compare the ARP \texttt{Origin/Target HW} fields against the frame \texttt{Source/Destination MAC} and ensure the ARP \texttt{Origin/Target IP} fields contain unicast values. This behavior is disabled on DAI \textit{trusted ports}. DAI uses optional per-interface rate limits to prevent DoS attacks against the switch CPU and ARP table.
+	\textit{Dynamic ARP Inspection} (DAI) is an optional switch security feature to prevent ARP Poisoning and ARP DoS. The \textit{DHCP Snooping Binding Table} is used to filter incoming ARP messages based on their \texttt{Origin HW} and \texttt{Origin IP} values; an ARP ACL can also be configured for hosts using static IP addresses. Optional verification checks compare the ARP \texttt{Origin/Target HW} values against the frame \texttt{Source/Destination MAC} and ensure the ARP \texttt{Origin/Target IP} fields contain unicast values. This behavior is disabled on DAI \textit{trusted ports}. DAI uses optional per-interface rate limits to prevent DoS attacks against the switch CPU and ARP table.
 
 
 	%IEEE 802.11 Wireless LANs (WLANs) 																		--subsec:802.11 WLANS
@@ -531,7 +534,7 @@
 	Address 3			& 6 Bytes	& Dst / Src / Rx / Tx Address\\\hline
 	Sequence Control		& 2 Bytes	& Fragmentation / Duplication Management\\\hline
 	Address 4			& 6 Bytes	& Dst / Src / Rx / Tx Address\\\hline
-	QoS Control		& 2 Bytes	& Section \ref{sec:QOS}\\\hline
+	QoS Control		& 2 Bytes	& \Cref{sec:QOS}\\\hline
 	HT Control			& 4 Bytes	& HT Operations (802.11n and later)\\\hline
 	Data				& varies	&\\\hline
 	FCS				& 4 Bytes	&\\\hline
@@ -588,7 +591,7 @@
 	DS			& Virtual				& Mobility Group		& DHCP Relay, WebAuth\\\hline
 	DS			& Dynamic				& USERS			& Bind WLANs to VLANs (tunnel LAG)\\\hline
 	\end{tabular}\end{table}
-	\note{Goldenrod} Only Lightweight APs require a \textit{Wireless LAN Controller} (WLC) deployment to support WLANs. Each Autonomous AP can support multiple independent WLANs.
+	\note{Goldenrod} Lightweight APs require a \textit{Wireless LAN Controller} (WLC) and CAPWAP to support WLANs. Each Autonomous AP can independently support multiple WLANs.
 
 	%Autonomous APs 																					--itm:AUTONOMOUS AP
 	\textbf{Autonomous AP Modes:}
@@ -639,7 +642,7 @@
 	Flag		& 1 Byte	& Synchronization\\\hline
 	Address	& 1 Byte	& Destination Node\\\hline
 	Control	& 1 Byte	&\\\hline
-	Type		& 2 Bytes	& EtherType (Table \ref{tab:ETHERTYPE})\\\hline
+	Type		& 2 Bytes	& EtherType (\Cref{tab:ETHERTYPE})\\\hline
 	Data		& varies	&\\\hline
 	FCS		& 4 Bytes	&\\\hline
 	\end{tabular}\end{table}
@@ -731,13 +734,13 @@
 	Version				& 4 bits	& IP Version (4)\\\hline
 	IP Header Length (IHL)		& 4 bits	& Header Length (Bytes $\div$ 5)\\\hline
 	DS Field				& 8 bits	& QoS Type-of-Service (ToS) Marking\\
-						&		& (Section \ref{sec:QOS})\\\hline
+						&		& (\Cref{sec:QOS})\\\hline
 	Packet Length			& 16 bits	& Total Packet Length\\\hline
 	Identification			& 16 bits	& Fragmentation\\\hline
 	Flags					& 3 bits	& Fragmentation\\\hline
 	Fragment Offset			& 13 bits	& Fragmentation\\\hline
 	Time-to-Live (TTL)		& 8 bits	& Loop Prevention\\\hline
-	Protocol				& 8 bits	& Protocol Type (Table \ref{tab:L3 PROTOCOL})\\\hline
+	Protocol				& 8 bits	& Protocol Type (\Cref{tab:L3 PROTOCOL})\\\hline
 	Header Checksum		& 16 bits	&\\\hline
 	Source IP				& 32 bits	&\\\hline
 	Destination IP			& 32 bits	&\\\hline
@@ -779,10 +782,10 @@
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Version			& 4 bits	& IP Version (6)\\\hline
-	Traffic Class			& 8 bits	& QoS Marking (Section \ref{sec:QOS})\\\hline
+	Traffic Class			& 8 bits	& QoS Marking (\Cref{sec:QOS})\\\hline
 	Flow Label			& 20 bits	& Experimental\\\hline
 	Payload Length		& 16 bits	& Data + Extension Headers Length\\\hline
-	Next Header		& 8 bits	& Protocol Type (Table \ref{tab:L3 PROTOCOL})\\\hline
+	Next Header		& 8 bits	& Protocol Type (\Cref{tab:L3 PROTOCOL})\\\hline
 	Hop Limit			& 8 bits	& Loop Prevention\\\hline
 	Source Address		& 128 bits	&\\\hline
 	Destination Address	& 128 bits	&\\\hline
@@ -828,9 +831,9 @@
 	\begin{tabular}{| l | c | r |}
 	\hline
 	Type			& 8 bits	& Message Type\\
-				&		& (Tables \ref{tab:ICMP VALUES} + \ref{tab:ICMPV6 VALUES}) \\\hline
+				&		& (\Cref{tab:ICMP VALUES,tab:ICMPV6 VALUES}) \\\hline
 	Code			& 8 bits	& Message Subtype / Status Code\\
-				&		& (Tables \ref{tab:ICMP VALUES} + \ref{tab:ICMPV6 VALUES})\\\hline
+				&		& (\Cref{tab:ICMP VALUES,tab:ICMPV6 VALUES})\\\hline
 	Checksum		& 16 bits	&\\\hline
 	Header Data	& 32 bits	& Message-specific fields\\\hline
 	Payload		& varies	&\\\hline
@@ -873,9 +876,9 @@
 	\subsection[RFC 4861 ICMPv6 NDP]{\RFC{4861} ICMPv6 Neighbor Discovery Protocol (NDP) \label{subsec:NDP}}
 	ICMPv6 NDP offers core functionality for IPv6 networks, including \textit{Neighbor Discovery}, \textit{Router Discovery}, \textit{Stateless Address Autoconfiguration} (SLAAC), and \textit{Duplicate Address Detection} (DAD).
 
-	\textit{Router Solicitation} (RS) and \textit{Router Advertisement} (RA) messages (Tables \ref{tab:NDP RS} and \ref{tab:NDP RA}) replace DHCP/DHCPv6 default gateway discovery. RS messages are sent to All-IPv6-Routers multicast; RA messages are sent either to a unicast target address or to All-IPv6-Hosts multicast.
+	\textit{Router Solicitation} (RS) and \textit{Router Advertisement} (RA) messages (\Cref{tab:NDP RS,tab:NDP RA}) replace DHCP/DHCPv6 default gateway discovery. RS messages are sent to All-IPv6-Routers multicast; RA messages are sent either to a unicast target address or to All-IPv6-Hosts multicast.
 
-	\textit{Neighbor Solicitation} (NS) and \textit{Neighbor Advertisement} (NA) messages (Tables \ref{tab:NDP NS} and \ref{tab:NDP NA}) replace ARP. NS messages are sent to a solicited-node multicast target address; NA messages are sent either to a unicast target address or to All-IPv6-Hosts multicast.
+	\textit{Neighbor Solicitation} (NS) and \textit{Neighbor Advertisement} (NA) messages (\Cref{tab:NDP NS,tab:NDP NA} ) replace ARP. NS messages are sent to a solicited-node multicast target address; NA messages are sent either to a unicast target address or to All-IPv6-Hosts multicast.
 
 	%NDP SLAAC 																							--itm:NDP SLAAC
 	\textbf{The SLAAC Process:}
@@ -962,7 +965,7 @@
 
 	%RFC 2328 OSPFv2 																						--subsec:OSPF
 	\subsection[RFC 2328 OSPFv2]{\RFC{2328} Open Shortest Path First (OSPFv2) \label{subsec:OSPF}}
-	OSPFv2 is a link-state IGP for dynamic routing which maintains a \textit{Link-State Database} (LSDB) representing the internetwork of connected OSPF routers within an \textit{OSPF area}. Each OSPF router forms OSPF neighbor relationships with connected OSPF routers using a series of OSPF messages and \textit{OSPF neighbor states}, which synchronize their LSDBs.
+	OSPFv2 is a link-state IGP for dynamic routing which maintains a \textit{Link-State Database} (LSDB) representing the internetwork of connected OSPF routers within an \textit{OSPF area}. Each OSPF router forms OSPF neighborships with connected OSPF routers through a series of OSPF messages and \textit{OSPF neighbor states}, which synchronize their LSDBs. Each OSPF area must connect to \textit{backbone area} 0 via an OSPF \textit{Area Border Router} (ABR). An OSPF \textit{Autonomous System Border Router} (ASBR) connects the local \textit{Autonomous System} (AS) with one or more external AS.
 
 	%OSPF LSA Types 																					--tab:OSPF LSA TYPES
 	\begin{table}[H]
@@ -971,12 +974,13 @@
 	\begin{tabular}{llr}
 	\hline
 	\textbf{LSA Type}		& \textbf{Source}		& \textbf{Conditions}\\\hline
-	Type 1 Router LSA		& SPF-Routers		& 1 per intra-area router\\\hline
-	Type 2 Network LSA	& SPF-DRs			& 1 per DR/BDR subnet\\\hline
-	Type 3 Summary LSA	& ABRs			& 1 per inter-area subnet\\\hline
-	Type 5 AS-External LSA	& ASBRs			& 1 per AS-External network\\\hline
+	Type 1 Router		& SPF-Routers		& 1 per intra-area router\\\hline
+	Type 2 Network		& SPF-DRs			& 1 per DR/BDR subnet\\\hline
+	Type 3 Summary		& ABRs			& 1 per inter-area subnet\\\hline
+	Type 4 Summary ASBR	& ABRs			& 1 per inter-area ASBR\\\hline
+	Type 5 AS-External	& ASBRs			& 1 per AS-External network\\\hline
 	\end{tabular}\end{table}
-	
+
 	%OSPF LSA Packet																						--tab:OSPF LSA
 	\begin{table}[H]
 	\centering
@@ -985,14 +989,14 @@
 	\hline
 	LS Age			& 2 Bytes	& Seconds since LSA originated\\\hline
 	Options			& 1 Byte	&\\\hline
-	LS Type			& 1 Byte	& LSA Type (Table \ref{tab:OSPF LSA TYPES})\\\hline
+	LS Type			& 1 Byte	& LSA Type (\Cref{tab:OSPF LSA TYPES})\\\hline
 	Link-State ID		& 4 Bytes	& Determined by \texttt{LS Type}\\\hline
 	Advertising Router	& 4 Bytes	& Advertising Router \texttt{RID}\\\hline
 	LS Sequence Number	& 4 Bytes	& Used by routers to judge LSAs\\\hline
 	LS Checksum		& 2 Bytes	& Checksum of LSA (excluding \texttt{LS Age})\\\hline
 	Length			& 2 Bytes	& LSA + Header Length in Bytes\\\hline
 	\end{tabular}\end{table}
-	Each LSDB is a collection of \textit{OSPF Link-State Advertisements} (LSAs) whose contents describe the internetwork according to their LSA type (Table \ref{tab:OSPF LSA TYPES}). Note that the number of OSPF routers, OSPF areas, and other variables determine the number and type of LSAs within the LSDB.
+	Each LSDB is a collection of \textit{OSPF Link-State Advertisements} (LSAs) whose contents describe the internetwork according to their LSA type (\Cref{tab:OSPF LSA TYPES}). Note that the number of OSPF routers, OSPF areas, and other variables determine the number and type of LSAs within the LSDB.
 
 	%OSPF Hello Packet 																						--tab:OSPF HELLO
 	\begin{table}[H]
@@ -1019,9 +1023,9 @@
 	\end{tabular}\end{table}
 	OSPF Hello packets are used for neighbor discovery and maintenance. OSPF routers use it to learn each other's \texttt{RID} in neighbor state \textbf{INIT} and determine whether they are OSPF-compatible.
 	
-	OSPF routers are compatible if their \texttt{RID}s are unique and if their \texttt{Version}, \texttt{Area ID}, \texttt{Network Mask}, \texttt{Hello Interval}, and \texttt{Router Dead Interval} match. If OSPF authentication is configured, the \texttt{AuType} and \texttt{Authentication} must also match. Two OSPF-compatible routers move on to neighbor state \textbf{2WAY}, are considered OSPF neighbors, and are ready to begin the 2-way LSDB exchange process.
+	OSPF routers are compatible if their \texttt{RID}s are unique and if their \texttt{Version}, \texttt{Area ID}, \texttt{Network Mask}, \texttt{Hello Interval}, and \texttt{Router Dead Interval} match. If OSPF authentication is configured, the \texttt{AuType} and \texttt{Authentication} must also match. Two OSPF-compatible routers enter neighbor state \textbf{2WAY}, are considered OSPF neighbors, and are ready to begin the 2-way LSDB exchange process.
 	
-	 DR/BDR elections may take place among OSPF routers connected to the same subnet. One OSPF router is elected the \textit{Designated Router} (DR) and another is elected the \textit{Backup Designated Router} (BDR), with the remaining routers becoming \textit{DROthers}. The router with the highest \texttt{Rtr Pri} value becomes the DR, with the highest \texttt{RID} serving as tiebreaker; the runner-up becomes the BDR and there is no preemption. The DR/BDR routers become fully-adjacent neighbors with all OSPF routers in the subnet; DROther routers remain in 2WAY state with each other.
+	OSPF elections may take place among OSPF routers connected to the same subnet. The router with the highest \texttt{Rtr Pri} is elected \textit{Designated Router} (DR), with the highest \texttt{RID} serving as tiebreaker; the runner-up becomes the \textit{Backup Designated Router} (BDR). There is no preemption and the remaining routers become \textit{DROthers}. The DR/BDR routers become fully-adjacent neighbors with all OSPF routers in the subnet; DROther routers remain in 2WAY state with each other.
 
 	%OSPF DD Packet 																						--tab:OSPF DD
 	\begin{table}[H]
@@ -1044,7 +1048,7 @@
 	More				& 1 bit 	& 1 indicates more DD packets follow\\\hline
 	Master/Slave		& 1 bit 	& 1 indicates master, 0 indicates slave\\\hline
 	DD Sequence Number	& 4 Bytes	& sequence number of DD packets\\\hline
-	LSA Headers		& varies	& LSA header(s) (Table \ref{tab:OSPF LSA})\\\hline
+	LSA Headers		& varies	& LSA header(s) (\Cref{tab:OSPF LSA})\\\hline
 	\end{tabular}\end{table}
 	OSPF DD packets are used by both routers to summarize and compare their local LSDBs. The \textit{master router} (higher \texttt{RID}) enters neighbor state \textbf{EXSTART} by sending an OSPF DD packet, which initializes the LSDB exchange process. The \textit{slave router} (lower \texttt{RID}) enters neighbor state \textbf{EXCHANGE} by responding with its own OSPF DD packet.
 
@@ -1062,7 +1066,7 @@
 	Checksum			& 2 Bytes	&\\\hline
 	AuType			& 2 Bytes	& OSPF Authentication Type (0-2)\\\hline
 	Authentication		& 8 Bytes	& Determined by \texttt{AuType}\\\hline
-	LS Type			& 4 Bytes	& Requested LSA Type (Table \ref{tab:OSPF LSA TYPES})\\\hline
+	LS Type			& 4 Bytes	& Requested LSA Type (\Cref{tab:OSPF LSA TYPES})\\\hline
 	Link-State ID		& 4 Bytes	& Determined by \texttt{LS Type}\\\hline
 	Advertising Router	& 4 Bytes	& Sending Router's \texttt{RID}\\\hline
 	\end{tabular}\end{table}
@@ -1099,13 +1103,11 @@
 	Checksum		& 2 Bytes	&\\\hline
 	AuType		& 2 Bytes	& OSPF Authentication Type (0-2)\\\hline
 	Authentication	& 8 Bytes	& Determined by \texttt{AuType}\\\hline
-	LSA Headers	& varies	& Acknowledged LSA header(s) (Table \ref{tab:OSPF LSA})\\\hline
+	LSA Headers	& varies	& Acknowledged LSA header(s) (\Cref{tab:OSPF LSA})\\\hline
 	\end{tabular}\end{table}
-	Both routers enter the neighbor state \textbf{LOADING} after the LSDB exchange process has been initiated. The master router requests certain LSAs using OSPF LSR packets (Table \ref{tab:OSPF LSR}). The slave router responds with OSPF LSU packets (Table \ref{tab:OSPF LSU}) containing the requested LSAs, which the master router acknowledges using OSPF LSAck packets (Table \ref{tab:OSPF LSACK}). This process then reverses, with the slave router requesting LSAs that the master router supplies. Once the LSDB exchange process has been completed, both routers enter neighbor state \textbf{FULL}, indicating they are \textit{fully-adjacent OSPF neighbors}.
+	Both routers enter neighbor state \textbf{LOADING} after the LSDB exchange process has been initiated. The master router requests certain LSAs using OSPF LSR packets (\Cref{tab:OSPF LSR}). The slave router responds with OSPF LSU packets (\Cref{tab:OSPF LSU}) containing the requested LSAs, which the master router acknowledges using OSPF LSAck packets (\Cref{tab:OSPF LSACK}). This process then reverses, with the slave router requesting LSAs that the master router supplies. Routers which complete the LSDB exchange process enter neighbor state \textbf{FULL} and are \textit{fully-adjacent OSPF neighbors}.
 
-	OSPF routers apply \textit{Dijkstra's Shortest-Path First} (SPF) algorithm to their LSDB to calculate the best routes to each network, which are dynamically added to the routing table. This calculation depends on the size of the LSDB and is performed independently for each OSPF area. Each OSPF area must connect to \textit{backbone area} 0 via an OSPF \textit{Area Border Router} (ABR). An OSPF \textit{Autonomous System Border Router} (ASBR) within backbone area 0 connects the local \textit{Autonomous System} to one or more external AS.
-
-
+	OSPF runs \textit{Dijkstra's Shortest-Path First} (SPF) algorithm on the LSDB to calculate the best routes to each network. This calculation depends on the LSDB size and is performed independently for each OSPF area. Each OSPF interface calculates an \textit{OSPF Cost} ($\textit{OSPF Reference Bandwidth} \div \textit{Interface Bandwidth}$) which affects the resulting OSPF route metric.
 
 
 
@@ -1159,8 +1161,8 @@
 	\centering
 	\begin{tabular}{| l | c | r |}
 	\hline
-	Source Port		& 2 Bytes	& Tables \ref{tab:L4 PORTS KNOWN} + \ref{tab:L4 PORTS REGISTERED}\\\hline
-	Destination Port	& 2 Bytes	& Tables \ref{tab:L4 PORTS KNOWN} + \ref{tab:L4 PORTS REGISTERED}\\\hline
+	Source Port		& 2 Bytes	& \Cref{tab:L4 PORTS KNOWN,tab:L4 PORTS REGISTERED}\\\hline
+	Destination Port	& 2 Bytes	& \Cref{tab:L4 PORTS KNOWN,tab:L4 PORTS REGISTERED}\\\hline
 	Length		& 2 Bytes	& Header + Data Length in Bytes\\\hline
 	Checksum		& 2 Bytes	&\\\hline
 	Data			& varies	&\\\hline
@@ -1174,8 +1176,8 @@
 	\centering
 	\begin{tabular}{| l | c | r |}
 	\hline
-	Source Port		& 2 Bytes	& Tables \ref{tab:L4 PORTS KNOWN} + \ref{tab:L4 PORTS REGISTERED}\\\hline
-	Destination Port	& 2 Bytes	& Tables \ref{tab:L4 PORTS KNOWN} + \ref{tab:L4 PORTS REGISTERED}\\\hline
+	Source Port		& 2 Bytes	& \Cref{tab:L4 PORTS KNOWN,tab:L4 PORTS REGISTERED}\\\hline
+	Destination Port	& 2 Bytes	& \Cref{tab:L4 PORTS KNOWN,tab:L4 PORTS REGISTERED}\\\hline
 	SEQ Number	& 4 Bytes	& Windowing / Flow Control (SEQ flag)\\\hline
 	ACK Number	& 4 Bytes	& Windowing / Flow Control (ACK flag)\\\hline
 	Data Offset		& 4 bits	&\\\hline
@@ -1231,7 +1233,7 @@
 	File Name			& 128 Bytes	& Optional Boot File\\\hline
 	Magic Cookie		& 4 Bytes	& Identifies DHCP over Bootp\\
 					&		& (\texttt{0x63.82.53.63})\\\hline
-	Options			& varies	& One or more option headers (Table \ref{tab:DHCP OPTIONS})\\\hline
+	Options			& varies	& One or more option headers (\Cref{tab:DHCP OPTIONS})\\\hline
 	\end{tabular}\end{table}
 
 	\begin{minipage}{.4\linewidth}
@@ -1273,7 +1275,7 @@
 
 	\textit{DHCP Relay} can be configured on the default gateway LAN interface when the DHCP server exists in another subnet. This causes the default gateway to insert \texttt{DHCP Option 82} into received DHCP client messages and forward them to the DHCP server as unicast packets. \textit{DHCP Snooping} automatically enables this feature as the \textit{DHCP Snooping Information Option}.
 
-	\textit{DHCP Snooping} is an optional switch security feature to prevent DHCP Poisoning and DHCP DoS attacks. It generates the \textit{DHCP Snooping Binding Table} by observing DHCP flows and mapping observed DHCP \texttt{CHADDR} to the corresponding packet \texttt{Source IP}, frame \texttt{Source MAC}, VLAN, and local incoming switchport. It ensures consistency between table entries and subsequent DHCP client messages, additionally filtering all DHCP server messages by default. This behavior is disabled on DHCP Snooping \textit{trusted ports}. DHCP Snooping uses optional per-interface rate limits to prevent DoS attacks against the switch CPU and DHCP Servers.
+	\textit{DHCP Snooping} is an optional switch security feature to prevent DHCP Poisoning and DHCP DoS. The \textit{DHCP Snooping Binding Table} maps DHCP \texttt{CHADDR} values to their corresponding switchport, VLAN, frame \texttt{Source MAC}, and packet \texttt{Source IP} values based on observed DHCP flows. It ensures consistency between table entries and subsequent DHCP client messages; all DHCP server messages are filtered by default. This behavior is disabled on DHCP Snooping \textit{trusted ports}. DHCP Snooping uses optional per-interface rate limits to prevent DoS attacks against the switch CPU and DHCP servers.
 
 
 	%RFC 7230 HTTP 																							--subsec:HTTP
@@ -1313,7 +1315,7 @@
 
 	%RFC 5424 Syslog 																						--subsec:SYSLOG
 	\subsection[RFC 5424 Syslog]{\RFC{5424} System Logging (Syslog) \label{subsec:SYSLOG}}
-	Cisco IOS generates system event logs categorized based on \textit{severity level} (Table \ref{tab:LOGGING}). Log messages use the \texttt{TIMESTAMP SEQ\_NUM \%FACILITY-SEVERITY-MNEMONIC: DESCRIPTION} format and may be stored locally for review. Devices can be configured for centralized logging to a Syslog server over UDP based on severity level, freeing local device RAM for other tasks and simplifying event correlation among devices.
+	Cisco IOS generates system event logs categorized based on \textit{severity level} (\Cref{tab:LOGGING}). Log messages use the \texttt{TIMESTAMP SEQ\_NUM \%FACILITY-SEVERITY-MNEMONIC: DESCRIPTION} format and may be stored locally for review. Devices can be configured for centralized logging to a Syslog server over UDP based on severity level, freeing local device RAM for other tasks and simplifying event correlation among devices.
 
 	%Logging Keywords																						--tab:LOGGING
 	\begin{table}[H]
@@ -1357,8 +1359,7 @@
 	\textit{Background}		& 8 \texttt{0x08} & 10 \texttt{0x0a} & 12 \texttt{0x0c} & 14 \texttt{0x0e}\\
 	\textbf{PCP0}			& \textbf{CS0}	&			&			&\\
 	\textit{Best Effort}			& 0 \texttt{0x00} &			&			&\\
-	\end{tabular}
-	\end{table}
+	\end{tabular}\end{table}
 	\note{Goldenrod} \texttt{CS} values use bit-pattern \texttt{XXX000}, resulting in an $8X$ DSCP value. \texttt{AF} values use bit-pattern \texttt{XXXYY0}, resulting in an $8X+2Y$ DSCP value.
 
 	%QoS Fields 																							-- tab:QOS FIELDS
@@ -1368,11 +1369,11 @@
 	\begin{tabular}{llr}
 	\hline
 	\textbf{QoS Standard} 			& \textbf{Protocol Field(s)}		& \textbf{Notes}\\\hline
-	IEEE 802.1p (CoS)				& IEEE 802.1Q \texttt{PCP/DEI} 	& Table \ref{tab:802.1Q}\\\hline
-							& IEEE 802.11 \texttt{QoS Control} 	& Subsection \ref{subsec:802.11 WLANS}\\\hline
-	\RFC{791} IPP (CS)			& IPv4 \texttt{ToS Byte} (OLD) 	& Subsection \ref{subsec:IPV4}\\
-	RFC \rfc{2474}/\rfc{3168} (DSCP)	& IPv4 \texttt{DS Field} (NEW) 	& Subsection \ref{subsec:IPV4}\\\hline
-	\RFC{2460} (DSCP)			& IPv6 \texttt{Traffic Class} 		& Subsection \ref{subsec:IPV6}\\\hline
+	IEEE 802.1p (CoS)				& IEEE 802.1Q \texttt{PCP/DEI} 	& \Cref{tab:802.1Q}\\\hline
+							& IEEE 802.11 \texttt{QoS Control} 	& \Cref{subsec:802.11 WLANS}\\\hline
+	\RFC{791} IPP (CS)			& IPv4 \texttt{ToS Byte} (OLD) 	& \Cref{subsec:IPV4}\\
+	RFC \rfc{2474}/\rfc{3168} (DSCP)	& IPv4 \texttt{DS Field} (NEW) 	& \Cref{subsec:IPV4}\\\hline
+	\RFC{2460} (DSCP)			& IPv6 \texttt{Traffic Class} 		& \Cref{subsec:IPV6}\\\hline
 							& MPLS \texttt{EXP}\\\hline
 	\end{tabular}\end{table}
 	\textit{Quality of Service} (QoS) is defined across several standards to provide preferential treatment for certain traffic. They define groups of QoS markings (shown above) as well as header fields used to mark QoS traffic. QoS-configured devices employ \textit{Classification} to identify QoS traffic and apply specifically configured actions, including \textit{Marking}, \textit{Queuing}, \textit{Policing}, \textit{Shaping}, and/or \textit{Congestion Avoidance} features. Marking is typically done by an initial device, simplifying Classification for downstream devices. QoS characterizes network traffic according to the following metrics:
@@ -1551,34 +1552,34 @@
 	\centering
 	\begin{tabular}{llr}
 	\textbf{OFFICIAL STANDARD}	& \textbf{ALTERNATIVE}		& \textbf{REFERENCE}\\\hline
-	\RFC{1661} PPP			& ITU HDLC / Cisco HDLC	& Subsections \ref{subsec:ITU HDLC} + \ref{subsec:IETF PPP}\\
-	Ethernet II / IEEE 802.3		&					& Subsection \ref{subsec:802.3 ETHERNET}\\
-	IEEE 802.2 LLC/SNAP		&					& Tables \ref{tab:802.2 LLC} + \ref{tab:802.2 SNAP}\\
-	IEEE 802.3u FastEthernet		&					& Subsection \ref{subsec:CABLING}\\
-	IEEE 802.3af/at/bt PoE		& Cisco ILP				& Table \ref{tab:POE}\\\hline
-	IEEE 802.1Q VLAN Trunking	& Cisco ISL/DTP/VTP		& Subsections \ref{subsec:VLAN TAGGING} + \ref{subsec:CISCO VTP}\\
-	IEEE 802.1AB LLDP		& Cisco CDP			& Subsection \ref{subsec:CDP/802.1AB}\\
-	IEEE 802.1D/w STP/RSTP		& Cisco PVST+/PVRST		& Subsection \ref{subsec:802.1D/w}\\
+	\RFC{1661} PPP			& ITU HDLC / Cisco HDLC	& \Cref{subsec:ITU HDLC,subsec:IETF PPP}\\
+	Ethernet II / IEEE 802.3		&					& \Cref{subsec:802.3 ETHERNET}\\
+	IEEE 802.2 LLC/SNAP		&					& \Cref{tab:802.2 LLC,tab:802.2 SNAP}\\
+	IEEE 802.3u FastEthernet		&					& \Cref{subsec:CABLING}\\
+	IEEE 802.3af/at/bt PoE		& Cisco ILP				& \Cref{tab:POE}\\\hline
+	IEEE 802.1Q VLAN Trunking	& Cisco ISL/DTP/VTP		& \Cref{subsec:VLAN TAGGING,subsec:CISCO VTP}\\
+	IEEE 802.1AB LLDP		& Cisco CDP			& \Cref{subsec:CDP/802.1AB}\\
+	IEEE 802.1D/w STP/RSTP		& Cisco PVST+/PVRST		& \Cref{subsec:802.1D/w}\\
 	IEEE 802.1s MSTP			&					&\\
 	IEEE 802.3AD LACP		& Cisco PAgP			&\\\hline
-	IEEE 802.11 WLAN			& Wi-Fi Alliance			& Subsection \ref{subsec:802.11 WLANS}\\
-	IEEE 802.11i EAP			& 					&Figure \ref{fig:WIRELESS SECURITY}\\
-	IEEE 802.1x Access Control	&					& Figure \ref{fig:WIRELESS SECURITY}\\\hline
-	RFC \rfc{791}/\rfc{1918} IPv4	& \RFC{2460} IPv6		& Subsections \ref{subsec:IPV4} + \ref{subsec:IPV6}\\
-	\RFC{792} ICMP			& \RFC{4443} ICMPv6		& Subsection \ref{subsec:ICMP}\\
-	\RFC{826} ARP			& \RFC{4861} NDP		& Subsections \ref{subsec:ARP} + \ref{subsec:NDP}\\
+	IEEE 802.11 WLAN			& Wi-Fi Alliance			& \Cref{subsec:802.11 WLANS}\\
+	IEEE 802.11i EAP			& 					& \Cref{fig:WIRELESS SECURITY}\\
+	IEEE 802.1x Access Control	&					& \Cref{fig:WIRELESS SECURITY}\\\hline
+	RFC \rfc{791}/\rfc{1918} IPv4	& \RFC{2460} IPv6		& \Cref{subsec:IPV4,subsec:IPV6}\\
+	\RFC{792} ICMP			& \RFC{4443} ICMPv6		& \Cref{subsec:ICMP}\\
+	\RFC{826} ARP			& \RFC{4861} NDP		& \Cref{subsec:ARP,subsec:NDP}\\
 	RFC \rfc{1631}/\rfc{3022} NAT	&					&\\
-	\RFC{2328} OSPF			& EIGRP / RIP / ...			& Subsection \ref{subsec:OSPF}\\
+	\RFC{2328} OSPF			& EIGRP / RIP / ...			& \Cref{subsec:OSPF}\\
 	\RFC{5798} VRRP			& Cisco HSRP/GLBP		&\\
-	\RFC{2475} QoS			&					& Section \ref{sec:QOS}\\\hline
-	\RFC{768} UDP			& \RFC{793} TCP			& Subsections \ref{subsec:UDP} + \ref{subsec:TCP}\\\hline
-	\RFC{959} FTP			& FTPS / TFTP / SFTP / ....	& Subsection \ref{subsec:FTP}\\
+	\RFC{2475} QoS			&					& \Cref{sec:QOS}\\\hline
+	\RFC{768} UDP			& \RFC{793} TCP			& \Cref{subsec:UDP,subsec:TCP}\\\hline
+	\RFC{959} FTP			& FTPS / TFTP / SFTP / ....	& \Cref{subsec:FTP}\\
 	RFC \rfc{1305}/\rfc{5905} NTP	&					&\\
 	\RFC{1065} SNMP			&					&\\
-	\RFC{5424} Syslog			&					& Subsection \ref{subsec:SYSLOG}\\
-	\RFC{2131} DHCP			&					& Subsection \ref{subsec:DHCP}\\
-	\RFC{3046} DHCP Relay		&					& Subsection \ref{subsec:DHCP}\\
-	\RFC{7230} HTTP			&					& Subsection \ref{subsec:HTTP}\\
+	\RFC{5424} Syslog			&					& \Cref{subsec:SYSLOG}\\
+	\RFC{2131} DHCP			&					& \Cref{subsec:DHCP}\\
+	\RFC{3046} DHCP Relay		&					& \Cref{subsec:DHCP}\\
+	\RFC{7230} HTTP			&					& \Cref{subsec:HTTP}\\
 	\RFC{4301} IPSec			& \RFC{5246} TLS			&\\\hline
 	\end{tabular}\end{table}
 
