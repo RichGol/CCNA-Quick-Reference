@@ -4,15 +4,15 @@
 
 This GitHub repository hosts a personal project to organize CCNA 200-301 material and IEEE 802 protocols for quick reference and study. It is not a replacement for official CCNA learning material and does not include all topics covered by the current CCNA 200-301 exam.
 
-The project is written in the LaTeX markup language, which typesets a searchable PDF document. This repository primarily exists to share the PDF document with those who find it useful, although those who are curious are welcome to explore the underlying LaTeX code.
+The project is written in the LaTeX markup language, which typesets a searchable PDF document. This repository primarily exists to share the document with those who find it useful, although those who are curious are welcome to explore the underlying LaTeX code.
 
-*Note: The LaTeX code most likely does NOT adhere to best-practices, as I am self-taught in and solve issues as they arise. This is not my first LaTeX document, and it will not be my last.*
+*Note: The LaTeX code most likely does NOT adhere to best-practices, as I am self-taught and solve issues as they arise. This is not my first LaTeX document, and it will not be my last.*
 
 I created this project shortly after becoming CCNA certified in order to more legibly organize my personal study notes. I am sharing it in the hope of helping others who are pursuing their own interests in networking.
 
 ## Document Features
 
-- Fully searchable PDF written and compiled using LaTeX, allowing for internal links to each topic section/subsection. Topics are organized according to the TCP/IP Network Model (Layer 1 through Layer 5), plus QoS and Appendix sections.
+- Fully searchable PDF written and compiled in LaTeX, allowing for internal links to each topic section/subsection. Topics are organized according to the TCP/IP Network Model (Layer 1 through Layer 5), plus QoS, MPLS, and Appendix sections.
 
 - Applicable topics include relevant RFC number(s), which serves as formatted hyperlink(s) (via [datatracker.ietf.org](https://datatracker.ietf.org/)) directly to the specified RFC(s). Note that IEEE standards are not linked at this time.
 
@@ -27,6 +27,8 @@ I created this project shortly after becoming CCNA certified in order to more le
 ## File Structure
 
 `CCNA_RefDoc.pdf`: The primary file, a searchable PDF that those pursuing CCNA certification or networking may find useful.
+
+`CCNA_RefDoc_BW.pdf`: A black/white version of CCNA_RefDoc.pdf for compatibility with black/white printing.
 
 `CCNA_RefDoc.tex`: The LaTeX markup language "source code", which can be typeset by a TeX editor to create a searchable PDF.
 
