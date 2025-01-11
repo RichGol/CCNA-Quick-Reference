@@ -20,7 +20,9 @@ I created this project shortly after becoming CCNA certified in order to more le
 
 - Applicable topics include relevant RFC number(s), which serves as formatted hyperlink(s) (via [datatracker.ietf.org](https://datatracker.ietf.org/)) directly to the specified RFC(s). Note that IEEE standards are not linked at this time.
 
-- Includes header formats for common protocols, including field names and lengths. Quick-reference tables list common field values and addresses / address blocks. Color-coding provides visual reference where appropriate.
+- Includes header formats for common protocols, including field names and lengths. Quick-reference tables list common field values and addresses / address blocks. The document is presented grayscale for printing compatibility.
+  
+  - See the [main branch](https://github.com/RichGol/CCNA-Quick-Reference/tree/main) for a color version of the document.
 
 - Includes common network processes and features, including STP elections; OSPF DR/BDR elections; AP modes; modified EUI-64 address generation and more.
 
@@ -31,8 +33,6 @@ I created this project shortly after becoming CCNA certified in order to more le
 ## File Structure
 
 `CCNA_RefDoc.pdf`: The primary file, a searchable PDF that those pursuing CCNA certification or networking may find useful.
-
-`CCNA_RefDoc_BW.pdf`: A grayscale version of CCNA_RefDoc.pdf for compatibility with black/white printing.
 
 `CCNA_RefDoc.tex`: The LaTeX markup language "source code", which can be typeset by a TeX editor to create a searchable PDF.
 

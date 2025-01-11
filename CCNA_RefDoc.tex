@@ -46,7 +46,7 @@
 \counterwithin{table}{section}									% reset table counters per-section
 \counterwithin{figure}{section}								% reset figure counters per-section
 
-\newcommand{\printColor}{Y}								% toggle document colors for printing. Value {Y} for colors, value {} for black/white.
+\newcommand{\printColor}{}									% toggle document colors for printing. Value {Y} for colors, value {} for black/white.
 \newcommand{\textcolorbf}[2]{\if\printColor Y{\textcolor{#1}{\textbf{#2}}}\else{\textbf{#2}}\fi}
 \newcommand{\note}[1]{\if\printColor Y{\colorbox{#1}{Note:}}\else{\underline{Note:}}\fi}
 
@@ -1313,7 +1313,7 @@
 	\RFC{791} IPP (CS)			& IPv4 \texttt{ToS Byte} (OLD) 	& \Cref{subsec:IPV4}\\
 	RFC \rfc{2474}/\rfc{3168} (DSCP)	& IPv4 \texttt{DS Field} (NEW) 	& \Cref{subsec:IPV4}\\\hline
 	\RFC{2460} (DSCP)			& IPv6 \texttt{Traffic Class} 		& \Cref{subsec:IPV6}\\\hline
-							& MPLS \texttt{EXP}\\\hline
+	RFC \rfc{3032}/\rfc{5462}		& MPLS \texttt{EXP}			& \Cref{sec:MPLS}\\\hline
 	\end{tabular}\end{table}
 	\textit{Quality of Service} (QoS) is defined across several standards to provide preferential treatment for certain traffic. They define groups of QoS markings (shown above) as well as header fields used to mark QoS traffic. QoS-configured devices employ \textit{Classification} to identify QoS traffic and apply specifically configured actions, including \textit{Marking}, \textit{Queuing}, \textit{Policing}, \textit{Shaping}, and/or \textit{Congestion Avoidance} features. Marking is typically done by an initial device, simplifying Classification for downstream devices. QoS characterizes network traffic according to the following metrics:
 
@@ -1380,6 +1380,24 @@
 	An \textit{Ethernet LAN} (E-LAN) connects multiple customer sites in a Full Mesh EVC. These customer devices must reside in the same subnet to become routing peers. An E-LAN is much more practical than using $\frac{n * (n-1)}{2}$ separate E-Lines.
 
 	An \textit{Ethernet Tree} (E-Tree) connects an \textit{E-Tree Root} (a central site) to multiple \textit{E-Tree Leafs} (remote sites) in a Point-to-Multipoint EVC. Each E-Tree leaf can send frames only to the E-Tree root, while the E-Tree root can send frames to all E-Tree leafs. This is optimal when an E-LAN is not required.
+
+
+
+
+
+%%--sec:SDN
+%\section{Software-Defined Networking (SDN) \label{sec:SDN}}
+%Traditional network functionality is separated among the \textit{Data Plane}, \textit{Control Plane}, and \textit{Management Plane}. The data plane is normally distributed among all networking devices via \textit{Application-Specific Integrated Circuit} (ASIC) and \textit{Ternary Content-Addressible Memory} (TCAM) hardware. The control plane is normally distributed among devices via control plane protocols; networking devices coordinate through protocol overhead messaging.
+%
+%SDN offers another approach to building and controlling an IP-based network. It uses an \textit{SDN Controller} (controller), running as server software or a VM, to centralize control plane functionality. The degree and type of control varies depending on the implemented SDN model. The controller may be placed anywhere in the network so long as it has IP reachability to all networking devices. It uses a \textit{Southbound Interface} (SBI) to communicate with networking devices and a \textit{Northbound Interface} (NBI) to communicate with network management applications. Each SBI/NBI is defined by an SDN communication protocol (OpenFlow, NetConf, PCEP, SSH, Telnet, etc) and API (REST); many models support multiple SBIs/NBIs.
+%
+%The SBI/NBI enable the controller to collect data from the entire network for analysis and presentation to external applications. This allows for \textit{network programmability}: automated control of the network via application software. Controllers offer a mix of *configuration management* and *operational management* features. Configuration management features interact with device configurations. Operational management features monitor, gather data, and report/alert to potential issues (e.g. configuration drift).
+%
+%The \textit{Open Networking Foundation} (ONF) user/vendor consortium helps define protocols, SBIs/NBIs, and SDN visions to establish SDN within the marketplace. They created the \textit{OpenSDN} model and the \textit{OpenFlow} SBI, which completely centralizes the control plane. The controller knows the network topology and per-device configuration details, allowing it to program each device's table entries. This gives OpenSDN switches feature flexibility beyond traditional Layer 2 / Layer 3 switch models.
+%
+%OpenSDN is compatible with dozens of controllers, partially because of enterprise SDN consolidation taking place in the 2010s. It resulted in the open-source \textit{OpenDaylight} (ODL) controller, which supports many SBIs and still exists today under the Linux Foundation. Vendors can use ODL as the basis of their own SDN controllers.
+%
+%The Cisco-proprietary \textit{OpenSDN Controller} (OSC) was built on ODL, but was discontinued in favor of Cisco's \textit{Intent-Based Networking} (IBN) approach. Cisco IBN offers \textit{Application Centric Infrastructure} (ACI) for data centers, \textit{Software-Defined Access} (SDA) for enterprise campus LANs, and \textit{Software-Defined WAN} (SD-WAN) for enterprise WANs. See \href{https://developer.cisco.com}{Cisco Devnet} and \href{https://dcloud.cisco.com}{Cisco dCloud} to learn more about Cisco IBN offerings.
 
 
 
