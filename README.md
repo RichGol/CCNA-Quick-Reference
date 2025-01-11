@@ -1,5 +1,9 @@
 # The CCNA Quick Reference Guide
 
+<p align="center">
+  <img src="https://github.com/RichGol/CCNA-Quick-Reference/blob/main/images/CCNA_RefDoc.gif?raw=true" alt="CCNA_RefDoc.gif" width="60%"/>
+</p>
+
 ## Purpose
 
 This GitHub repository hosts a personal project to organize CCNA 200-301 material and IEEE 802 protocols for quick reference and study. It is not a replacement for official CCNA learning material and does not include all topics covered by the current CCNA 200-301 exam.
@@ -28,8 +32,8 @@ I created this project shortly after becoming CCNA certified in order to more le
 
 `CCNA_RefDoc.pdf`: The primary file, a searchable PDF that those pursuing CCNA certification or networking may find useful.
 
-`CCNA_RefDoc_BW.pdf`: A black/white version of CCNA_RefDoc.pdf for compatibility with black/white printing.
+`CCNA_RefDoc_BW.pdf`: A grayscale version of CCNA_RefDoc.pdf for compatibility with black/white printing.
 
 `CCNA_RefDoc.tex`: The LaTeX markup language "source code", which can be typeset by a TeX editor to create a searchable PDF.
 
-`images`: A folder containing all images that are typeset by LaTeX into the resulting PDF.
+`images`: A folder containing all images used by the project.
