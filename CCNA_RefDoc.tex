@@ -17,7 +17,7 @@
 
 \usepackage{hyperref}										% provide TOC and \href link formatting
 \hypersetup{
-	colorlinks=true,
+	colorlinks=false,
 	linkcolor=blue,
 	filecolor=magenta,
 	urlcolor=black,
@@ -34,7 +34,7 @@
 	frame=topline,
 	breaklines=true,
 	breakatwhitespace=true,
-	postbreak={\hbox{\textcolor{red}{>\space}}},
+	postbreak={\hbox{\textcolor{gray}{>\space}}},
 %	keepspaces=true,
 	tabsize=2
 }
@@ -87,8 +87,8 @@
 	\centering
 	\caption{IEEE 802.3 Copper Standards \label{tab:802.3 COPPER}}
 	\begin{tabular}{| l | c | r r |}\hline
-	802.3		& 10BASE-T 		& 10 Mbps 		&CAT3\\\hline
-	802.3u 	& 100BASE-T 		& 100 Mbps 	&CAT5\\\hline
+	802.3i		& 10BASE-T 		& 10 Mbps 		&CAT3\\\hline
+	802.3u 	& 100BASE-TX 		& 100 Mbps 	&CAT5\\\hline
 	802.3ab 	& 1000BASE-T 		& 1 Gbps 		&CAT5e\\\hline
 	802.3z 	& 1000BASE-SX 		& 1 Gbps		&550m Fiber\\
 			& 1000BASE-LX		& 1 Gbps		&5km Fiber\\\hline
@@ -239,11 +239,11 @@
 	\centering
 	\caption{Cisco InterSwitch Link (ISL) \label{tab:CISCO ISL}}
 	\begin{tabular}{| l | c | r |}\hline
-	Destination Address	& 40 bits	& Multicast (\texttt{01.000c.0000} / \texttt{03.000c.0000})\\\hline
+	Destination Address	& 40 bits	& Multicast (\texttt{0100.0c00.00} / \texttt{0300.0c00.00})\\\hline
 	Type				& 4 bits	& Frame Type\\\hline
 	User				& 4 bits	& Priority Handling\\\hline
 	Source Address		& 48 bits	& Sending Switchport MAC\\\hline
-	LEN				& 16 bits	& Original Frame Length\\\hline
+	LEN				& 16 bits	& Original Frame Length in Bytes\\\hline
 	AAAA03			& 24 bits	& SNAP/LLC Field (\texttt{0xaaaa03})\\\hline
 	HSA				& 24 bits	& Source Address OUI (\texttt{0000.0c})\\\hline
 	VLAN				& 15 bits	& VLAN ID\\\hline
@@ -537,7 +537,7 @@
 	\begin{table}[H]
 	\centering
 	\caption{WLC Deployment \label{tab:WLC DEPLOYMENT}}
-	\begin{tabular}{lccc}\hline
+	\begin{tabular}{lcrr}\hline
 	\textbf{Deployment}	& \textbf{WLC Location}	& \textbf{Clients}		& \textbf{APs}\\\hline
 	Unified			& Central				& 64,000			& 6,000\\\hline
 	Cloud			& Data Center 			& 32,000			& 3,000\\\hline
@@ -626,7 +626,7 @@
 	\begin{minipage}{.35\linewidth}
 	\centering
 	\caption{IPv4 Protocol / IPv6 Next Header Values \label{tab:L3 PROTOCOL}}
-	\begin{tabular}{| c | c | r|}\hline
+	\begin{tabular}{| c | r | r|}\hline
 	\texttt{0x01}	& 1			& ICMP\\\hline
 	\texttt{0x02}	& 2			& IGMP\\\hline
 	\texttt{0x04}	& 4			& IPv4\\\hline
@@ -736,6 +736,8 @@
 	\textbf{Octet Wildcard}	& 127	& 63	& 31 	& 15	& 7	& 3	& 1	& 0\\\hline
 	\end{tabular}\end{table}
 
+	IPv4 hosts use an \textit{ARP Table} (mapping Layer 2/3 addresses) and Layer 3 forwarding logic to send packets. Local traffic is forwarded directly; external traffic is forwarded to the default gateway address.
+
 
 	%RFC 2460 IP Version 6 																						--subsec:IPV6
 	\subsection[RFC 2460 IPv6]{\RFC{2460} IP Version 6 \label{subsec:IPV6}}
@@ -766,7 +768,7 @@
 	Unicast			&				&\\\hline
 	Link-Local 			& \texttt{fe80::/64}	& \texttt{fe80:0:0:0} (64 bits) + INT ID (64 bits)\\
 	Unicast			&				&\\\hline
-	Multicast			& \texttt{ff00::/12}	& \texttt{ff02:0:0:0:0:1:ffXX:XXXX/104} Solicited-Node Multicast\\
+	Multicast			& \texttt{ff00::/12}	& \texttt{ff02::1:ffXX:XXXX/104} Solicited-Node Multicast\\
 					& \texttt{ff01::/16}	& Interface/Node-Local\\
 					& \texttt{ff02::/16}	& Link-Local\\
 					& \texttt{ff05::/16}	& Site-Local\\
@@ -914,6 +916,8 @@
 	Options			& varies	&\\\hline
 	\end{tabular}\end{table}
 	\note{Goldenrod} Unlike IPv4 ARP, ICMPv6 NDP messages are encapsulated within an IPv6 packet.
+
+	IPv6 hosts use an \textit{NDP Neighbor Table} (mapping Layer 2/3 addresses) and an IPv6 routing table (populated by Router Discovery) to send packets. \textit{On-link} traffic is forwarded directly; \textit{off-link} traffic is forwarded to the default gateway's link-local address.
 
 
 	%RFC 2328 OSPFv2 																						--subsec:OSPF
@@ -1432,7 +1436,7 @@
 	\begin{minipage}[t]{.45\linewidth}
 	\centering
 	\caption{Protocol Priority Values\label{tab:DEFAULT PRIORITIES}}
-	\begin{tabular}{lcr}\hline
+	\begin{tabular}{llr}\hline
 	\textbf{Protocol}		& \textbf{Priority}		& \textbf{Default Value}\\\hline
 	STP/RSTP			& 0 - 61,440			& 32,768\\\hline
 	OSPF				& 0 - 255			& 1\\\hline
@@ -1580,7 +1584,7 @@
 	%Example Configuration 																					--subsec:CONFIG
 	\newpage
 	\subsection{Cisco IOS Configuration Examples \label{subsec:CONFIG}}
-	\textbf{Layer 2 Interface Configuration:}
+	\textbf{Layer 2 Interface Configuration}
 	\begin{lstlisting}
 configure terminal
 	interface F0/1
@@ -1593,7 +1597,7 @@ configure terminal
 show interfaces [INT] [status | switchport]
 	\end{lstlisting}
 
-	\textbf{VLAN Configuration:}
+	\textbf{VLAN Configuration}
 	\begin{lstlisting}
 configure terminal
 	vlan VLAN_ID
@@ -1623,7 +1627,7 @@ show vlan id VLAN_ID
 show vtp {status | password}
 	\end{lstlisting}
 
-	\textbf{Link Aggregation Configuration:}
+	\textbf{Link Aggregation Configuration}
 	\begin{lstlisting}
 configure terminal
 	port-channel load-balance {src-mac | dst-mac | src-dst-mac | src-ip | dst-ip | src-dst-ip | src-port | dst-port | src-dst-port}
@@ -1640,7 +1644,7 @@ show etherchannel load-balance
 test etherchannel load-balance interface INT mac SRC_MAC DST_MAC
 	\end{lstlisting}
 
-	\textbf{Port Security Configuration:}
+	\textbf{Port Security Configuration}
 	\begin{lstlisting}
 configure terminal
 	errdisable recovery cause psecure-violation
@@ -1664,7 +1668,7 @@ show mac address-table [static | secure] [vlan VLAN_ID | interface INT]
 clear mac address-table dynamic [vlan VLAN_ID | interface INT | address MAC]
 	\end{lstlisting}
 
-	\textbf{CDP / LLDP Configuration:}
+	\textbf{CDP / LLDP Configuration}
 	\begin{lstlisting}
 configure terminal
 	[no] {cdp | lldp} run
@@ -1682,7 +1686,7 @@ show {cdp | lldp} neighbors [detail] [INT]
 show {cdp | lldp} entry NEIGHBOR
 	\end{lstlisting}
 
-	\textbf{Spanning Tree Configuration:}
+	\textbf{Spanning Tree Configuration}
 	\begin{lstlisting}
 configure terminal
 	errdisable recovery cause bpduguard
@@ -1704,7 +1708,7 @@ show spanning-tree [bridge | summary]
 show spanning-tree [vlan VLAN_LIST | interface INT]
 	\end{lstlisting}
 
-	\textbf{Authenticated NTP Configuration:}
+	\textbf{Authenticated NTP Configuration}
 	\begin{lstlisting}
 configure terminal
 	clock timezone CST -6 0
@@ -1725,7 +1729,7 @@ show ntp associations [detail]
 show {clock | calendar} [detail]
 	\end{lstlisting}
 
-	\textbf{Logging and SNMP Configuration:}
+	\textbf{Logging and SNMP Configuration}
 	\begin{lstlisting}
 terminal monitor
 configure terminal
@@ -1745,7 +1749,7 @@ configure terminal
 show snmp {community | contact | location | host}
 	\end{lstlisting}
 
-	\textbf{DHCP Snooping and DAI Configuration:}
+	\textbf{DHCP Snooping and DAI Configuration}
 	\begin{lstlisting}
 configure terminal
 	errdisable recovery cause dhcp-rate-limit
@@ -1768,7 +1772,7 @@ show ip dhcp snooping [binding]
 show ip arp inspection [statistics | interfaces]
 	\end{lstlisting}
 
-	\textbf{Layer 3 Interface Configuration:}
+	\textbf{Layer 3 Interface Configuration}
 	\begin{lstlisting}
 configure terminal
 	sdm prefer lanbase-routing
@@ -1799,7 +1803,7 @@ show ip default-gateway
 show vlans
 	\end{lstlisting}
 
-	\textbf{IP Routing Configuration:}
+	\textbf{IP Routing Configuration}
 	\begin{lstlisting}
 configure terminal
 	router ospf 1
@@ -1854,7 +1858,7 @@ show ip arp
 show ipv6 neighbors
 	\end{lstlisting}
 
-	\textbf{VRF Configuration:}
+	\textbf{VRF Configuration}
 	\begin{lstlisting}
 configure terminal
 	ip vrf VRF_NAME
@@ -1867,7 +1871,7 @@ show ip route vrf VRF_NAME
 ping vrf VRF_NAME [ADDRESS]
 	\end{lstlisting}
 
-	\textbf{FHRP Configuration:}
+	\textbf{FHRP Configuration}
 	\begin{lstlisting}
 configure terminal
 	interface F0/0
@@ -1887,7 +1891,7 @@ show vrrp [brief | GROUP_ID]
 show vrrp interface INT [brief]
 	\end{lstlisting}
 
-	\textbf{DHCP Services Configuration:}
+	\textbf{DHCP Services Configuration}
 	\begin{lstlisting}
 configure terminal
 	service dhcp
@@ -1905,7 +1909,7 @@ show ip dhcp pool POOL_NAME
 show ip dhcp binding
 	\end{lstlisting}
 
-	\textbf{ACL Configuration:}
+	\textbf{ACL Configuration}
 	\begin{lstlisting}
 configure terminal
 	access-list {1-99 | 1300-1999} {permit | deny} {[host] SRC_IP | SRC_IP SRC_WC | any} [log]
@@ -1930,7 +1934,7 @@ show access-lists
 show ip access-lists
 	\end{lstlisting}
 
-	\textbf{NAT Services Configuration:}
+	\textbf{NAT Services Configuration}
 	\begin{lstlisting}
 configure terminal
 	interface F0/0
@@ -1947,7 +1951,7 @@ show ip nat translations
 show ip nat statistics
 	\end{lstlisting}
 
-	\textbf{QoS Configuration:}
+	\textbf{QoS Configuration}
 	\begin{lstlisting}
 configure terminal
 	class-map [match-all | match-any] CMAP_NAME
@@ -1963,7 +1967,7 @@ configure terminal
 show run | section policy-map
 	\end{lstlisting}
 
-	\textbf{WLC WLAN Configuration:}
+	\textbf{WLC WLAN Configuration}\hrule
 	\begin{enumerate}
 		\item{Create a new WLC Dynamic Interface:}
 		\begin{itemize} \itemsep -5pt
