@@ -5,9 +5,13 @@
 \date{\vspace{-5px}}
 \setlength\intextsep{0cm}
 
+\newif\ifcolor											% toggle document colors for printing. \colortrue for colors, \colorfalse for grayscale
+\colortrue
+
 \usepackage[top=.5in,bottom=.75in,left=.75in,right=.75in]{geometry}		% set page margins
-\usepackage{parskip}										% left-align texts with no indentation
+\usepackage{parskip}										% left-aligns text with no indentation
 \usepackage{float}										% provide [H] option to table/figure/graphics environments
+\usepackage{array}										% provide advanced table formatting
 \usepackage[justification=raggedright,font=bf,position=bottom]{caption}	% provide caption formatting
 \usepackage[dvipsnames]{xcolor}								% provide \textcolor, \colorbox, and predefined colors
 
@@ -17,7 +21,7 @@
 
 \usepackage{hyperref}										% provide TOC and \href link formatting
 \hypersetup{
-	colorlinks=true,
+	colorlinks={\ifcolor true\else false\fi},
 	linkcolor=blue,
 	filecolor=magenta,
 	urlcolor=black,
@@ -28,13 +32,13 @@
 }
 \usepackage{cleveref}										% provide smart label references
 
-\usepackage{listings}										% provide \listings environment
+\usepackage{listings}										% provide \listings code environment
 \lstdefinestyle{mystyle}{
 	basicstyle=\ttfamily\footnotesize,
 	frame=topline,
 	breaklines=true,
 	breakatwhitespace=true,
-	postbreak={\hbox{\textcolor{red}{>\space}}},
+	postbreak={\hbox{\textcolor{\ifcolor red\else gray\fi}{>\space}}},
 %	keepspaces=true,
 	tabsize=2
 }
@@ -46,10 +50,8 @@
 \counterwithin{table}{section}									% reset table counters per-section
 \counterwithin{figure}{section}								% reset figure counters per-section
 
-\newcommand{\printColor}{Y}								% toggle document colors for printing. Value {Y} for colors, value {} for black/white.
-\newcommand{\textcolorbf}[2]{\if\printColor Y{\textcolor{#1}{\textbf{#2}}}\else{\textbf{#2}}\fi}
-\newcommand{\note}[1]{\if\printColor Y{\colorbox{#1}{Note:}}\else{\underline{Note:}}\fi}
-
+\newcommand{\textcolorbf}[2]{\ifcolor \textcolor{#1}{\textbf{#2}}\else \textbf{#2}\fi}
+\newcommand{\note}[1]{\ifcolor \colorbox{#1}{Note:}\else \underline{Note:}\fi}
 \newcommand{\rfc}[1]{\href{https://datatracker.ietf.org/doc/html/rfc#1}{#1}}
 \newcommand{\RFC}[1]{\href{https://datatracker.ietf.org/doc/html/rfc#1}{RFC #1}}
 
@@ -63,15 +65,15 @@
 	\subsection[ANSI/TIA T568]{ANSI/TIA T568 Pinout Standards \label{subsec:T568}}
 	\begin{table}[H]
 	\centering
-	\begin{tabular}{cll cc}\hline
+	\begin{tabular}{@{} c l l c c @{}}\hline
 	\textbf{Pin}	& \textbf{T568A}					& \textbf{T568B} 							& \textbf{MDI} 	& \textbf{MDI-X}\\\hline
-	1		& \textcolorbf{Green}{Green-White}		& \textcolorbf{orange}{Orange-White}			& Tx			& Rx\\\hline
-	2		& \textcolorbf{Green}{Green}			& \textcolorbf{orange}{Orange}				& Tx			& Rx\\\hline
-	3		& \textcolorbf{orange}{Orange-White}	& \textcolorbf{Green}{Green-White}				& Rx 			& Tx\\\hline
-	4		& \textcolorbf{cyan}{Blue}			& \textcolorbf{cyan}{Blue}\\\hline
-	5		& \textcolorbf{cyan}{Blue-White}		& \textcolorbf{cyan}{Blue-White}\\\hline
-	6		& \textcolorbf{orange}{Orange}		& \textcolorbf{Green}{Green}					& Rx			& Tx\\\hline
-	7		& \textcolorbf{Mahogany}{Brown-White}	& \textcolorbf{Mahogany}{Brown-White}\\\hline
+	1		& \textcolorbf{Green}{Green-White}		& \textcolorbf{orange}{Orange-White}			& Tx			& Rx\\
+	2		& \textcolorbf{Green}{Green}			& \textcolorbf{orange}{Orange}				& Tx			& Rx\\
+	3		& \textcolorbf{orange}{Orange-White}	& \textcolorbf{Green}{Green-White}				& Rx 			& Tx\\
+	4		& \textcolorbf{cyan}{Blue}			& \textcolorbf{cyan}{Blue}\\
+	5		& \textcolorbf{cyan}{Blue-White}		& \textcolorbf{cyan}{Blue-White}\\
+	6		& \textcolorbf{orange}{Orange}		& \textcolorbf{Green}{Green}					& Rx			& Tx\\
+	7		& \textcolorbf{Mahogany}{Brown-White}	& \textcolorbf{Mahogany}{Brown-White}\\
 	8		& \textcolorbf{Mahogany}{Brown}		& \textcolorbf{Mahogany}{Brown}\\\hline
 	\end{tabular}\end{table}
 	Two standard T568 pinouts exist for the \textit{Medium-Dependent Interface} (MDI) and \textit{MDI Crossover} (MDI-X) port standards. Computers, routers, and Layer 3 devices use the MDI standard; switches, hubs, and other Layer 2 devices use the MDI-X standard. Connections between MDI and MDI-X ports use a \textit{straight-through} cable, where the same T568 standard terminates each end of the cable. Connections between two MDI (or two MDI-X) ports use a \textit{crossover} cable, where different T568 standards terminate each end of the cable. Most new equipment incorporates \textit{Auto-MDIX} circuitry to allow either cable type.
@@ -83,7 +85,7 @@
 	\subsection{Cabling Standards \label{subsec:CABLING}}
 	\begin{table}[H]
 	%IEEE 802.3 Copper Standards																				--tab:802.3 COPPER
-	\begin{minipage}[t]{.6\linewidth}
+	\begin{minipage}[t]{.58\linewidth}
 	\centering
 	\caption{IEEE 802.3 Copper Standards \label{tab:802.3 COPPER}}
 	\begin{tabular}{| l | c | r r |}\hline
@@ -98,7 +100,7 @@
 			& 5GBASE-T 		& 5 Gbps 		&CAT5e\\\hline
 	\end{tabular}\end{minipage}\hfill
 	%SFP Transceivers																								--tab:SFP
-	\begin{minipage}[t]{.4\linewidth}
+	\begin{minipage}[t]{.42\linewidth}
 	\centering
 	\caption{SFP Transceivers \label{tab:SFP}}
 	\begin{tabular}{| c | r | r |}\hline
@@ -115,27 +117,27 @@
 	\begin{table}[H]
 	\centering
 	\caption{ANSI/TIA-598 Fiber Standards \label{tab:802.3 FIBER}}
-	\begin{tabular}{| c | c | c | r |}\hline
-	\textbf{Fiber Type}	& \textbf{Polish}	& \textbf{Jacket / Connector}								& \textbf{Usage}\\\hline
-	OS1 / OS2			& UPC		& \textcolorbf{Dandelion}{yellow} / \textcolorbf{Cyan}{blue}		& indoor / outdoor\\\cline{2-3}
-					& APC		& \textcolorbf{Dandelion}{yellow} / \textcolorbf{Green}{green}		&\\\hline
-	OM1				& UPC		& \textcolorbf{orange}{orange} / \textcolorbf{Tan}{beige} 			& 100 Mbps\\
-					&			& \textcolorbf{orange}{orange} / \textcolorbf{darkgray}{gray}		&\\\hline
-	OM2				& UPC		& \textcolorbf{orange}{orange} / \textbf{black}					& 1 Gbps\\\hline
-	OM3 / OM4			& UPC		& \textcolorbf{Aquamarine}{aqua} / \textcolorbf{Aquamarine}{aqua}	& 10/40/100 Gbps\\\hline
-	OM5				& UPC		& \textcolorbf{LimeGreen}{lime} / \textcolorbf{LimeGreen}{lime}		& 10/40/100 Gbps\\\hline
+	\begin{tabular}{| l | c | c | r |}\hline
+	\textbf{Type}	& \textbf{Polish}	& \textbf{Jacket / Connector}								& \textbf{Usage}\\\hline
+	OS1/OS2		& UPC		& \textcolorbf{Dandelion}{yellow} / \textcolorbf{Cyan}{blue}		& indoor / outdoor\\\cline{2-3}
+				& APC		& \textcolorbf{Dandelion}{yellow} / \textcolorbf{Green}{green}		&\\\hline
+	OM1			& UPC		& \textcolorbf{orange}{orange} / \textcolorbf{Tan}{beige} 			& 100 Mbps\\
+				&			& \textcolorbf{orange}{orange} / \textcolorbf{darkgray}{gray}		&\\\hline
+	OM2			& UPC		& \textcolorbf{orange}{orange} / \textbf{black}					& 1 Gbps\\\hline
+	OM3/OM4		& UPC		& \textcolorbf{Aquamarine}{aqua} / \textcolorbf{Aquamarine}{aqua}	& 10/40/100 Gbps\\\hline
+	OM5			& UPC		& \textcolorbf{LimeGreen}{lime} / \textcolorbf{LimeGreen}{lime}		& 10/40/100 Gbps\\\hline
 	\end{tabular}\end{table}%
 
 	%Power over Ethernet (PoE)																						--tab:POE
 	\begin{table}[H]
 	\centering
 	\caption{Power over Ethernet (PoE) \label{tab:POE}}
-	\begin{tabular}{| l  l | c | l |}\hline
-	Cisco Inline Power	& ILP			& 7.5W			& 2 wire pairs\\\hline
-	IEEE 802.3af			& Type 1 PoE	& 15W (44-57v)		& 2 wire pairs $\ge$ CAT3\\\hline
-	IEEE 802.3at			& Type 2 PoE+	& 30W (50-57v)		& 2 wire pairs $\ge$ CAT5\\\hline
-	IEEE 802.3bt 		& Type 3 UPoE	& 60W (50-57v) 		& 4 wire pairs $\ge$ CAT5\\
-					& Type 4 UPoE+	& 100W (52-57v)		& 4 wire pairs $\ge$ CAT5\\\hline
+	\begin{tabular}{| l l | r r | l |}\hline
+	Cisco Inline Power	& ILP			& 7.5W	&		& 2 wire pairs\\\hline
+	IEEE 802.3af			& Type 1 PoE	& 15W 	&44-57v	& 2 wire pairs $\ge$ CAT3\\\hline
+	IEEE 802.3at			& Type 2 PoE+	& 30W	&50-57v	& 2 wire pairs $\ge$ CAT5\\\hline
+	IEEE 802.3bt 		& Type 3 UPoE	& 60W 	&50-57v 	& 4 wire pairs $\ge$ CAT5\\
+					& Type 4 UPoE+	& 100W 	&52-57v	& 4 wire pairs $\ge$ CAT5\\\hline
 	\end{tabular}\end{table}
 	IEEE \textit{Active PoE} negotiates power delivery via LLDP. Nonstandard \textit{Passive PoE} provides a constant voltage that may \textcolorbf{Red}{damage} equipment. \textbf{Mode A} PoE energizes the 2 data wire pairs; \textbf{Mode B} PoE energizes the 2 spare wire pairs; \textbf{4Pair} PoE energizes all 4 wire pairs.
 
@@ -150,36 +152,36 @@
 	\begin{minipage}[t]{.4\linewidth}
 	\centering
 	\caption{EtherType Values \label{tab:ETHERTYPE}}
-	\begin{tabular}{| c | r |}\hline
-	\texttt{0x0800}	& IPv4 Packet\\\hline
-	\texttt{0x0806}	& ARP\\\hline
-	\texttt{0x2000}	& Cisco CDP\\\hline
-	\texttt{0x8100}	& IEEE 802.1Q\\\hline
-	\texttt{0x86dd}	& IPv6 Packet\\\hline
-	\texttt{0x8809}	& Ethernet Slow Protocols\\\hline
-	\texttt{0x8847}	& MPLS Unicast\\
-	\texttt{0x8848}	& MPLS Multicast\\\hline
-	\texttt{0x8863}	& PPPoE Discovery\\
-	\texttt{0x8864}	& PPPoE Session\\\hline
-	\texttt{0x888e}	& IEEE 802.1x EAPOL\\\hline
-	\texttt{0x88cc}	& IEEE 802.1AB LLDP\\\hline
+	\begin{tabular}{| >{\ttfamily}c | r |}\hline
+	0x0800	& IPv4 Packet\\\hline
+	0x0806	& ARP\\\hline
+	0x2000	& Cisco CDP\\\hline
+	0x8100	& IEEE 802.1Q\\\hline
+	0x86dd	& IPv6 Packet\\\hline
+	0x8809	& Ethernet Slow Protocols\\\hline
+	0x8847	& MPLS Unicast\\
+	0x8848	& MPLS Multicast\\\hline
+	0x8863	& PPPoE Discovery\\
+	0x8864	& PPPoE Session\\\hline
+	0x888e	& IEEE 802.1x EAPOL\\\hline
+	0x88cc	& IEEE 802.1AB LLDP\\\hline
 	\end{tabular}\end{minipage}\hfill
 	%Layer 2 Multicast																					--tab:MULTICAST L2
 	\begin{minipage}[t]{.6\linewidth}
 	\centering
 	\caption{Layer 2 Multicast \label{tab:MULTICAST L2}}
-	\begin{tabular}{| l | r |}\hline
-	\texttt{0000.0c07.acXX}		& Cisco HSRPv1\\
-	\texttt{0000.0c9f.fXXX}		& Cisco HSRPv2\\\hline
-	\texttt{0000.5e00.01XX} 		& IETF VRRP\\\hline
-	\texttt{0007.b40X.XXYY}		& Cisco GLBP\\\hline
-	\texttt{0100.5eXX.XXXX}		& IPv4 Multicast\\
-	\texttt{3333.XXXX.XXXX}		& IPv6 Multicast\\\hline
-	\texttt{0100.0ccc.cccc}	 	& Cisco CDP / VTP / UDLD\\\hline
-	\texttt{0180.c200.000e}	 	& IEEE 802.1AB LLDP\\\hline
-	\texttt{0100.0ccc.cccd}		& Cisco PVST+ / PVRST\\\hline
-	\texttt{0180.c200.0000}	 	& IEEE 802.1D STP\\
-						& IEEE 802.1w RSTP\\\hline
+	\begin{tabular}{| >{\ttfamily}l | r |}\hline
+	0000.0c07.acXX		& Cisco HSRPv1\\
+	0000.0c9f.fXXX		& Cisco HSRPv2\\\hline
+	0000.5e00.01XX 		& IETF VRRP\\\hline
+	0007.b40X.XXYY		& Cisco GLBP\\\hline
+	0100.5eXX.XXXX		& IPv4 Multicast\\
+	3333.XXXX.XXXX		& IPv6 Multicast\\\hline
+	0100.0ccc.cccc	 	& Cisco CDP / VTP / UDLD\\\hline
+	0180.c200.000e	 	& IEEE 802.1AB LLDP\\\hline
+	0100.0ccc.cccd		& Cisco PVST+ / PVRST\\\hline
+	0180.c200.0000	 	& IEEE 802.1D STP\\
+					& IEEE 802.1w RSTP\\\hline
 	\end{tabular}\end{minipage}\end{table}
 	\note{Goldenrod} \texttt{0180.c200.000X} multicast addresses are not forwarded by 802.1D-compliant bridges. Not all Layer 2 protocols support multicast.
 
@@ -215,7 +217,7 @@
 	\textbf{\caption{IEEE SubNetwork Access Protocol (SNAP) Header \label{tab:802.2 SNAP}}}
 	\begin{tabular}{| l | c | r |}\hline
 	Organizationally Unique ID (OUI) 	& 3 Bytes	& \texttt{0x000000} or Vendor OUI\\\hline
-	Type	& 2 Bytes	& EtherType (\Cref{tab:ETHERTYPE})\\\hline
+	Type						& 2 Bytes	& EtherType (\Cref{tab:ETHERTYPE})\\\hline
 	\end{tabular}\end{table}
 	\note{Goldenrod} Each 802.3 frame includes an 802.2 LLC header for process multiplexing. Per \RFC{1042}, an 802.2 LLC header with value \texttt{0xaaaa03} includes a SNAP header identifying the EtherType.
 
@@ -408,7 +410,7 @@
 	\begin{table}[H]
 	\centering
 	\caption{Spanning Tree Port Costs \label{tab:STP PORT COSTS}}
-	\begin{tabular}{r | rrr}\hline
+	\begin{tabular}{@{} r | r r r @{}}\hline
 	\textbf{Port Speed}	& \textbf{STP IEEE Cost}	& \textbf{Revised IEEE Cost}	& \textbf{RSTP IEEE Cost}\\\hline
 	10 Mbps			& 100				& 100					& 2,000,000\\
 	100 Mbps			& 10				& 19					& 200,000\\
@@ -416,20 +418,19 @@
 	10 Gbps			& 1				& 2					& 2,000\\
 	100 Gbps			& - 				& - 					& 200\\
 	1 Tbps			& - 				& - 					& 20\\
-	10 Tbps			& - 				& - 					& 2\\
-	\hline
+	10 Tbps			& - 				& - 					& 2\\\hline
 	\end{tabular}\end{table}
 
 	%STP Port States 																						--tab:STP PORT STATES
 	\begin{table}[H]
 	\centering
 	\caption{Spanning Tree Port States \label{tab:STP PORT STATES}}
-	\begin{tabular}{cccccc}\hline
+	\begin{tabular}{@{} c c c c c c @{}}\hline
 	\textbf{STP State}	& \textbf{RSTP State}	& \textbf{Send/Receive BPDUs}	& \textbf{Forward Data}		& \textbf{Learn MACs}\\\hline
-	Disabled		& Discarding		& \textcolorbf{Red}{No}		& \textcolorbf{Red}{No}	& \textcolorbf{Red}{No}\\\hline
-	Blocking		& Discarding		& \textcolorbf{Dandelion}{Receive}	& \textcolorbf{Red}{No}	& \textcolorbf{Red}{No}\\\hline
-	Listening		& ----- 			& \textcolorbf{Green}{Yes}		& \textcolorbf{Red}{No}	& \textcolorbf{Red}{No}\\\hline
-	Learning		& Learning			& \textcolorbf{Green}{Yes}		& \textcolorbf{Red}{No}	& \textcolorbf{Green}{Yes}\\\hline
+	Disabled		& Discarding		& \textcolorbf{Red}{No}		& \textcolorbf{Red}{No}	& \textcolorbf{Red}{No}\\
+	Blocking		& Discarding		& \textcolorbf{Dandelion}{Receive}	& \textcolorbf{Red}{No}	& \textcolorbf{Red}{No}\\
+	Listening		& ----- 			& \textcolorbf{Green}{Yes}		& \textcolorbf{Red}{No}	& \textcolorbf{Red}{No}\\
+	Learning		& Learning			& \textcolorbf{Green}{Yes}		& \textcolorbf{Red}{No}	& \textcolorbf{Green}{Yes}\\
 	Forwarding		& Forwarding		& \textcolorbf{Green}{Yes}		& \textcolorbf{Green}{Yes}	& \textcolorbf{Green}{Yes}\\\hline
 	\end{tabular}\end{table}
 
@@ -520,8 +521,8 @@
 	\begin{table}[H]
 	\centering
 	\caption{IEEE 802.11 Standards \label{tab:802.11 STANDARDS}}
-	\begin{tabular}{ccccl}\hline
-	\textbf{Standard}	& \textbf{Frequency Range}	& \textbf{Bandwidth}	& \textbf{Encoding}	& \textbf{Name}\\\hline
+	\begin{tabular}{@{} c r r c l @{}}\hline
+	\textbf{Standard}	& \textbf{RF Band}		& \textbf{Bandwidth}	& \textbf{Encoding}	& \textbf{Name}\\\hline
 	-1997			& 2.4 GHz				& 2 Mbps			& FHSS/DSSS\\\hline
 	b 			& 2.4 GHz 				& 11 Mbps			& DSSS\\\hline
 	a 			& 5 GHz				& 54 Mbps 			& OFDM\\\hline
@@ -537,11 +538,11 @@
 	\begin{table}[H]
 	\centering
 	\caption{WLC Deployment \label{tab:WLC DEPLOYMENT}}
-	\begin{tabular}{lcrr}\hline
+	\begin{tabular}{@{} l c r r @{}}\hline
 	\textbf{Deployment}	& \textbf{WLC Location}	& \textbf{Clients}		& \textbf{APs}\\\hline
-	Unified			& Central				& 64,000			& 6,000\\\hline
-	Cloud			& Data Center 			& 32,000			& 3,000\\\hline
-	Embedded			& Access Switch			& 4,000 			& 200\\\hline
+	Unified			& Central				& 64,000			& 6,000\\
+	Cloud			& Data Center 			& 32,000			& 3,000\\
+	Embedded			& Access Switch			& 4,000 			& 200\\
 	Mobility Express		& LAP 				& 2,000			& 100\\\hline
 	\end{tabular}\end{table}
 
@@ -549,7 +550,7 @@
 	\begin{table}[H]
 	\centering
 	\caption{WLC Ports and Interfaces \label{tab:WLC PORTS}}
-	\begin{tabular}{llcr}\hline
+	\begin{tabular}{@{} l l c r @{}}\hline
 	\textbf{WLC Port}	& \textbf{WLC Interface}	& \textbf{VLAN}		& \textbf{Usage}\\\hline
 	Console		&					&				& Initial config\\\hline
 	Service Port		& Service Port			& OOB-MGMT		& Out-Of-Band mgmt (access port)\\
@@ -626,30 +627,30 @@
 	\begin{minipage}{.35\linewidth}
 	\centering
 	\caption{IPv4 Protocol / IPv6 Next Header Values \label{tab:L3 PROTOCOL}}
-	\begin{tabular}{| c | r | r|}\hline
-	\texttt{0x01}	& 1			& ICMP\\\hline
-	\texttt{0x02}	& 2			& IGMP\\\hline
-	\texttt{0x04}	& 4			& IPv4\\\hline
-	\texttt{0x06}	& 6			& TCP\\\hline
-	\texttt{0x11}	& 17			& UDP\\\hline
-	\texttt{0x29}	& 41			& IPv6\\\hline
-%	\texttt{0x2b}	& 43			& IPv6-Route\\
-%	\texttt{0x2c}	& 44			& IPv6-Frag\\\hline
-	\texttt{0x2f}		& 47			& GRE\\\hline
-	\texttt{0x3a}	& 58			& ICMPv6\\\hline
-%	\texttt{0x3b}	& 59			& IPv6-NoNxt\\
-%	\texttt{0x3c}	& 60			& IPv6-Opts\\\hline
-	\texttt{0x58}	& 88			& EIGRP\\\hline
-	\texttt{0x59}	& 89			& OSPF\\\hline
-	\texttt{0x67}	& 103			& PIM\\\hline
-	\texttt{0x70}	& 112			& VRRP\\\hline
-	\texttt{0x89}	& 137			& MPLS-in-IP\\\hline
+	\begin{tabular}{| >{\ttfamily}c | r | r |}\hline
+	0x01	& 1			& ICMP\\\hline
+	0x02	& 2			& IGMP\\\hline
+	0x04	& 4			& IPv4\\\hline
+	0x06	& 6			& TCP\\\hline
+	0x11	& 17			& UDP\\\hline
+	0x29	& 41			& IPv6\\\hline
+%	0x2b	& 43			& IPv6-Route\\
+%	0x2c 	& 44			& IPv6-Frag\\\hline
+	0x2f	& 47			& GRE\\\hline
+	0x3a 	& 58			& ICMPv6\\\hline
+%	0x3b 	& 59			& IPv6-NoNxt\\
+%	0x3c 	& 60			& IPv6-Opts\\\hline
+	0x58	& 88			& EIGRP\\\hline
+	0x59	& 89			& OSPF\\\hline
+	0x67	& 103			& PIM\\\hline
+	0x70	& 112			& VRRP\\\hline
+	0x89	& 137			& MPLS-in-IP\\\hline
 	\end{tabular}\end{minipage}%
 	%Layer 3 Multicast 																					--tab:MULTICAST L3
 	\begin{minipage}{.6\linewidth}
 	\centering
 	\caption{Layer 3 Multicast \label{tab:MULTICAST L3}}
-	\begin{tabular}{| l | c | r|}\hline
+	\begin{tabular}{| l | c | r |}\hline
 	224.0.0.1		& All-IPv4-Nodes		&\\
 	\texttt{ff02::1}	& All-IPv6-Nodes		&\\\hline
 	224.0.0.2		& All-IPv4-Routers	& Cisco HSRPv1\\
@@ -673,20 +674,20 @@
 	\begin{table}[H]
 	\centering
 	\caption{Route Types \label{tab:ROUTE TYPES}}
-	\begin{tabular}{lcr}\hline
-	\textbf{Route Type}	& \textbf{Administrative Distance}	& \textbf{IGP Type}\\\hline
-	Connected			& 0						&\\\hline
-	Static				& 1						&\\\hline
-	BGP				& 20						& EGP\\\hline
-	EIGRP				& 90						& Advanced Distance Vector\\\hline
-	IGRP				& 100						& Distance Vector\\\hline
-	OSPF				& 110						& Link-State\\\hline
-	IS-IS				& 115						& Link-State\\\hline
-	RIP				& 120						& Distance Vector\\\hline
-	EIGRP External		& 170						& Advanced Distance Vector\\\hline
-	iBGP				& 200						& EGP\\\hline
-	DHCP			& 254						&\\\hline
-	Invalid			& 255						&\\\hline
+	\begin{tabular}{@{} l c r @{}}\hline
+	\textbf{Route Type}	& \textbf{AD Value}	& \textbf{IGP Type}\\\hline
+	Connected 			& 0				&\\
+	Static				& 1				&\\
+	BGP				& 20				& EGP\\
+	EIGRP				& 90				& Advanced Distance Vector\\
+	IGRP				& 100				& Distance Vector\\
+	OSPF				& 110				& Link-State\\
+	IS-IS				& 115				& Link-State\\
+	RIP				& 120				& Distance Vector\\
+	EIGRP External		& 170				& Advanced Distance Vector\\
+	iBGP				& 200				& EGP\\
+	DHCP			& 254				&\\
+	Invalid			& 255				&\\\hline
 	\end{tabular}\end{table}
 
 
@@ -716,7 +717,7 @@
 	\begin{table}[H]
 	\centering
 	\caption{\RFC{791} / \RFC{1918} Addressing \label{tab:ADDRESSING IPV4}}
-	\begin{tabular}{clcr}\hline
+	\begin{tabular}{@{} c l c r @{}}\hline
 	\textbf{\RFC{791}}	& \textbf{First Octet}		& \textbf{Address Block}		& \textbf{\RFC{1918} Block}\\\hline
 	Class A 			& \texttt{0XXX XXXX}		& 0.0.0.0 - 127.0.0.0 /8			& 10.0.0.0 /8\\
 	Class B 			& \texttt{10XX XXXX}		& 128.0.0.0 - 191.255.0.0 /16		& 172.16.0.0 /12\\
@@ -729,10 +730,10 @@
 	\begin{table}[H]
 	\centering
 	\caption{IPv4 Subnetting Magic Numbers \label{tab:SUBNETTING}}
-	\begin{tabular}{r | cccccccc}\hline
-	\textbf{Bit Position}	& 1	& 2	& 3	& 4	& 5	& 6	& 7 & 8\\\hline
-	\textbf{Octet Mask}	& 128 & 192 & 224 & 240 & 248 & 252 & 254 & 255\\\hline
-	\textbf{Addresses}	& 128	& 64	& 32	& 16	& 8	& 4	& 2	& 1\\\hline
+	\begin{tabular}{@{} r | c c c c c c c c @{}}\hline
+	\textbf{Bit Position}	& 1	& 2	& 3	& 4	& 5	& 6	& 7 & 8\\
+	\textbf{Octet Mask}	& 128 & 192 & 224 & 240 & 248 & 252 & 254 & 255\\
+	\textbf{Addresses}	& 128	& 64	& 32	& 16	& 8	& 4	& 2	& 1\\
 	\textbf{Octet Wildcard}	& 127	& 63	& 31 	& 15	& 7	& 3	& 1	& 0\\\hline
 	\end{tabular}\end{table}
 
@@ -760,20 +761,20 @@
 	\begin{table}[H]
 	\centering
 	\caption{\RFC{2460} Addressing \label{tab:ADDRESSING IPV6}}
-	\begin{tabular}{rlr}\hline
-	\textbf{Address Class}	& \textbf{Block}		& \textbf{Format}\\\hline
-	Global 			& Any			& Prefix ($P$ bits) + Subnet ID ($64-P$ bits) + INT ID (64 bits)\\
-	Unicast			&				&\\\hline
-	Unique Local 		& \texttt{fd00::/8}		& \texttt{fd} + Global ID (40 bits) + Subnet ID (16 bits) + INT ID (64 bits)\\
-	Unicast			&				&\\\hline
-	Link-Local 			& \texttt{fe80::/64}	& \texttt{fe80:0:0:0} (64 bits) + INT ID (64 bits)\\
-	Unicast			&				&\\\hline
-	Multicast			& \texttt{ff00::/12}	& \texttt{ff02::1:ffXX:XXXX/104} Solicited-Node Multicast\\
-					& \texttt{ff01::/16}	& Interface/Node-Local\\
-					& \texttt{ff02::/16}	& Link-Local\\
-					& \texttt{ff05::/16}	& Site-Local\\
-					& \texttt{ff08::/16}	& Org-Local\\
-					& \texttt{ff0e::/16}	& Global\\\hline
+	\begin{tabular}{@{} r l r !{+} r !{+} r !{+} r @{}}\hline
+	\textbf{Address Class}	& \textbf{Block}		& \multicolumn{4}{c}{\textbf{Address Format}}\\\hline
+	Global			& Any			& \multicolumn{2}{r!{+}}{Prefix}		& Subnet ID	& Interface ID\\
+	Unicast			&				& \multicolumn{2}{r!{\hphantom{+}}}{$P$ bits} & \multicolumn{1}{r!{\hphantom{+}}}{$64-P$ bits} & 64 bits\\\hline
+	Unique Local		& \texttt{fd00::/8}		& \texttt{fd}	& Global ID			& Subnet ID	& Interface ID\\
+	Unicast			&				& \multicolumn{1}{r!{\hphantom{+}}}{8 bits} & \multicolumn{1}{r!{\hphantom{+}}}{40 bits} & \multicolumn{1}{r!{\hphantom{+}}}{16 bits} & 64 bits\\\hline
+	Link-Local			& \texttt{fe80::/64}	& \multicolumn{3}{r!{+}}{\texttt{fe80:0:0:0}}			& Interface ID\\
+	Unicast			&				& \multicolumn{3}{r!{\hphantom{+}}}{64 bits}			& 64 bits\\\hline
+	Multicast			& \texttt{ff00::/12}	& \multicolumn{4}{r@{}}{\texttt{ff02::1:ffXX:XXXX/104} Solicited-Node Multicast}\\
+					& \texttt{ff01::/16}	& \multicolumn{4}{r@{}}{Interface/Node-Local}\\
+					& \texttt{ff02::/16}	& \multicolumn{4}{r@{}}{Link-Local}\\
+					& \texttt{ff05::/16}	& \multicolumn{4}{r@{}}{Site-Local}\\
+					& \texttt{ff08::/16}	& \multicolumn{4}{r@{}}{Org-Local}\\
+					& \texttt{ff0e::/16}	& \multicolumn{4}{r@{}}{Global}\\\hline
 	\end{tabular}\end{table}
 	\note{Goldenrod} IPv6 does not support broadcasts, only scoped multicasts.
 
@@ -782,8 +783,8 @@
 	\begin{enumerate} \itemsep -5pt
 		\label{itm:EUI64}
 		\item{Split the interface MAC address into two 24-bit parts.}
-		\item{Insert \texttt{0xfffe} between the two parts, creating a 48-bit address.}
-		\item{Invert the 7th bit (the \textit{Universal/Local bit}) of the resulting address.}
+		\item{Insert \texttt{0xfffe} between the two parts, creating a 64-bit Interface ID.}
+		\item{Invert the 7th bit (the \textit{Universal/Local bit}) of the resulting Interface ID.}
 	\end{enumerate}
 
 	%RFC 792 Internet Control Message Protocol (ICMP) / RFC 4443 ICMPv6 														--subsec:ICMP
@@ -805,29 +806,29 @@
 	\begin{minipage}[t]{.45\linewidth}
 	\centering
 	\caption{ICMP Type.Code Values \label{tab:ICMP VALUES}}
-	\begin{tabular}{| r | r |}\hline
-	\texttt{0.0}	& Echo Reply\\\hline
-	\texttt{3.X} 	& Destination Unreachable\\\hline
-	\texttt{8.0}	& Echo Request\\\hline
-	\texttt{9.0}	& Router Advertisement\\
-	\texttt{10.0}	& Router Solicitation\\\hline
-	\texttt{11.X} & Time Exceeded\\\hline
+	\begin{tabular}{| >{\ttfamily}r | r |}\hline
+	0.0	& Echo Reply\\\hline
+	3.X 	& Destination Unreachable\\\hline
+	8.0	& Echo Request\\\hline
+	9.0	& Router Advertisement\\
+	10.0	& Router Solicitation\\\hline
+	11.X 	& Time Exceeded\\\hline
 	\end{tabular}\end{minipage}\hfill
 	%ICMPv6 Type.Code 																					--tab:ICMPV6 VALUES
 	\begin{minipage}[t]{.45\linewidth}
 	\centering
 	\caption{ICMPv6 Type.Code Values\label{tab:ICMPV6 VALUES}}
-	\begin{tabular}{| r | r |}\hline
-	\texttt{1.X}	 	& Destination Unreachable\\\hline
-	\texttt{2.0}		& Packet Too Big\\\hline
-	\texttt{3.X}	 	& Time Exceeded\\\hline
-	\texttt{128.0}	& Echo Request\\
-	\texttt{129.0}	& Echo Reply\\\hline
-	\texttt{133.0}	& NDP RS\\
-	\texttt{134.0}	& NDP RA\\
-	\texttt{135.0}	& NDP NS\\
-	\texttt{136.0}	& NDP NA\\
-	\texttt{137.0}	& NDP Redirect\\\hline
+	\begin{tabular}{| >{\ttfamily}r | r |}\hline
+	1.X	 & Destination Unreachable\\\hline
+	2.0	& Packet Too Big\\\hline
+	3.X	& Time Exceeded\\\hline
+	128.0	& Echo Request\\
+	129.0	& Echo Reply\\\hline
+	133.0	& NDP RS\\
+	134.0	& NDP RA\\
+	135.0	& NDP NS\\
+	136.0	& NDP NA\\
+	137.0	& NDP Redirect\\\hline
 	\end{tabular}\end{minipage}\end{table}
 
 
@@ -859,7 +860,7 @@
 
 	\begin{table}[H]
 	%NDP RS 																								--tab:NDP RS
-	\begin{minipage}[t]{.48\linewidth}
+	\begin{minipage}[t]{.47\linewidth}
 	\centering
 	\caption{NDP RS \label{tab:NDP RS}}
 	\begin{tabular}{| l | c | r |}\hline
@@ -870,7 +871,7 @@
 	Options	& varies	&\\\hline
 	\end{tabular}\end{minipage}\hfill
 	%NDP NS 																								--tab:NDP NS
-	\begin{minipage}[t]{.52\linewidth}
+	\begin{minipage}[t]{.53\linewidth}
 	\centering
 	\caption{NDP NS \label{tab:NDP NS}}
 	\begin{tabular}{| l | c | r |}\hline
@@ -928,14 +929,14 @@
 	\begin{table}[H]
 	\centering
 	\caption{OSPF LSA Types \label{tab:OSPF LSA TYPES}}
-	\begin{tabular}{llr}\hline
+	\begin{tabular}{@{} l l r @{}}\hline
 	\textbf{LSA Type}		& \textbf{Source}		& \textbf{Conditions / Notes}\\\hline
-	Type 1 Router		& SPF-Routers		& 1 per intra-area router\\\hline
-	Type 2 Network		& SPF-DRs			& 1 per DR/BDR subnet\\\hline
-	Type 3 Summary		& ABRs			& 1 per inter-area subnet\\\hline
-	Type 3 Default		& ABRs			& Advertises the local ABR\\\hline
-	Type 4 Summary ASBR	& ABRs			& Advertises a non-local ASBR\\\hline
-	Type 5 AS-External	& ASBRs			& 1 per AS-External network\\\hline
+	Type 1 Router		& SPF-Routers		& 1 per intra-area router\\
+	Type 2 Network		& SPF-DRs			& 1 per DR/BDR subnet\\
+	Type 3 Summary		& ABRs			& 1 per inter-area subnet\\
+	Type 3 Default		& ABRs			& Advertises the local ABR\\
+	Type 4 Summary ASBR	& ABRs			& Advertises a non-local ASBR\\
+	Type 5 AS-External	& ASBRs			& 1 per AS-External network\\
 	Type 7 NSSA		& ASBRs			& 1 per AS-External network (stub area)\\\hline
 	\end{tabular}\end{table}
 	
@@ -1065,6 +1066,8 @@
 
 
 
+
+
 %LAYER 4 																										--sec:L4
 \section{Layer 4 Protocols \label{sec:L4}}
 	\begin{table}[H]
@@ -1072,7 +1075,7 @@
 	\begin{minipage}[t]{.45\linewidth}
 	\centering
 	\caption{Well-Known Ports \label{tab:L4 PORTS KNOWN}}
-	\begin{tabular}{| rr | r |}\hline
+	\begin{tabular}{| r r | r |}\hline
 	TCP	& 20		& FTP Data\\
 	TCP	& 21		& FTP Control\\\hline
 	TCP	& 22		& SSH / SFTP\\\hline
@@ -1097,7 +1100,7 @@
 	\begin{minipage}[t]{.45\linewidth}
 	\centering
 	\caption{Registered Ports \label{tab:L4 PORTS REGISTERED}}
-	\begin{tabular}{| cr | r |}\hline
+	\begin{tabular}{| c r | r |}\hline
 	UDP	& 1812	& RADIUS Auth\\
 	UDP	& 1813	& RADIUS Accounting\\\hline
 	TCP	& 1985	& Cisco HSRP\\\hline
@@ -1190,23 +1193,23 @@
 	\begin{table}[H]
 	\centering
 	\caption{DHCP Options \label{tab:DHCP OPTIONS}}
-	\begin{tabular}{r | r}\hline
+	\begin{tabular}{@{} r | r @{}}\hline
 	\textbf{Option}	& \textbf{Value}\\\hline
-	1			& Subnet Mask\\\hline
-	3			& Default Router\\\hline
-	6			& DNS Server\\\hline
-	28			& Broadcast Address\\\hline
-	43			& WLC IP Address\\\hline
-	50			& Requested IP Address\\\hline
-	51			& Address Lease Time\\\hline
-	53			& DHCP Message Type\\\hline
-	54			& DHCP Server ID\\\hline
-	55			& Parameter Requests\\\hline
-	58			& Renewal Time Value\\\hline
-	59			& Rebinding Time Value\\\hline
-	66			& TFTP Server IP Address\\\hline
-	82			& Relay Agent Information\\\hline
-	150			& TFTP Server List\\\hline
+	1			& Subnet Mask\\
+	3			& Default Router\\
+	6			& DNS Server\\
+	28			& Broadcast Address\\
+	43			& WLC IP Address\\
+	50			& Requested IP Address\\
+	51			& Address Lease Time\\
+	53			& DHCP Message Type\\
+	54			& DHCP Server ID\\
+	55			& Parameter Requests\\
+	58			& Renewal Time Value\\
+	59			& Rebinding Time Value\\
+	66			& TFTP Server IP Address\\
+	82			& Relay Agent Information\\
+	150			& TFTP Server List\\
 	255			& End\\\hline
 	\end{tabular}\end{table}\end{minipage}\hfill
 	\begin{minipage}{.6\linewidth}
@@ -1235,11 +1238,11 @@
 	\begin{table}[H]
 	\centering
 	\caption{Common HTTP Verbs \label{tab:HTTP VERBS}}
-	\begin{tabular}{r | c | l}\hline
+	\begin{tabular}{@{} l c l @{}}\hline
 	\textbf{HTTP Verb}		& \textbf{CRUD Action}	& \textbf{Description}\\\hline
-	\texttt{HTTP POST}		& Create			& Create/initialize new data structures/variables\\\hline
-	\texttt{HTTP GET}			& Read			& Read variable names/structures/values\\\hline
-	\texttt{HTTP PATCH/PUT}	& Update			& Update/replace some variable values\\\hline
+	\texttt{HTTP POST}		& Create			& Create/initialize new data structures/variables\\
+	\texttt{HTTP GET}			& Read			& Read variable names/structures/values\\
+	\texttt{HTTP PATCH/PUT}	& Update			& Update/replace some variable values\\
 	\texttt{HTTP DELETE}		& Delete			& Delete some data structures/variables\\\hline
 	\end{tabular}\end{table}
 
@@ -1247,13 +1250,13 @@
 	\begin{table}[H]
 	\centering
 	\caption{HTTP Return Codes \label{tab:HTTP CODES}}
-	\begin{tabular}{r | c | l}\hline
+	\begin{tabular}{@{} c l l @{}}\hline
 	\textbf{Code}	& \textbf{Type}	& \textbf{Meaning}\\\hline
-	\texttt{1XX}			& Informational			& Request was received and is being processed\\\hline
-	\texttt{2XX}			& Successful			& Request was received, understood, and accepted\\\hline
-	\texttt{3XX}			& Redirection			& Further action required to complete request\\\hline
-	\texttt{4XX}			& Client Error			& Request contains bad syntax or cannot be fulfilled\\\hline
-	\texttt{5XX}			& Server Error			& Server failed to fulfill an (apparently) valid request\\\hline
+	\texttt{1XX}		& Informational	& Request was received and is being processed\\
+	\texttt{2XX}		& Successful	& Request was received, understood, and accepted\\
+	\texttt{3XX}		& Redirection	& Further action required to complete request\\
+	\texttt{4XX}		& Client Error	& Request contains bad syntax or cannot be fulfilled\\
+	\texttt{5XX}		& Server Error	& Server failed to fulfill an (apparently) valid request\\\hline
 	\end{tabular}\end{table}
 	Modern web browsers support \textit{HTTP Secure} (HTTPS) using TLS (\RFC{5246}) to dynamically secure a connection between the client and server. Initializing a TLS session creates a client VPN tunnel which authenticates the user and encrypts the data transfer between that client and server only.
 
@@ -1266,7 +1269,7 @@
 	\begin{table}[H]
 	\centering
 	\caption{Logging Keywords \label{tab:LOGGING}}
-	\begin{tabular}{l c r}\hline
+	\begin{tabular}{@{} l c r @{}}\hline
 	\textbf{Keyword} 	& \textbf{Severity}	& \textbf{Description}\\\hline
 	Emergency		& 0				& System Unusable\\
 	Alert			& 1				& Immediate Action Required\\\hline
@@ -1300,9 +1303,9 @@
 	\textbf{PCP2}			& \textbf{CS2}	& \textbf{AF21}	& \textbf{AF22}	& \textbf{AF23}\\
 	\textit{Excellent Effort}		& 16 \texttt{0x10} & 18 \texttt{0x12} & 20 \texttt{0x14} & 22 \texttt{0x16}\\
 	\textbf{PCP1}			& \textbf{CS1}	& \textbf{AF11}	& \textbf{AF12}	& \textbf{AF13}\\
-	\textit{Background}		& 8 \texttt{0x08} & 10 \texttt{0x0a} & 12 \texttt{0x0c} & 14 \texttt{0x0e}\\
+	\textit{Background}		& 8 \texttt{0x08}	& 10 \texttt{0x0a} & 12 \texttt{0x0c} & 14 \texttt{0x0e}\\
 	\textbf{PCP0}			& \textbf{CS0}	&			&			&\\
-	\textit{Best Effort}			& 0 \texttt{0x00} &			&			&\\
+	\textit{Best Effort}			& 0 \texttt{0x00} 	&			&			&\\
 	\end{tabular}\end{table}
 	\note{Goldenrod} \texttt{CS} values use bit-pattern \texttt{XXX000}, resulting in an $8X$ DSCP value. \texttt{AF} values use bit-pattern \texttt{XXXYY0}, resulting in an $8X+2Y$ DSCP value.
 
@@ -1310,10 +1313,10 @@
 	\begin{table}[H]
 	\centering
 	\caption{QoS Fields \label{tab:QOS FIELDS}}
-	\begin{tabular}{llr}\hline
+	\begin{tabular}{@{} l l r @{}}\hline
 	\textbf{QoS Standard} 			& \textbf{Protocol Field(s)}		& \textbf{Notes}\\\hline
-	IEEE 802.1p (CoS)				& IEEE 802.1Q \texttt{PCP/DEI} 	& \Cref{tab:802.1Q}\\\hline
-							& IEEE 802.11 \texttt{QoS Control} 	& \Cref{subsec:802.11 WLANS}\\\hline
+	IEEE 802.1p (CoS)				& 802.1Q \texttt{PCP/DEI} 		& \Cref{tab:802.1Q}\\\hline
+							& 802.11 \texttt{QoS Control} 		& \Cref{subsec:802.11 WLANS}\\\hline
 	\RFC{791} IPP (CS)			& IPv4 \texttt{ToS Byte} (OLD) 	& \Cref{subsec:IPV4}\\
 	RFC \rfc{2474}/\rfc{3168} (DSCP)	& IPv4 \texttt{DS Field} (NEW) 	& \Cref{subsec:IPV4}\\\hline
 	\RFC{2460} (DSCP)			& IPv6 \texttt{Traffic Class} 		& \Cref{subsec:IPV6}\\\hline
@@ -1336,7 +1339,7 @@
 	\begin{table}[H]
 	\centering
 	\caption{Traffic QoS Requirements \label{tab:QOS TRAFFIC}}
-	\begin{tabular}{c | c c c}
+	\begin{tabular}{@{} c | c c c @{}}
 	\textbf{Traffic}			&\textbf{One-Way Delay}	& \textbf{Jitter}	&\textbf{Loss}\\\hline
 	\textit{Voice Over IP} (VoIP)	& $<$ 150 ms 			& $<$ 30 ms 	& $<$ 1\%\\
 	\textit{Video}			& 200-400 ms 			& 30-50 ms 	& 0.1-1\%\\
@@ -1354,12 +1357,12 @@
 	\begin{table}[H]
 	\centering
 	\caption{MPLS WAN Services \label{tab:MPLS SERVICES}}
-	\begin{tabular}{| l | r | l |}\hline
+	\begin{tabular}{@{} l r l @{}}\hline
 	\textbf{MPLS Service}	& \textbf{Nodes}	& \textbf{Notes}\\\hline
-	Layer 2 E-Line		& 2 per-EVC	& P2P EVCs using 802.1Q \texttt{VLAN ID}s and subnets\\\hline
-	Layer 2 E-LAN		& $n$ per-EVC	& Mesh EVC using 1 subnet\\\hline
-	Layer 2 E-Tree		& $n$ per-EVC	& P2MP EVC using 1 subnet\\\hline
-	Layer 2 MPLS VPN	& $n$		& CE-CE neighbors within 1 subnet\\\hline
+	Layer 2 E-Line		& 2 per-EVC	& P2P EVCs using 802.1Q \texttt{VLAN ID}s and subnets\\
+	Layer 2 E-LAN		& $n$ per-EVC	& Mesh EVC using 1 subnet\\
+	Layer 2 E-Tree		& $n$ per-EVC	& P2MP EVC using 1 subnet\\
+	Layer 2 MPLS VPN	& $n$		& CE-CE neighbors within 1 subnet\\
 	Layer 3 MPLS VPN	& $n$		& PE-CE neighbors with route redistribution\\\hline
 	\end{tabular}\end{table}%
 
@@ -1381,7 +1384,7 @@
 	
 	An \textit{Ethernet Line} (E-Line) connects exactly two customer sites in a Point-to-Point EVC. These customer devices must belong to the same subnet to become routing peers. Multiple E-Lines can terminate at the same customer interface, each using a unique subnet and 802.1Q \texttt{VLAN ID}. This enables many E-Lines to share the same access link.
 
-	An \textit{Ethernet LAN} (E-LAN) connects multiple customer sites in a Full Mesh EVC. These customer devices must reside in the same subnet to become routing peers. An E-LAN is much more practical than using $\frac{n * (n-1)}{2}$ separate E-Lines.
+	An \textit{Ethernet LAN} (E-LAN) connects multiple customer sites in a Full Mesh EVC. These customer devices must reside in the same subnet to become routing peers. An E-LAN is much more practical than using $\frac{n(n-1)}{2}$ separate E-Lines.
 
 	An \textit{Ethernet Tree} (E-Tree) connects an \textit{E-Tree Root} (a central site) to multiple \textit{E-Tree Leafs} (remote sites) in a Point-to-Multipoint EVC. Each E-Tree leaf can send frames only to the E-Tree root, while the E-Tree root can send frames to all E-Tree leafs. This is optimal when an E-LAN is not required.
 
@@ -1414,7 +1417,7 @@
 	\begin{minipage}[t]{.55\linewidth}
 	\centering
 	\caption{Protocol Timers \label{tab:DEFAULT TIMERS}}
-	\begin{tabular}{lrr}\hline
+	\begin{tabular}{@{} l r r @{}}\hline
 	\textbf{Protocol}		& \textbf{Timer}	& \textbf{Default Value}\\\hline
 	MAC Table 			& Aging-Time	& 300 s\\\hline
 	STP				& Hello		& 2 s\\
@@ -1436,12 +1439,12 @@
 	\begin{minipage}[t]{.45\linewidth}
 	\centering
 	\caption{Protocol Priority Values\label{tab:DEFAULT PRIORITIES}}
-	\begin{tabular}{llr}\hline
+	\begin{tabular}{@{} l l r @{}}\hline
 	\textbf{Protocol}		& \textbf{Priority}		& \textbf{Default Value}\\\hline
-	STP/RSTP			& 0 - 61,440			& 32,768\\\hline
-	OSPF				& 0 - 255			& 1\\\hline
-	HSRP				& 1 - 255			& 100\\\hline
-	VRRP				& 1 - 254			& 100\\\hline
+	STP/RSTP			& 0 - 61,440			& 32,768\\
+	OSPF				& 0 - 255			& 1\\
+	HSRP				& 1 - 255			& 100\\
+	VRRP				& 1 - 254			& 100\\
 	NTP				& 1 - 15			& 8\\\hline
 	\end{tabular}\end{minipage}\end{table}
 	\note{Goldenrod} The MAC Table is also referred to as the \textit{Forwarding Information Base} (FIB) or \textit{Content Addressable Memory} (CAM) table.
@@ -1450,14 +1453,14 @@
 	\begin{table}[H]
 	\centering
 	\caption{Cisco Encryption Algorithms\label{tab:CISCO ENCRYPTION}}
-	\begin{tabular}{clcr}\hline
+	\begin{tabular}{@{} c l c r @{}}\hline
 	\textbf{Type}	& \textbf{Algorithm}	& \textbf{Salt}	& \textbf{Secure?}\\\hline
-	0			& cleartext			& 			& \textcolorbf{Red}{NO}\\\hline
-	4			& PBKDF2-SHA-256	& 			& \textcolorbf{Red}{NO}\\\hline
-	5			& MD5			& 32 bits		& \textcolorbf{Dandelion}{WEAK}\\\hline
-	6			& AES-128			& 			& \textcolorbf{Green}{YES}\\\hline
-	7			& Vigenere			& 			& \textcolorbf{Red}{NO}\\\hline
-	8			& PBKDF2-SHA-256	& 80 bits		& \textcolorbf{Green}{YES}\\\hline
+	0			& cleartext			& 			& \textcolorbf{Red}{NO}\\
+	4			& PBKDF2-SHA-256	& 			& \textcolorbf{Red}{NO}\\
+	5			& MD5			& 32 bits		& \textcolorbf{Dandelion}{WEAK}\\
+	6			& AES-128			& 			& \textcolorbf{Green}{YES}\\
+	7			& Vigenere			& 			& \textcolorbf{Red}{NO}\\
+	8			& PBKDF2-SHA-256	& 80 bits		& \textcolorbf{Green}{YES}\\
 	9			& Scrypt			& 80 bits		& \textcolorbf{Green}{YES}\\\hline
 	\end{tabular}\end{table}
 
@@ -1466,72 +1469,72 @@
 	\begin{minipage}[t]{.55\linewidth}
 	\centering
 	\caption{ASCII Values \label{tab:ASCII}}
-	\begin{tabular}{rrr | rrr | ccc}\hline
-	32 & 64 & 96	& \texttt{0x20} & \texttt{0x40} & \texttt{0x60}	& SP		& @	& `\\
-	33 & 65 & 97	& \texttt{0x21} & \texttt{0x41} & \texttt{0x61}	& ! 		& A 	& a\\
-	34 & 66 & 98	& \texttt{0x22} & \texttt{0x42} & \texttt{0x62}	& ``		& B 	& b\\
-	35 & 67 & 99	& \texttt{0x23} & \texttt{0x43} & \texttt{0x63}	& \#		& C 	& c\\
-	36 & 68 & 100	& \texttt{0x24} & \texttt{0x44} & \texttt{0x64}	& \$		& D 	& d\\
-	37 & 69 & 101	& \texttt{0x25} & \texttt{0x45} & \texttt{0x65}	& \%		& E 	& e\\
-	38 & 70 & 102	& \texttt{0x26} & \texttt{0x46} & \texttt{0x66} 	& \&		& F 	& f\\
-	39 & 71 & 103	& \texttt{0x27} & \texttt{0x47} & \texttt{0x67}	& `		& G 	& g\\
-	40 & 72 & 104	& \texttt{0x28} & \texttt{0x48} & \texttt{0x68}	& (		& H 	& h\\
-	41 & 73 & 105 	& \texttt{0x29} & \texttt{0x49} & \texttt{0x69} 	& )		& I 	& i\\
-	42 & 74 & 106	& \texttt{0x2a} & \texttt{0x4a} & \texttt{0x6a}	& *		& J	& j\\
-	43 & 75 & 107	& \texttt{0x2b} & \texttt{0x4b} & \texttt{0x6b} 	& +		& K	& k\\
-	44 & 76 & 108	& \texttt{0x2c} & \texttt{0x4c} & \texttt{0x6c}	& ,		& L 	& l\\
-	45 & 77 & 109	& \texttt{0x2d} & \texttt{0x4d} & \texttt{0x6d}	& - 		& M 	& m\\
-	46 & 78 & 110	& \texttt{0x2e} & \texttt{0x4e} & \texttt{0x6e}	& .		& N 	& n\\
-	47 & 79 & 111	& \texttt{0x2f} & \texttt{0x4f} & \texttt{0x6f}	& /		& O	& o\\
-	48 & 80 & 112	& \texttt{0x30} & \texttt{0x50} & \texttt{0x70}	& 0		& P 	& p\\
-	49 & 81 & 113	& \texttt{0x31} & \texttt{0x51} & \texttt{0x71}	& 1		& Q 	& q\\
-	50 & 82 & 114	& \texttt{0x32} & \texttt{0x52} & \texttt{0x72}	& 2		& R 	& r\\
-	51 & 83 & 115	& \texttt{0x33} & \texttt{0x53} & \texttt{0x73}	& 3		& S 	& s\\
-	52 & 84 & 116	& \texttt{0x34} & \texttt{0x54} & \texttt{0x74}	& 4		& T 	& t\\
-	53 & 85 & 117	& \texttt{0x35} & \texttt{0x55} & \texttt{0x75}	& 5		& U 	& u\\
-	54 & 86 & 118	& \texttt{0x36} & \texttt{0x56} & \texttt{0x76} 	& 6		& V 	& v\\
-	55 & 87 & 119	& \texttt{0x37} & \texttt{0x57} & \texttt{0x77}	& 7		& W 	& w\\
-	56 & 88 & 120	& \texttt{0x38} & \texttt{0x58} & \texttt{0x78}	& 8		& X 	& x\\
-	57 & 89 & 121 	& \texttt{0x39} & \texttt{0x59} & \texttt{0x79}	& 9		& Y 	& y\\
-	58 & 90 & 122	& \texttt{0x3a} & \texttt{0x5a} & \texttt{0x7a}	& :		& Z	& z\\
-	59 & 91 & 123	& \texttt{0x3b} & \texttt{0x5b} & \texttt{0x7b}	& ;		& [	& \{\\
-	60 & 92 & 124	& \texttt{0x3c} & \texttt{0x5c} & \texttt{0x7c}	& $<$	& \textbackslash	& $\vert$\\
-	61 & 93 & 125	& \texttt{0x3d} & \texttt{0x5d} & \texttt{0x7d}	& =		& ]	& \}\\
-	62 & 94 & 126	& \texttt{0x3e} & \texttt{0x5e} & \texttt{0x7e}	& $>$	& \^{}	& \~{}\\
-	63 & 95 & 127	& \texttt{0x3f} & \texttt{0x5f} & \texttt{0x7f}	& ?		& \_	& DEL\\
+	\begin{tabular}{@{} r r r | >{\ttfamily}r >{\ttfamily}r >{\ttfamily}r | c c c @{}}\hline
+	32	& 64	& 96		& 0x20	& 0x40	& 0x60	& SP		& @			& `\\
+	33 	& 65	& 97		& 0x21	& 0x41	& 0x61	& ! 		& A 			& a\\
+	34	& 66	& 98		& 0x22	& 0x42	& 0x62	& ``		& B 			& b\\
+	35	& 67	& 99		& 0x23	& 0x43	& 0x63	& \#		& C 			& c\\
+	36	& 68	& 100		& 0x24	& 0x44	& 0x64	& \$		& D 			& d\\
+	37	& 69	& 101		& 0x25	& 0x45	& 0x65	& \%		& E 			& e\\
+	38	& 70	& 102		& 0x26	& 0x46	& 0x66 	& \&		& F 			& f\\
+	39	& 71	& 103		& 0x27	& 0x47	& 0x67	& `		& G 			& g\\
+	40	& 72	& 104		& 0x28	& 0x48	& 0x68	& (		& H 			& h\\
+	41	& 73	& 105 	& 0x29	& 0x49	& 0x69 	& )		& I 			& i\\
+	42	& 74	& 106		& 0x2a	& 0x4a	& 0x6a	& *		& J			& j\\
+	43	& 75	& 107		& 0x2b	& 0x4b	& 0x6b 	& +		& K			& k\\
+	44	& 76	& 108		& 0x2c	& 0x4c	& 0x6c	& ,		& L 			& l\\
+	45	& 77	& 109		& 0x2d	& 0x4d	& 0x6d	& - 		& M 			& m\\
+	46	& 78	& 110		& 0x2e	&0x4e	& 0x6e	& .		& N 			& n\\
+	47	& 79	& 111		& 0x2f	& 0x4f	& 0x6f	& /		& O			& o\\
+	48	& 80	& 112		& 0x30	& 0x50	& 0x70	& 0		& P 			& p\\
+	49	& 81	& 113		& 0x31	& 0x51	& 0x71	& 1		& Q 			& q\\
+	50	& 82	& 114		& 0x32	& 0x52	& 0x72	& 2		& R 			& r\\
+	51	& 83	& 115		& 0x33	& 0x53	& 0x73	& 3		& S 			& s\\
+	52	& 84	& 116		& 0x34	& 0x54	& 0x74	& 4		& T 			& t\\
+	53	& 85	& 117		& 0x35	& 0x55	& 0x75	& 5		& U 			& u\\
+	54	& 86	& 118		& 0x36	& 0x56	& 0x76 	& 6		& V 			& v\\
+	55	& 87	& 119		& 0x37	& 0x57	& 0x77	& 7		& W 			& w\\
+	56	& 88	& 120		& 0x38	& 0x58	& 0x78	& 8		& X 			& x\\
+	57	& 89	& 121 	& 0x39	& 0x59	& 0x79	& 9		& Y 			& y\\
+	58	& 90	& 122		& 0x3a	& 0x5a	& 0x7a	& :		& Z			& z\\
+	59	& 91	& 123		& 0x3b	& 0x5b	& 0x7b	& ;		& [			& \{\\
+	60	& 92	& 124		& 0x3c	& 0x5c	& 0x7c	& $<$	& \textbackslash	& $\vert$\\
+	61	& 93	& 125		& 0x3d	& 0x5d	& 0x7d	& =		& ]			& \}\\
+	62	& 94	& 126		& 0x3e	& 0x5e	& 0x7e	& $>$	& \^{}		& \~{}\\
+	63	& 95	& 127		& 0x3f	& 0x5f	& 0x7f	& ?		& \_			& DEL\\
 	\end{tabular}\end{minipage}\hfill
 	%SI Prefixes																								--tab:SI PREFIXES
 	\begin{minipage}[t]{.45\linewidth}
 	\centering
 	\caption{SI Prefixes \label{tab:SI PREFIXES}}
-	\begin{tabular}{cllr}\hline
-	Z 	& Zetta	& $10^{21}$	& sextillion\\\hline
-	E 	& Exa		& $10^{18}$	& quintillion\\\hline
-	P 	& Peta	& $10^{15}$	& quadrillion\\\hline
-	T	& Tera	& $10^{12}$	& trillion\\\hline
-	G	& Giga	& $10^{9}$		& billion\\\hline
-	M	& Mega	& $10^{6}$		& million\\\hline
-	k	& Kilo	& $10^{3}$		& thousand\\\hline
-	h 	& Hecto	& $10^{2}$		& hundred\\\hline
-	da	& Deka	& $10^{1}$		& ten\\\hline
-	d 	& deci	& $10^{-1}$	& tenth\\\hline
-	c 	& centi	& $10^{-2}$	& hundredth\\\hline
-	m 	& milli	& $10^{-3}$	& thousandth\\\hline
-	$\mu$ & micro	& $10^{-6}$	& millionth\\\hline
-	n 	& nano	& $10^{-9}$	& billionth\\\hline
+	\begin{tabular}{@{} c l l r @{}}\hline
+	Z 	& Zetta	& $10^{21}$	& sextillion\\
+	E 	& Exa		& $10^{18}$	& quintillion\\
+	P 	& Peta	& $10^{15}$	& quadrillion\\
+	T	& Tera	& $10^{12}$	& trillion\\
+	G	& Giga	& $10^{9}$		& billion\\
+	M	& Mega	& $10^{6}$		& million\\
+	k	& Kilo	& $10^{3}$		& thousand\\
+	h 	& Hecto	& $10^{2}$		& hundred\\
+	da	& Deka	& $10^{1}$		& ten\\
+	d 	& deci	& $10^{-1}$	& tenth\\
+	c 	& centi	& $10^{-2}$	& hundredth\\
+	m 	& milli	& $10^{-3}$	& thousandth\\
+	$\mu$ & micro	& $10^{-6}$	& millionth\\
+	n 	& nano	& $10^{-9}$	& billionth\\
 	p 	& pico	& $10^{-12}$	& trillionth\\\hline
 	\end{tabular}
 	%Binary Prefixes 																						--tab:BINARY PREFIXES
 	\centering
 	\caption{Binary Prefixes \label{tab:BINARY PREFIXES}}
-	\begin{tabular}{cll}\hline
-	Yi 	& Yobi	& $2^{80}$\\\hline
-	Zi	& Zebi	& $2^{70}$\\\hline
-	Ei	& Exbi	& $2^{60}$\\\hline
-	Pi	& Pebi	& $2^{50}$\\\hline
-	Ti 	& Tebi	& $2^{40}$\\\hline
-	Gi	& Gibi	& $2^{30}$\\\hline
-	Mi 	& Mebi	& $2^{20}$\\\hline
+	\begin{tabular}{@{} c l l @{}}\hline
+	Yi 	& Yobi	& $2^{80}$\\
+	Zi	& Zebi	& $2^{70}$\\
+	Ei	& Exbi	& $2^{60}$\\
+	Pi	& Pebi	& $2^{50}$\\
+	Ti 	& Tebi	& $2^{40}$\\
+	Gi	& Gibi	& $2^{30}$\\
+	Mi 	& Mebi	& $2^{20}$\\
 	Ki	& Kibi	& $2^{10}$\\\hline
 	\end{tabular}\end{minipage}\end{table}
 
@@ -1547,7 +1550,7 @@
 	\subsection{Official Standards \label{subsec:STANDARDS}}
 	\begin{table}[H]
 	\centering
-	\begin{tabular}{llr}
+	\begin{tabular}{@{} l l r @{}}
 	\textbf{OFFICIAL STANDARD}		& \textbf{ALTERNATIVE}		& \textbf{REFERENCE}\\\hline
 	IEEE 802.3 Copper				& ANSI/TIA-598 Fiber		& \Cref{subsec:CABLING}\\
 	IEEE 802.3af/at/bt PoE			& Cisco ILP				& \Cref{tab:POE}\\\hline
