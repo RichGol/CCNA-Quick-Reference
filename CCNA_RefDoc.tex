@@ -12,6 +12,7 @@
 \usepackage{parskip}										% left-aligns text with no indentation
 \usepackage{float}										% provide [H] option to table/figure/graphics environments
 \usepackage{array}										% provide advanced table formatting
+\usepackage{multirow}
 \usepackage[justification=raggedright,font=bf,position=bottom]{caption}	% provide caption formatting
 \usepackage[dvipsnames]{xcolor}								% provide \textcolor, \colorbox, and predefined colors
 
@@ -52,8 +53,12 @@
 
 \newcommand{\textcolorbf}[2]{\ifcolor \textcolor{#1}{\textbf{#2}}\else \textbf{#2}\fi}
 \newcommand{\note}[1]{\ifcolor \colorbox{#1}{Note:}\else \underline{Note:}\fi}
+
 \newcommand{\rfc}[1]{\href{https://datatracker.ietf.org/doc/html/rfc#1}{#1}}
 \newcommand{\RFC}[1]{\href{https://datatracker.ietf.org/doc/html/rfc#1}{RFC #1}}
+
+\newcommand{\mc}[3]{\multicolumn{#1}{#2}{#3}}
+\newcommand{\mr}[2]{\multirow{#1}{*}{#2}}
 
 %DOCSTART
 \begin{document}
@@ -66,13 +71,13 @@
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{@{} c l l c c @{}}\hline
-	\textbf{Pin}	& \textbf{T568A}					& \textbf{T568B} 							& \textbf{MDI} 	& \textbf{MDI-X}\\\hline
-	1		& \textcolorbf{Green}{Green-White}		& \textcolorbf{orange}{Orange-White}			& Tx			& Rx\\
-	2		& \textcolorbf{Green}{Green}			& \textcolorbf{orange}{Orange}				& Tx			& Rx\\
-	3		& \textcolorbf{orange}{Orange-White}	& \textcolorbf{Green}{Green-White}				& Rx 			& Tx\\
+	\textbf{Pin}	& \textbf{T568A}					& \textbf{T568B} 						& \textbf{MDI} 	& \textbf{MDI-X}\\\hline
+	1		& \textcolorbf{Green}{Green-White}		& \textcolorbf{orange}{Orange-White}		& Tx			& Rx\\
+	2		& \textcolorbf{Green}{Green}			& \textcolorbf{orange}{Orange}			& Tx			& Rx\\
+	3		& \textcolorbf{orange}{Orange-White}	& \textcolorbf{Green}{Green-White}			& Rx 			& Tx\\
 	4		& \textcolorbf{cyan}{Blue}			& \textcolorbf{cyan}{Blue}\\
 	5		& \textcolorbf{cyan}{Blue-White}		& \textcolorbf{cyan}{Blue-White}\\
-	6		& \textcolorbf{orange}{Orange}		& \textcolorbf{Green}{Green}					& Rx			& Tx\\
+	6		& \textcolorbf{orange}{Orange}		& \textcolorbf{Green}{Green}				& Rx			& Tx\\
 	7		& \textcolorbf{Mahogany}{Brown-White}	& \textcolorbf{Mahogany}{Brown-White}\\
 	8		& \textcolorbf{Mahogany}{Brown}		& \textcolorbf{Mahogany}{Brown}\\\hline
 	\end{tabular}\end{table}
@@ -88,44 +93,44 @@
 	\begin{minipage}[t]{.58\linewidth}
 	\centering
 	\caption{IEEE 802.3 Copper Standards \label{tab:802.3 COPPER}}
-	\begin{tabular}{| l | c | r r |}\hline
-	802.3i		& 10BASE-T 		& 10 Mbps 		&CAT3\\\hline
-	802.3u 	& 100BASE-TX 		& 100 Mbps 	&CAT5\\\hline
-	802.3ab 	& 1000BASE-T 		& 1 Gbps 		&CAT5e\\\hline
-	802.3z 	& 1000BASE-SX 		& 1 Gbps		&550m Fiber\\
-			& 1000BASE-LX		& 1 Gbps		&5km Fiber\\\hline
-	802.3an 	& 10GBASE-T 		& 10 Gbps 		&CAT6a\\\hline
-	802.3ba 	& 40GBASE-T 		& 40 Gbps 		&CAT8\\\hline
-	802.3bz 	& 2.5GBASE-T 		& 2.5 Gbps 		&CAT5e\\
-			& 5GBASE-T 		& 5 Gbps 		&CAT5e\\\hline
+	\begin{tabular}{| l | r @{} l | r r |}\hline
+	802.3i			& 10		& BASE-T 	& 10 Mbps 		&CAT3\\\hline
+	802.3u 		& 100		& BASE-TX 	& 100 Mbps 	&CAT5\\\hline
+	802.3ab 		& 1000	& BASE-T 	& 1 Gbps 		&CAT5e\\\hline
+	\mr{2}{802.3z}	& 1000	& BASE-SX	& \mr{2}{1 Gbps}	&550m Fiber\\
+				& 1000	& BASE-LX	&			&5km Fiber\\\hline
+	802.3an 		& 10G	& BASE-T 	& 10 Gbps 		&CAT6a\\\hline
+	802.3ba 		& 40G	& BASE-T 	& 40 Gbps 		&CAT8\\\hline
+	\mr{2}{802.3bz}	& 2.5G	& BASE-T 	& 2.5 Gbps 		&CAT5e\\
+				& 5G		& BASE-T 	& 5 Gbps 		&CAT5e\\\hline
 	\end{tabular}\end{minipage}\hfill
 	%SFP Transceivers																								--tab:SFP
 	\begin{minipage}[t]{.42\linewidth}
 	\centering
 	\caption{SFP Transceivers \label{tab:SFP}}
 	\begin{tabular}{| c | r | r |}\hline
-	SX/SR		& MMF 850 nm				& 550/300 m\\
-			& \textbf{black}				&\\\hline
-	LX/LR		& SMF 1310 nm				& 10-20 km\\
-			& \textcolorbf{Cyan}{blue}		&\\\hline
-	----- 		& SMF 1490 nm				& -----\\
-			& \textcolorbf{Orchid}{violet}		&\\\hline
-	EX/ER		& SMF 1550 nm				& 40 km\\
-	ZX/ZR	& \textcolorbf{Dandelion}{yellow}	& 80 km\\\hline
+	SX			& MMF 850 nm				& 550 m\\
+	SR			& \textbf{black}				& 300 m\\\hline
+	\mr{2}{LX/LR}	& SMF 1310 nm				& \mr{2}{10-20 km}\\
+				& \textcolorbf{Cyan}{blue}		&\\\hline
+	\mr{2}{-----}	& SMF 1490 nm				& \mr{2}{-----}\\
+				& \textcolorbf{Orchid}{violet}		&\\\hline
+	EX/ER			& SMF 1550 nm				& 40 km\\
+	ZX/ZR		& \textcolorbf{Dandelion}{yellow}	& 80 km\\\hline
 	\end{tabular}\end{minipage}\end{table}%
 	
 	\begin{table}[H]
 	\centering
 	\caption{ANSI/TIA-598 Fiber Standards \label{tab:802.3 FIBER}}
 	\begin{tabular}{| l | c | c | r |}\hline
-	\textbf{Type}	& \textbf{Polish}	& \textbf{Jacket / Connector}								& \textbf{Usage}\\\hline
-	OS1/OS2		& UPC		& \textcolorbf{Dandelion}{yellow} / \textcolorbf{Cyan}{blue}		& indoor / outdoor\\\cline{2-3}
-				& APC		& \textcolorbf{Dandelion}{yellow} / \textcolorbf{Green}{green}		&\\\hline
-	OM1			& UPC		& \textcolorbf{orange}{orange} / \textcolorbf{Tan}{beige} 			& 100 Mbps\\
-				&			& \textcolorbf{orange}{orange} / \textcolorbf{darkgray}{gray}		&\\\hline
-	OM2			& UPC		& \textcolorbf{orange}{orange} / \textbf{black}					& 1 Gbps\\\hline
-	OM3/OM4		& UPC		& \textcolorbf{Aquamarine}{aqua} / \textcolorbf{Aquamarine}{aqua}	& 10/40/100 Gbps\\\hline
-	OM5			& UPC		& \textcolorbf{LimeGreen}{lime} / \textcolorbf{LimeGreen}{lime}		& 10/40/100 Gbps\\\hline
+	\textbf{Type}	& \textbf{Polish}	& \textbf{Jacket/Connector}								& \textbf{Usage}\\\hline
+	\mr{2}{OS1/OS2}	& UPC		& \textcolorbf{Dandelion}{yellow}/\textcolorbf{Cyan}{blue}		& \mr{2}{indoor/outdoor}\\\cline{2-3}
+				& APC		& \textcolorbf{Dandelion}{yellow}/\textcolorbf{Green}{green}		&\\\hline
+	\mr{2}{OM1}	& \mr{2}{UPC}	& \textcolorbf{orange}{orange}/\textcolorbf{Tan}{beige}			& \mr{2}{100 Mbps}\\
+				&			& \textcolorbf{orange}{orange}/\textcolorbf{darkgray}{gray}		&\\\hline
+	OM2			& UPC		& \textcolorbf{orange}{orange}/\textbf{black}					& 1 Gbps\\\hline
+	OM3/OM4		& UPC		& \textcolorbf{Aquamarine}{aqua}/\textcolorbf{Aquamarine}{aqua}	& 10/40/100 Gbps\\\hline
+	OM5			& UPC		& \textcolorbf{LimeGreen}{lime}/\textcolorbf{LimeGreen}{lime}		& 10/40/100 Gbps\\\hline
 	\end{tabular}\end{table}%
 
 	%Power over Ethernet (PoE)																						--tab:POE
@@ -136,8 +141,8 @@
 	Cisco Inline Power	& ILP			& 7.5W	&		& 2 wire pairs\\\hline
 	IEEE 802.3af			& Type 1 PoE	& 15W 	&44-57v	& 2 wire pairs $\ge$ CAT3\\\hline
 	IEEE 802.3at			& Type 2 PoE+	& 30W	&50-57v	& 2 wire pairs $\ge$ CAT5\\\hline
-	IEEE 802.3bt 		& Type 3 UPoE	& 60W 	&50-57v 	& 4 wire pairs $\ge$ CAT5\\
-					& Type 4 UPoE+	& 100W 	&52-57v	& 4 wire pairs $\ge$ CAT5\\\hline
+	\mr{2}{IEEE 802.3bt}	& Type 3 UPoE	& 60W 	&50-57v 	& \mr{2}{4 wire pairs $\ge$ CAT5}\\
+					& Type 4 UPoE+	& 100W 	&52-57v	&\\\hline
 	\end{tabular}\end{table}
 	IEEE \textit{Active PoE} negotiates power delivery via LLDP. Nonstandard \textit{Passive PoE} provides a constant voltage that may \textcolorbf{Red}{damage} equipment. \textbf{Mode A} PoE energizes the 2 data wire pairs; \textbf{Mode B} PoE energizes the 2 spare wire pairs; \textbf{4Pair} PoE energizes all 4 wire pairs.
 
@@ -180,7 +185,7 @@
 	0100.0ccc.cccc	 	& Cisco CDP / VTP / UDLD\\\hline
 	0180.c200.000e	 	& IEEE 802.1AB LLDP\\\hline
 	0100.0ccc.cccd		& Cisco PVST+ / PVRST\\\hline
-	0180.c200.0000	 	& IEEE 802.1D STP\\
+	\mr{2}{0180.c200.0000}	& IEEE 802.1D STP\\
 					& IEEE 802.1w RSTP\\\hline
 	\end{tabular}\end{minipage}\end{table}
 	\note{Goldenrod} \texttt{0180.c200.000X} multicast addresses are not forwarded by 802.1D-compliant bridges. Not all Layer 2 protocols support multicast.
@@ -190,34 +195,34 @@
 	\subsection{Ethernet II / IEEE 802.3 \label{subsec:802.3 ETHERNET}}
 	\begin{table}[H]
 	\centering
-	\begin{tabular}{| l | c | r |}\hline
-	Preamble		& 7 Bytes	& 10101010\\\hline
-	SFD 			& 1 Byte	& 10101011\\\hline
-	Destination MAC	& 6 Bytes	&\\\hline
-	Source MAC	& 6 Bytes	&\\\hline
-	Type (Ethernet II)	& 2 Bytes	& EtherType (\Cref{tab:ETHERTYPE})\\
-	Length (802.3)	&		& Payload Length in Bytes\\\hline
-	Data			& varies	& 46-1500 Bytes based on MTU\\\hline
-	FCS			& 4 Bytes	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Preamble		& 7		& Bytes		& 10101010\\\hline
+	SFD 			& 1		& Byte		& 10101011\\\hline
+	Destination MAC	& 6		& Bytes		&\\\hline
+	Source MAC	& 6		& Bytes		&\\\hline
+	Type (Ethernet II)	& \mr{2}{2}	& \mr{2}{Bytes}	& EtherType (\Cref{tab:ETHERTYPE})\\
+	Length (802.3)	&		&			& Payload Length in Bytes\\\hline
+	Data			& \mc{2}{c|}{varies}		& 46-1500 Bytes based on MTU\\\hline
+	FCS			& 4 & Bytes				&\\\hline
 	\end{tabular}\end{table}
 
 	%IEEE 802.2 Logical Link Control (LLC)																			--tab:802.2 LLC
 	\begin{table}[H]
 	\centering
 	\caption{IEEE 802.2 Logical Link Control (LLC) \label{tab:802.2 LLC}}
-	\begin{tabular}{| l | c |}\hline
-	Destination Service Access Point (DSAP)	& 1 Byte\\\hline
-	Source Service Access Point (SSAP)		& 1 Byte\\\hline
-	Control						& 1-2 Bytes\\\hline
+	\begin{tabular}{| l | r @{ } l |}\hline
+	Destination Service Access Point (DSAP)	& 1	& Byte\\\hline
+	Source Service Access Point (SSAP)		& 1	& Byte\\\hline
+	Control						& 1-2	& Bytes\\\hline
 	\end{tabular}\end{table}
 
 	%IEEE Subnetwork Access Protocol (SNAP)																		--tab:802.2 SNAP
 	\begin{table}[H]
 	\centering
 	\textbf{\caption{IEEE SubNetwork Access Protocol (SNAP) Header \label{tab:802.2 SNAP}}}
-	\begin{tabular}{| l | c | r |}\hline
-	Organizationally Unique ID (OUI) 	& 3 Bytes	& \texttt{0x000000} or Vendor OUI\\\hline
-	Type						& 2 Bytes	& EtherType (\Cref{tab:ETHERTYPE})\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Organizationally Unique ID (OUI) 	& 3	& Bytes	& \texttt{0x000000} or Vendor OUI\\\hline
+	Type						& 2	& Bytes	& EtherType (\Cref{tab:ETHERTYPE})\\\hline
 	\end{tabular}\end{table}
 	\note{Goldenrod} Each 802.3 frame includes an 802.2 LLC header for process multiplexing. Per \RFC{1042}, an 802.2 LLC header with value \texttt{0xaaaa03} includes a SNAP header identifying the EtherType.
 
@@ -228,32 +233,32 @@
 	\begin{table}[H]
 	\centering
 	\caption{IEEE 802.1Q Tagging \label{tab:802.1Q}}
-	\begin{tabular}{| l | c | r |}\hline
-	Tag Protocol Identifier (TPID)		& 16 bits	& EtherType (\texttt{0x8100}, \Cref{tab:ETHERTYPE})\\\hline
-	TCI: Priority Code Point (PCP)		& 3 bits	& QoS Class-of-Service (CoS) Marking\\
-							&		& (\Cref{sec:QOS})\\\hline
-	TCI: Drop Eligible Indicator (DEI)	& 1 bit 	& QoS Drop Eligibility\\\hline
-	VLAN ID 					& 12 bits	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Tag Protocol Identifier (TPID)			& 16		& bits		& EtherType (\texttt{0x8100}, \Cref{tab:ETHERTYPE})\\\hline
+	\mr{2}{TCI: Priority Code Point (PCP)}	& \mr{2}{3}	& \mr{2}{bits}	& QoS Class-of-Service (CoS) Marking\\
+								&		&			& (\Cref{sec:QOS})\\\hline
+	TCI: Drop Eligible Indicator (DEI)		& 1		& bit 			& QoS Drop Eligibility\\\hline
+	VLAN ID 						& 12		& bits		&\\\hline
 	\end{tabular}\end{table}
 
 	%Cisco InterSwitch Link (ISL) 																					--tab:CISCO ISL
 	\begin{table}[H]
 	\centering
 	\caption{Cisco InterSwitch Link (ISL) \label{tab:CISCO ISL}}
-	\begin{tabular}{| l | c | r |}\hline
-	Destination Address	& 40 bits	& Multicast (\texttt{0100.0c00.00} / \texttt{0300.0c00.00})\\\hline
-	Type				& 4 bits	& Frame Type\\\hline
-	User				& 4 bits	& Priority Handling\\\hline
-	Source Address		& 48 bits	& Sending Switchport MAC\\\hline
-	LEN				& 16 bits	& Original Frame Length in Bytes\\\hline
-	AAAA03			& 24 bits	& SNAP/LLC Field (\texttt{0xaaaa03})\\\hline
-	HSA				& 24 bits	& Source Address OUI (\texttt{0000.0c})\\\hline
-	VLAN				& 15 bits	& VLAN ID\\\hline
-	BPDU Flag			& 1 bit 	& Flag BPDU / CDP / VTP frames\\\hline
-	INDEX			& 16 bits	& Diagnostics\\\hline
-	RES				& 16 bits	& Token Ring / FDDI Frames\\\hline
-	Data				& varies	& 8-196000 bit Unmodified original frame\\\hline
-	FCS				& 32 bits	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Destination Address	& 40	& bits		& Multicast (\texttt{0100.0c00.00} / \texttt{0300.0c00.00})\\\hline
+	Type				& 4	& bits		& Frame Type\\\hline
+	User				& 4	& bits		& Priority Handling\\\hline
+	Source Address		& 48	& bits		& Sending Switchport MAC\\\hline
+	LEN				& 16	& bits		& Original Frame Length in Bytes\\\hline
+	AAAA03			& 24	& bits		& SNAP/LLC Field (\texttt{0xaaaa03})\\\hline
+	HSA				& 24	& bits		& Source Address OUI (\texttt{0000.0c})\\\hline
+	VLAN				& 15	& bits		& VLAN ID\\\hline
+	BPDU Flag			& 1	& bit 			& Flag BPDU / CDP / VTP frames\\\hline
+	INDEX			& 16	& bits		& Diagnostics\\\hline
+	RES				& 16	& bits		& Token Ring / FDDI Frames\\\hline
+	Data				& \mc{2}{c|}{varies}	& 8-196000 bit Unmodified original frame\\\hline
+	FCS				& 32	& bits		&\\\hline
 	\end{tabular}\end{table}
 	\note{Goldenrod} Industry-standard IEEE 802.1Q supports both \textit{normal-range} VLANs (1-1005) and \textit{extended-range} VLANs (1006-4094); Cisco ISL is deprecated.
 
@@ -270,59 +275,59 @@
 	\begin{table}[H]
 	\centering
 	\caption{VTP Summary Advertisement \label{tab:VTP SUMMARY}}
-	\begin{tabular}{| l | c | r |}\hline
-	Version				& 1 Byte	& VTP Version (1-3)\\\hline
-	Code					& 1 Byte	& Summary Advertisement (\texttt{0x01})\\\hline
-	Followers				& 1 Byte	& Indicates a Subset Advertisement\\\hline
-	MgmtD Len				& 1 Byte	&\\\hline
-	Management Domain		& 32 Bytes	& VTP Domain Name\\\hline
-	Config Revision Number	& 4 Bytes	&\\\hline
-	Updater Identity			& 4 Bytes	& Originating VTP Server (IP Address)\\\hline
-	Update Timestamp		& 12 Bytes	& Datetime of revision\\\hline
-	MD5 Digest				& 16 Bytes	& VTP Password hash (if configured)\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Version				& 1	& Byte	& VTP Version (1-3)\\\hline
+	Code					& 1	& Byte	& Summary Advertisement (\texttt{0x01})\\\hline
+	Followers				& 1	& Byte	& Indicates a Subset Advertisement\\\hline
+	MgmtD Len				& 1	& Byte	&\\\hline
+	Management Domain		& 32	& Bytes	& VTP Domain Name\\\hline
+	Config Revision Number	& 4	& Bytes	&\\\hline
+	Updater Identity			& 4	& Bytes	& Originating VTP Server (IP Address)\\\hline
+	Update Timestamp		& 12	& Bytes	& Datetime of revision\\\hline
+	MD5 Digest				& 16	& Bytes	& VTP Password hash (if configured)\\\hline
 	\end{tabular}\end{table}
 
 	%VTP Subset Advertisements 																					--tab:VTP SUBSET
 	\begin{table}[H]
 	\centering
 	\caption{VTP Subset Advertisement \label{tab:VTP SUBSET}}
-	\begin{tabular}{| l | c | r |}\hline
-	Version				& 1 Byte	& VTP Version (1-3)\\\hline
-	Code					& 1 Byte	& Subset Advertisement (\texttt{0x02})\\\hline
-	Sequence Number		& 1 Byte	& Sequence in packet stream\\
-						&		& following Summary Advertisement\\\hline
-	MgmtD Len				& 1 Byte	&\\\hline
-	Management Domain		& 32 Bytes	& VTP Domain Name\\\hline
-	Config Revision Number	& 4 Bytes	&\\\hline
-	VLAN-Info Field(s)		& 4 Bytes	& Advertised VLAN(s) (\Cref{tab:VTP VLAN})\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Version				& 1		& Byte		& VTP Version (1-3)\\\hline
+	Code					& 1		& Byte		& Subset Advertisement (\texttt{0x02})\\\hline
+	\mr{2}{Sequence Number}	& \mr{2}{1}	& \mr{2}{Byte}	& Sequence in packet stream\\
+						&		&			& following Summary Advertisement\\\hline
+	MgmtD Len				& 1		& Byte		&\\\hline
+	Management Domain		& 32		& Bytes		& VTP Domain Name\\\hline
+	Config Revision Number	& 4		& Bytes		&\\\hline
+	VLAN-Info Field(s)		& 4		& Bytes		& Advertised VLAN(s) (\Cref{tab:VTP VLAN})\\\hline
 	\end{tabular}\end{table}
 
 	%VTP Subset Advertisements -- VLAN Information 																	--tab:VTP VLAN
 	\begin{table}[H]
 	\centering
 	\caption{The VLAN-Info Field \label{tab:VTP VLAN}}
-	\begin{tabular}{| l | c |}\hline
-	V-Info-Len				& 1 Byte\\\hline
-	Status				& 1 Byte\\\hline
-	VLAN-Type				& 1 Byte\\\hline
-	VLAN-Name Len			& 1 Byte\\\hline
-	ISL VLAN-ID			& 2 Bytes\\\hline
-	MTU Size				& 2 Bytes\\\hline
-	802.10 Index			& 4 Bytes\\\hline
-	VLAN-Name			& 4 Bytes\\\hline
+	\begin{tabular}{| l | r @{ } l |}\hline
+	V-Info-Len				& 1	& Byte\\\hline
+	Status				& 1	& Byte\\\hline
+	VLAN-Type				& 1	& Byte\\\hline
+	VLAN-Name Len			& 1	& Byte\\\hline
+	ISL VLAN-ID			& 2	& Bytes\\\hline
+	MTU Size				& 2	& Bytes\\\hline
+	802.10 Index			& 4	& Bytes\\\hline
+	VLAN-Name			& 4	& Bytes\\\hline
 	\end{tabular}\end{table}
 
 	%VTP Advertisement Requests 																			--tab:VTP REQUEST
 	\begin{table}[H]
 	\centering
 	\caption{Advertisement Requests \label{tab:VTP REQUEST}}
-	\begin{tabular}{| l | c | r |}\hline
-	Version				& 1 Byte	& VTP Version (1-3)\\\hline
-	Code					& 1 Byte	& Advertisement Request (\texttt{0x03})\\\hline
-	Reserved				& 1 Byte	&\\\hline
-	MgmtD Len				& 1 Byte	&\\\hline
-	Management Domain		& 32 Bytes	& VTP Domain Name\\\hline
-	Start-Value				& 32 Bytes	& Identifies the requested Subset Advertisement\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Version				& 1	& Byte	& VTP Version (1-3)\\\hline
+	Code					& 1	& Byte	& Advertisement Request (\texttt{0x03})\\\hline
+	Reserved				& 1	& Byte	&\\\hline
+	MgmtD Len				& 1	& Byte	&\\\hline
+	Management Domain		& 32	& Bytes	& VTP Domain Name\\\hline
+	Start-Value				& 32	& Bytes	& Identifies the requested Subset Advertisement\\\hline
 	\end{tabular}\end{table}
 
 
@@ -333,20 +338,20 @@
 	\begin{minipage}{.6\linewidth}
 	\centering
 	\caption{CDP Frame Format \label{tab:CDP}}
-	\begin{tabular}{| l | c | r |}\hline
-	Version			& 1 Byte	& CDP Version (1-2)\\\hline
-	Time-to-Live (TTL)	& 1 Byte	& CDP \texttt{Hold} timer\\\hline
-	Checksum			& 2 Bytes	&\\\hline
-	TLV List 			& varies	& CDP TLV(s)\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Version			& 1	& Byte		& CDP Version (1-2)\\\hline
+	Time-to-Live (TTL)	& 1	& Byte		& CDP \texttt{Hold} timer\\\hline
+	Checksum			& 2	& Bytes		&\\\hline
+	TLV List 			& \mc{2}{c|}{varies}	& CDP TLV(s)\\\hline
 	\end{tabular}\end{minipage}\hfill
 	%CDP TLVs 																								--tab:CDP TLV
 	\begin{minipage}{.3\linewidth}
 	\centering
 	\caption{CDP TLVs \label{tab:CDP TLV}}
-	\begin{tabular}{| l | c |}\hline
-	Type		& 2 Bytes\\\hline
-	Length	& 2 Bytes\\\hline
-	Value		& varies\\\hline
+	\begin{tabular}{| l | r @{ } l |}\hline
+	Type		& 2	& Bytes\\\hline
+	Length	& 2	& Bytes\\\hline
+	Value		& \mc{2}{c|}{varies}\\\hline
 	\end{tabular}\end{minipage}\end{table}
 	CDPv2 advertises Cisco device information to directly-connected neighbors. Each device maintains a \textit{CDP Neighbor Table} based on received CDP messages. It is necessary for Cisco IP Telephony and some other features.
 
@@ -355,21 +360,21 @@
 	\begin{minipage}{.75\linewidth}
 	\centering
 	\caption{IEEE 802.1AB LLDP PDU Format \label{tab:802.1AB}}
-	\begin{tabular}{| l | c | r |}\hline
-	Chassis ID TLV	& 9 Bytes	& Source MAC (Type 1)\\\hline
-	Port ID TLV		& 6 Bytes	& Source Interface (Type 2)\\\hline
-	Time-to-Live TLV	& 4 Bytes	& LLDP \texttt{Hold} timer (Type 3)\\\hline
-	Optional TLVs	& varies	& Optional LLDP TLV(s) (Types 4-127)\\\hline
-	End TLV		& 2 Bytes	& End of LLDP PDU (Type 0)\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Chassis ID TLV	& 9	& Bytes		& Source MAC (Type 1)\\\hline
+	Port ID TLV		& 6	& Bytes		& Source Interface (Type 2)\\\hline
+	Time-to-Live TLV	& 4	& Bytes		& LLDP \texttt{Hold} timer (Type 3)\\\hline
+	Optional TLVs	& \mc{2}{c|}{varies}	& Optional LLDP TLV(s) (Types 4-127)\\\hline
+	End TLV		& 2	& Bytes		& End of LLDP PDU (Type 0)\\\hline
 	\end{tabular}\end{minipage}\hfill
 	%LLDP TLVs 																							--tab:LLDP TLV
 	\begin{minipage}{.24\linewidth}
 	\centering
 	\caption{LLDP TLVs \label{tab:LLDP TLV}}
-	\begin{tabular}{| l | c |}\hline
-	Type		& 7 bits\\\hline
-	Length	& 9 bits\\\hline
-	Value		& 0-511 Bytes\\\hline
+	\begin{tabular}{| l | r @{ } l |}\hline
+	Type		& 7		& bits\\\hline
+	Length	& 9		& bits\\\hline
+	Value		& 0-511	& Bytes\\\hline
 	\end{tabular}\end{minipage}\end{table}
 	LLDP advertises vendor-neutral device information to directly-connected neighbors. Each device maintains a \textit{LLDP Neighbor Table} based on received LLDP messages. LLDP devices can autonegotiate the use of ANSI/TIA-1057 \textit{LLDP Media Endpoint Discovery} (LLDP-MED), providing advanced autodiscovery, VoIP, PoE, and other features.
 
@@ -378,32 +383,32 @@
 	\subsection[IEEE 802.1D STP / IEEE 802.1w RSTP]{IEEE 802.1D Spanning-Tree Protocol (STP) /\\IEEE 802.1w Rapid STP (RSTP) \label{subsec:802.1D/w}}
 	\begin{table}[H]
 	\centering
-	\begin{tabular}{| l | c | r |}\hline
-	Protocol Identifier		& 2 Bytes	& 0 for STP / PVST+\\\hline
-	Version			& 1 Byte	& 0 for STP / PVST+\\
-					&		& 2 for RSTP / PVRST\\\hline
-	Message Type		& 1 Byte	& Identify Configuration / TCN BPDUs\\
-					&		& (\texttt{0x02} for RSTP/MSTP)\\\hline
-	Flags				& 1 Byte	& Signals TC / TCA bits\\\hline
-	Root ID			& 8 Bytes	& The sender's Root BID (\Cref{tab:BID})\\\hline
-	Root Path Cost		& 4 Bytes	& The sender's cost to Root\\\hline
-	Bridge ID			& 8 Bytes	& The sender's BID (\Cref{tab:BID})\\\hline
-	Port ID			& 2 Bytes	& The sender's \texttt{Port Prio.Nbr}\\\hline
-	Message Age		& 2 Bytes	& Time since Root sent this BPDU\\\hline
-	Max Age			& 2 Bytes	& Time until BPDU expires\\\hline
-	Hello Time			& 2 Bytes	& How often Root sends BPDUs\\\hline
-	Forward Delay		& 2 Bytes	& Time spent in each transition state\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Protocol Identifier		& 2		& Bytes		& 0 for STP / PVST+\\\hline
+	\mr{2}{Version}		& \mr{2}{1}	& \mr{2}{Byte}	& 0 for STP / PVST+\\
+					&		&			& 2 for RSTP / PVRST\\\hline
+	\mr{2}{Message Type}	& \mr{2}{1}	& \mr{2}{Byte}	& Identify Configuration / TCN BPDUs\\
+					&		&			& (\texttt{0x02} for RSTP/MSTP)\\\hline
+	Flags				& 1		& Byte		& Signals TC / TCA bits\\\hline
+	Root ID			& 8		& Bytes		& The sender's Root BID (\Cref{tab:BID})\\\hline
+	Root Path Cost		& 4		& Bytes		& The sender's cost to Root\\\hline
+	Bridge ID			& 8		& Bytes		& The sender's BID (\Cref{tab:BID})\\\hline
+	Port ID			& 2		& Bytes		& The sender's \texttt{Port Prio.Nbr}\\\hline
+	Message Age		& 2		& Bytes		& Time since Root sent this BPDU\\\hline
+	Max Age			& 2		& Bytes		& Time until BPDU expires\\\hline
+	Hello Time			& 2		& Bytes		& How often Root sends BPDUs\\\hline
+	Forward Delay		& 2		& Bytes		& Time spent in each transition state\\\hline
 	\end{tabular}\end{table}
 
 	%STP BID Format 																								--tab:BID
 	\begin{table}[H]
 	\centering
 	\caption{Spanning Tree Bridge ID (BID) Format \label{tab:BID}}
-	\begin{tabular}{| l | c | r |}\hline
-	Base Priority		& 4 bits	& Configured bridge priority\\
-					&		& (multiple of 4096)\\\hline
-	System ID Extension	& 12 bits	& The VLAN ID of this STP instance\\\hline
-	System ID			& 48 bits	& The bridge \textit{Burned-In Address} (BIA)\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	\mr{2}{Base Priority}	& \mr{2}{4}	& \mr{2}{bits}	& Configured bridge priority\\
+					&		&			& (multiple of 4096)\\\hline
+	System ID Extension	& 12		& bits		& The VLAN ID of this STP instance\\\hline
+	System ID			& 48		& bits		& The bridge \textit{Burned-In Address} (BIA)\\\hline
 	\end{tabular}\end{table}
 
 	%STP Port Costs 																						--tab:STP PORT COSTS
@@ -440,7 +445,7 @@
 		\label{itm:STP CONVERGENCE}
 		\item{\textbf{Elect Root Bridge:}}
 		\begin{enumerate} \itemsep -5pt
-			\item{Lowest received BPDU \texttt{Root ID: Priority}}
+			\item{Lowest received BPDU \texttt{Root ID: Base Priority}}
 			\item{Tiebreaker: lowest received BPDU \texttt{Root ID: System ID}}
 		\end{enumerate}
 		\item{\textbf{Elect \textit{Root Ports} (RPs):}}
@@ -480,16 +485,16 @@
 	\subsection[RFC 826 ARP]{\RFC{826} Address Resolution Protocol (ARP) \label{subsec:ARP}}
 	\begin{table}[H]
 	\centering
-	\begin{tabular}{| l | c | r |}\hline
-	HTYPE	& 16 bits	& L2 Protocol (1 for Ethernet)\\\hline
-	PTYPE	& 16 bits	& L3 Protocol (EtherType, \Cref{tab:ETHERTYPE})\\\hline
-	HLEN		& 8 bits	& L2 Address Length in Bytes\\\hline
-	PLEN		& 8 bits	& L3 Address Length in Bytes\\\hline
-	Operation	& 16 bits	& Message Type (1 for Request, 2 for Reply)\\\hline
-	Origin HW 	& 48 bits	& Source MAC\\\hline
-	Origin IP	& 32 bits	& Source IP\\\hline
-	Target HW 	& 48 bits	& Destination MAC\\\hline
-	Target IP	& 32 bits	& Destination IP\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	HTYPE	& 16	& bits	& L2 Protocol (1 for Ethernet)\\\hline
+	PTYPE	& 16	& bits	& L3 Protocol (EtherType, \Cref{tab:ETHERTYPE})\\\hline
+	HLEN		& 8	& bits	& L2 Address Length in Bytes\\\hline
+	PLEN		& 8	& bits	& L3 Address Length in Bytes\\\hline
+	Operation	& 16	& bits	& Message Type (1 for Request, 2 for Reply)\\\hline
+	Origin HW 	& 48	& bits	& Source MAC\\\hline
+	Origin IP	& 32	& bits	& Source IP\\\hline
+	Target HW 	& 48	& bits	& Destination MAC\\\hline
+	Target IP	& 32	& bits	& Destination IP\\\hline
 	\end{tabular}\end{table}
 	\note{Goldenrod} As a Layer 2 protocol, all ARP messages are encapsulated directly within an Ethernet frame.
 
@@ -500,18 +505,18 @@
 	\subsection[IEEE 802.11 WLANs]{IEEE 802.11 Wireless LANs (WLANs) \label{subsec:802.11 WLANS}}
 	\begin{table}[H]
 	\centering
-	\begin{tabular}{| l | c | r |}\hline
-	Frame Control		& 2 Bytes	& Message Type / Subtype\\\hline
-	Duration / ID		& 2 Bytes	& Frame Transmission Time / Client Association\\\hline
-	Address 1			& 6 Bytes	& Dst / Src / Rx / Tx Address\\\hline
-	Address 2			& 6 Bytes	& Dst / Src / Rx / Tx Address\\\hline
-	Address 3			& 6 Bytes	& Dst / Src / Rx / Tx Address\\\hline
-	Sequence Control		& 2 Bytes	& Fragmentation / Duplication Management\\\hline
-	Address 4			& 6 Bytes	& Dst / Src / Rx / Tx Address\\\hline
-	QoS Control		& 2 Bytes	& \Cref{sec:QOS}\\\hline
-	HT Control			& 4 Bytes	& HT Operations (802.11n and later)\\\hline
-	Data				& varies	&\\\hline
-	FCS				& 4 Bytes	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Frame Control		& 2	& Bytes		& Message Type / Subtype\\\hline
+	Duration / ID		& 2	& Bytes		& Frame Transmission Time / Client Association\\\hline
+	Address 1			& 6	& Bytes		& Dst / Src / Rx / Tx Address\\\hline
+	Address 2			& 6	& Bytes		& Dst / Src / Rx / Tx Address\\\hline
+	Address 3			& 6	& Bytes		& Dst / Src / Rx / Tx Address\\\hline
+	Sequence Control		& 2	& Bytes		& Fragmentation / Duplication Management\\\hline
+	Address 4			& 6	& Bytes		& Dst / Src / Rx / Tx Address\\\hline
+	QoS Control		& 2	& Bytes		& \Cref{sec:QOS}\\\hline
+	HT Control			& 4	& Bytes		& HT Operations (802.11n and later)\\\hline
+	Data				& \mc{2}{c|}{varies}	&\\\hline
+	FCS				& 4	& Bytes		&\\\hline
 	\end{tabular}\end{table}
 	In America, the 2.4-GHz ISM band has 11 overlapping channels (1/6/11 nonoverlapping) and the 5-GHz U-NII band has 23 nonoverlapping channels. WLANs operate at half duplex with \textit{Carrier Sense Multiple Access / Collision Avoidance} (CSMA/CA) to minimize collisions.
 	
@@ -522,16 +527,16 @@
 	\centering
 	\caption{IEEE 802.11 Standards \label{tab:802.11 STANDARDS}}
 	\begin{tabular}{@{} c r r c l @{}}\hline
-	\textbf{Standard}	& \textbf{RF Band}		& \textbf{Bandwidth}	& \textbf{Encoding}	& \textbf{Name}\\\hline
-	-1997			& 2.4 GHz				& 2 Mbps			& FHSS/DSSS\\\hline
-	b 			& 2.4 GHz 				& 11 Mbps			& DSSS\\\hline
-	a 			& 5 GHz				& 54 Mbps 			& OFDM\\\hline
-	g 			& 2.4 GHz				& 54 Mbps 			& OFDM\\\hline
-	n 			& 2.4 / 5 GHz			& 600 Mbps		& OFDM 			& Wi-Fi 4 (HT)\\\hline
-	ac 			& 5 GHz				& 6.93 Gbps		& OFDM			& Wi-Fi 5 (VHT)\\\hline
-	ax			& 2.4 / 5 GHz			& 9.6 Gbps			& OFDM			& Wi-Fi 6 (HE)\\
-				& 6 GHz				&				& 				& Wi-Fi 6e\\\hline
-	be 			& 2.4/5/6 GHz			& 46 Gbps			& OFDM			& Wi-Fi 7 (EHT)\\\hline
+	\textbf{Standard}	& \textbf{RF Band}	& \textbf{Bandwidth}	& \textbf{Encoding}	& \textbf{Name}\\\hline
+	-1997			& 2.4 GHz			& 2 Mbps			& FHSS/DSSS\\\hline
+	b 			& 2.4 GHz 			& 11 Mbps			& DSSS\\\hline
+	a 			& 5 GHz			& 54 Mbps 			& OFDM\\\hline
+	g 			& 2.4 GHz			& 54 Mbps 			& OFDM\\\hline
+	n 			& 2.4 / 5 GHz		& 600 Mbps		& OFDM 			& Wi-Fi 4 (HT)\\\hline
+	ac 			& 5 GHz			& 6.93 Gbps		& OFDM			& Wi-Fi 5 (VHT)\\\hline
+	\mr{2}{ax}		& 2.4 / 5 GHz		& \mr{2}{9.6 Gbps}	& \mr{2}{OFDM}		& Wi-Fi 6 (HE)\\
+				& 6 GHz			&				& 				& Wi-Fi 6e\\\hline
+	be 			& 2.4/5/6 GHz		& 46 Gbps			& OFDM			& Wi-Fi 7 (EHT)\\\hline
 	\end{tabular}\end{table}
 
 	%WLC DEPLOYMENT 																				--tab:WLC DEPLOYMENT
@@ -551,16 +556,16 @@
 	\centering
 	\caption{WLC Ports and Interfaces \label{tab:WLC PORTS}}
 	\begin{tabular}{@{} l l c r @{}}\hline
-	\textbf{WLC Port}	& \textbf{WLC Interface}	& \textbf{VLAN}		& \textbf{Usage}\\\hline
-	Console		&					&				& Initial config\\\hline
-	Service Port		& Service Port			& OOB-MGMT		& Out-Of-Band mgmt (access port)\\
-				&					&				& bootup / system recovery\\\hline
-	Redundancy	& Redundancy			& MGMT			& In-Band mgmt (standby WLC)\\
-				& Management			&				& HA redundancy\\\hline
-	DS			& Management			& MGMT			& In-Band mgmt (active WLC)\\
-				&					&				& Form CAPWAP tunnels\\\hline
-	DS			& Virtual				& Mobility Group		& DHCP Relay, WebAuth\\\hline
-	DS			& Dynamic				& USERS			& Bind WLANs to VLANs (tunnel LAG)\\\hline
+	\textbf{WLC Port}		& \textbf{WLC Interface}	& \textbf{VLAN}		& \textbf{Usage}\\\hline
+	Console			&					&				& Initial config\\\hline
+	\mr{2}{Service Port}	& \mr{2}{Service Port}		& \mr{2}{OOB-MGMT}	& Out-of-band management (access port)\\
+					&					&				& \textsl{bootup / system recovery}\\\hline
+	\mr{2}{Redundancy}	& Redundancy			& \mr{2}{MGMT}		& In-band management (standby WLC)\\
+					& Management			&				& \textsl{HA redundancy}\\\hline
+	\mr{2}{DS}			& \mr{2}{Management}		& \mr{2}{MGMT}		& In-band management (active WLC)\\
+					&					&				& \textsl{Form CAPWAP tunnels}\\\hline
+	DS				& Virtual				& Mobility Group		& DHCP Relay, WebAuth\\\hline
+	DS				& Dynamic				& USERS			& Bind WLANs to VLANs (tunnel LAG)\\\hline
 	\end{tabular}\end{table}
 	\note{Goldenrod} Lightweight APs require a \textit{Wireless LAN Controller} (WLC) and CAPWAP to support WLANs. Each Autonomous AP can independently support multiple WLANs.
 
@@ -594,12 +599,12 @@
 	\subsection[ITU HDLC]{ITU High-Level Data-Link Control (HDLC) \label{subsec:ITU HDLC}}
 	\begin{table}[H]
 	\centering
-	\begin{tabular}{| l | c | r |}\hline
-	Flag		& 1 Byte	& Synchronization\\\hline
-	Address	& 1 Byte	& Destination Node\\\hline
-	Control	& 1 Byte	&\\\hline
-	Data		& varies	&\\\hline
-	FCS		& 4 Bytes	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Flag		& 1	& Byte		& Synchronization\\\hline
+	Address	& 1	& Byte		& Destination Node\\\hline
+	Control	& 1	& Byte		&\\\hline
+	Data		& \mc{2}{c|}{varies}	&\\\hline
+	FCS		& 4	& Bytes		&\\\hline
 	\end{tabular}\end{table}
 
 
@@ -607,13 +612,13 @@
 	\subsection[IETF RFC 1661 PPP / Cisco HDLC (cHDLC)]{IETF \RFC{1661} Point-to-Point Protocol (PPP) /\\Cisco HDLC (cHDLC) \label{subsec:IETF PPP}}
 	\begin{table}[H]
 	\centering
-	\begin{tabular}{| l | c | r |}\hline
-	Flag		& 1 Byte	& Synchronization\\\hline
-	Address	& 1 Byte	& Destination Node\\\hline
-	Control	& 1 Byte	&\\\hline
-	Type		& 2 Bytes	& EtherType (\Cref{tab:ETHERTYPE})\\\hline
-	Data		& varies	&\\\hline
-	FCS		& 4 Bytes	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Flag		& 1	& Byte		& Synchronization\\\hline
+	Address	& 1	& Byte		& Destination Node\\\hline
+	Control	& 1	& Byte		&\\\hline
+	Type		& 2	& Bytes		& EtherType (\Cref{tab:ETHERTYPE})\\\hline
+	Data		& \mc{2}{c|}{varies}	&\\\hline
+	FCS		& 4	& Bytes		&\\\hline
 	\end{tabular}\end{table}
 
 
@@ -651,20 +656,20 @@
 	\centering
 	\caption{Layer 3 Multicast \label{tab:MULTICAST L3}}
 	\begin{tabular}{| l | c | r |}\hline
-	224.0.0.1		& All-IPv4-Nodes		&\\
-	\texttt{ff02::1}	& All-IPv6-Nodes		&\\\hline
-	224.0.0.2		& All-IPv4-Routers	& Cisco HSRPv1\\
-	\texttt{ff02::2}	& All-IPv6-Routers	&\\\hline
-	224.0.0.5		& All-SPF-Routers	& OSPFv2\\
-	\texttt{ff02::5}	&				& OSPFv3\\\hline
-	224.0.0.6		& All-SPF-DRs		& OSPFv2\\
-	\texttt{ff02::6}	&				& OSPFv3\\\hline
-	224.0.0.9		& All-RIP-Routers		& RIPv2\\
-	\texttt{ff02::9}	&				& RIPng\\\hline
-	224.0.0.10		& All-EIGRP-Routers	& EIGRP\\
-	\texttt{ff02::a}	& All-EIGRPv6-Routers	& EIGRPv6\\\hline
-	224.0.0.18		& IETF VRRP		&\\\hline
-	224.0.0.102		& Cisco HSRPv2 / GLBP	&\\\hline
+	224.0.0.1		& All-IPv4-Nodes			&\\
+	\texttt{ff02::1}	& All-IPv6-Nodes			&\\\hline
+	224.0.0.2		& All-IPv4-Routers		& Cisco HSRPv1\\
+	\texttt{ff02::2}	& All-IPv6-Routers		&\\\hline
+	224.0.0.5		& \mr{2}{All-SPF-Routers}	& OSPFv2\\
+	\texttt{ff02::5}	&					& OSPFv3\\\hline
+	224.0.0.6		& \mr{2}{All-SPF-DRs}		& OSPFv2\\
+	\texttt{ff02::6}	&					& OSPFv3\\\hline
+	224.0.0.9		& \mr{2}{All-RIP-Routers}	& RIPv2\\
+	\texttt{ff02::9}	&					& RIPng\\\hline
+	224.0.0.10		& All-EIGRP-Routers		& EIGRP\\
+	\texttt{ff02::a}	& All-EIGRPv6-Routers		& EIGRPv6\\\hline
+	224.0.0.18		& IETF VRRP			&\\\hline
+	224.0.0.102		& Cisco HSRPv2 / GLBP		&\\\hline
 	\end{tabular}\end{minipage}\end{table}
 	\note{Goldenrod} Each Layer 3 multicast address maps to a corresponding Layer 2 multicast address which may be used in the L2PDU.
 
@@ -695,22 +700,22 @@
 	\subsection[RFC 791 IPv4]{\RFC{791} IP Version 4 \label{subsec:IPV4}}
 	\begin{table}[H]
 	\centering
-	\begin{tabular}{| l | c | r |}\hline
-	Version				& 4 bits	& IP Version (4)\\\hline
-	IP Header Length (IHL)		& 4 bits	& Header Length (Bytes $\div$ 5)\\\hline
-	DS Field				& 8 bits	& QoS Type-of-Service (ToS) Marking\\
-						&		& (\Cref{sec:QOS})\\\hline
-	Packet Length			& 16 bits	& Total Packet Length\\\hline
-	Identification			& 16 bits	& Fragmentation\\\hline
-	Flags					& 3 bits	& Fragmentation\\\hline
-	Fragment Offset			& 13 bits	& Fragmentation\\\hline
-	Time-to-Live (TTL)		& 8 bits	& Loop Prevention\\\hline
-	Protocol				& 8 bits	& Protocol Type (\Cref{tab:L3 PROTOCOL})\\\hline
-	Header Checksum		& 16 bits	&\\\hline
-	Source IP				& 32 bits	&\\\hline
-	Destination IP			& 32 bits	&\\\hline
-	Options				& varies	& Optional Header Fields\\\hline
-	Data					& varies	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Version			& 4		& bits		& IP Version (4)\\\hline
+	IP Header Length (IHL)	& 4		& bits		& Header Length (Bytes $\div$ 5)\\\hline
+	\mr{2}{DS Field}		& \mr{2}{8}	& \mr{2}{bits}	& QoS Type-of-Service (ToS) Marking\\
+					&		&			& (\Cref{sec:QOS})\\\hline
+	Packet Length		& 16		& bits		& Total Packet Length\\\hline
+	Identification		& 16		& bits		& Fragmentation\\\hline
+	Flags				& 3		& bits		& Fragmentation\\\hline
+	Fragment Offset		& 13		& bits		& Fragmentation\\\hline
+	Time-to-Live (TTL)	& 8		& bits		& Loop Prevention\\\hline
+	Protocol			& 8		& bits		& Protocol Type (\Cref{tab:L3 PROTOCOL})\\\hline
+	Header Checksum	& 16		& bits		&\\\hline
+	Source IP			& 32		& bits		&\\\hline
+	Destination IP		& 32		& bits		&\\\hline
+	Options			& \mc{2}{c|}{varies}		& Optional Header Fields\\\hline
+	Data				& \mc{2}{c|}{varies}		&\\\hline
 	\end{tabular}\end{table}
 
 	%RFC 791/1918 Addressing 																				--tab:ADDRESSING IPV4
@@ -744,16 +749,16 @@
 	\subsection[RFC 2460 IPv6]{\RFC{2460} IP Version 6 \label{subsec:IPV6}}
 	\begin{table}[H]
 	\centering
-	\begin{tabular}{| l | c | r |}\hline
-	Version			& 4 bits	& IP Version (6)\\\hline
-	Traffic Class			& 8 bits	& QoS Marking (\Cref{sec:QOS})\\\hline
-	Flow Label			& 20 bits	& Experimental\\\hline
-	Payload Length		& 16 bits	& Data + Extension Headers Length\\\hline
-	Next Header		& 8 bits	& Protocol Type (\Cref{tab:L3 PROTOCOL})\\\hline
-	Hop Limit			& 8 bits	& Loop Prevention\\\hline
-	Source Address		& 128 bits	&\\\hline
-	Destination Address	& 128 bits	&\\\hline
-	Data				& varies	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Version			& 4		& bits	& IP Version (6)\\\hline
+	Traffic Class			& 8		& bits	& QoS Marking (\Cref{sec:QOS})\\\hline
+	Flow Label			& 20		& bits	& Experimental\\\hline
+	Payload Length		& 16		& bits	& Data + Extension Headers Length\\\hline
+	Next Header		& 8		& bits	& Protocol Type (\Cref{tab:L3 PROTOCOL})\\\hline
+	Hop Limit			& 8		& bits	& Loop Prevention\\\hline
+	Source Address		& 128		& bits	&\\\hline
+	Destination Address	& 128		& bits	&\\\hline
+	Data				& \mc{2}{c|}{varies}	&\\\hline
 	\end{tabular}\end{table}
 	\note{Goldenrod} IPv6 uses a fixed 40-Byte header; IPv6 Options headers are sent separately.
 
@@ -762,19 +767,19 @@
 	\centering
 	\caption{\RFC{2460} Addressing \label{tab:ADDRESSING IPV6}}
 	\begin{tabular}{@{} r l r !{+} r !{+} r !{+} r @{}}\hline
-	\textbf{Address Class}	& \textbf{Block}		& \multicolumn{4}{c}{\textbf{Address Format}}\\\hline
-	Global			& Any			& \multicolumn{2}{r!{+}}{Prefix}		& Subnet ID	& Interface ID\\
-	Unicast			&				& \multicolumn{2}{r!{\hphantom{+}}}{$P$ bits} & \multicolumn{1}{r!{\hphantom{+}}}{$64-P$ bits} & 64 bits\\\hline
-	Unique Local		& \texttt{fd00::/8}		& \texttt{fd}	& Global ID			& Subnet ID	& Interface ID\\
-	Unicast			&				& \multicolumn{1}{r!{\hphantom{+}}}{8 bits} & \multicolumn{1}{r!{\hphantom{+}}}{40 bits} & \multicolumn{1}{r!{\hphantom{+}}}{16 bits} & 64 bits\\\hline
-	Link-Local			& \texttt{fe80::/64}	& \multicolumn{3}{r!{+}}{\texttt{fe80:0:0:0}}			& Interface ID\\
-	Unicast			&				& \multicolumn{3}{r!{\hphantom{+}}}{64 bits}			& 64 bits\\\hline
-	Multicast			& \texttt{ff00::/12}	& \multicolumn{4}{r@{}}{\texttt{ff02::1:ffXX:XXXX/104} Solicited-Node Multicast}\\
-					& \texttt{ff01::/16}	& \multicolumn{4}{r@{}}{Interface/Node-Local}\\
-					& \texttt{ff02::/16}	& \multicolumn{4}{r@{}}{Link-Local}\\
-					& \texttt{ff05::/16}	& \multicolumn{4}{r@{}}{Site-Local}\\
-					& \texttt{ff08::/16}	& \multicolumn{4}{r@{}}{Org-Local}\\
-					& \texttt{ff0e::/16}	& \multicolumn{4}{r@{}}{Global}\\\hline
+	\textbf{Address Class}	& \textbf{Block}			& \mc{4}{c}{\textbf{Address Format}}\\\hline
+	Global			& \mr{2}{Any}			& \mc{2}{r!{+}}{Prefix}				& Subnet ID					& Interface ID\\
+	Unicast			&					& \mc{2}{r!{\hphantom{+}}}{$P$ bits}	& \mc{1}{r!{\hphantom{+}}}{$64-P$ bits}	& 64 bits\\\hline
+	Unique Local		& \mr{2}{\texttt{fd00::/8}}	& \texttt{fd}	& Global ID			& Subnet ID					& Interface ID\\
+	Unicast			&					& \mc{1}{r!{\hphantom{+}}}{8 bits} & \mc{1}{r!{\hphantom{+}}}{40 bits} & \mc{1}{r!{\hphantom{+}}}{16 bits} & 64 bits\\\hline
+	Link-Local			& \mr{2}{\texttt{fe80::/64}}	& \mc{3}{r!{+}}{\texttt{fe80:0:0:0}}									& Interface ID\\
+	Unicast			&					& \mc{3}{r!{\hphantom{+}}}{64 bits}									& 64 bits\\\hline
+	Multicast			& \texttt{ff00::/12}		& \mc{4}{r@{}}{\texttt{ff02::1:ffXX:XXXX/104} Solicited-Node Multicast}\\
+					& \texttt{ff01::/16}		& \mc{4}{r@{}}{Interface/Node-Local}\\
+					& \texttt{ff02::/16}		& \mc{4}{r@{}}{Link-Local}\\
+					& \texttt{ff05::/16}		& \mc{4}{r@{}}{Site-Local}\\
+					& \texttt{ff08::/16}		& \mc{4}{r@{}}{Org-Local}\\
+					& \texttt{ff0e::/16}		& \mc{4}{r@{}}{Global}\\\hline
 	\end{tabular}\end{table}
 	\note{Goldenrod} IPv6 does not support broadcasts, only scoped multicasts.
 
@@ -791,14 +796,14 @@
 	\subsection[RFC 792 ICMP / RFC 4443 ICMPv6]{\RFC{792} Internet Control Message Protocol (ICMP) /\\\RFC{4443} ICMPv6 \label{subsec:ICMP}}
 	\begin{table}[H]
 	\centering
-	\begin{tabular}{| l | c | r |}\hline
-	Type			& 8 bits	& Message Type\\
-				&		& (\Cref{tab:ICMP VALUES,tab:ICMPV6 VALUES}) \\\hline
-	Code			& 8 bits	& Message Subtype / Status Code\\
-				&		& (\Cref{tab:ICMP VALUES,tab:ICMPV6 VALUES})\\\hline
-	Checksum		& 16 bits	&\\\hline
-	Header Data	& 32 bits	& Message-specific fields\\\hline
-	Payload		& varies	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	\mr{2}{Type}	& \mr{2}{8}	& \mr{2}{bits}	& Message Type\\
+				&		&			& (\Cref{tab:ICMP VALUES,tab:ICMPV6 VALUES}) \\\hline
+	\mr{2}{Code}	& \mr{2}{8}	& \mr{2}{bits}	& Message Subtype / Status Code\\
+				&		&			& (\Cref{tab:ICMP VALUES,tab:ICMPV6 VALUES})\\\hline
+	Checksum		& 16		& bits		&\\\hline
+	Header Data	& 32		& bits		& Message-specific fields\\\hline
+	Payload		& \mc{2}{c|}{varies}		&\\\hline
 	\end{tabular}\end{table}
 
 	\begin{table}[H]
@@ -863,58 +868,58 @@
 	\begin{minipage}[t]{.47\linewidth}
 	\centering
 	\caption{NDP RS \label{tab:NDP RS}}
-	\begin{tabular}{| l | c | r |}\hline
-	Type		& 8 bits	& Message Type (133)\\\hline
-	Code		& 8 bits	& Message Subtype (0)\\\hline
-	Checksum	& 16 bits	&\\\hline
-	Reserved	& 32 bits	& Unused (0)\\\hline
-	Options	& varies	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Type		& 8	& bits		& Message Type (133)\\\hline
+	Code		& 8	& bits		& Message Subtype (0)\\\hline
+	Checksum	& 16	& bits		&\\\hline
+	Reserved	& 32	& bits		& Unused (0)\\\hline
+	Options	& \mc{2}{c|}{varies}	&\\\hline
 	\end{tabular}\end{minipage}\hfill
 	%NDP NS 																								--tab:NDP NS
 	\begin{minipage}[t]{.53\linewidth}
 	\centering
 	\caption{NDP NS \label{tab:NDP NS}}
-	\begin{tabular}{| l | c | r |}\hline
-	Type			& 8 bits	& Message Type (135)\\\hline
-	Code			& 8 bits	& Message Subtype (0)\\\hline
-	Checksum		& 16 bits	&\\\hline
-	Reserved		& 32 bits	& Unused (0)\\\hline
-	Target Address	& 128 bits	&\\\hline
-	Options		& varies	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Type			& 8		& bits	& Message Type (135)\\\hline
+	Code			& 8		& bits	& Message Subtype (0)\\\hline
+	Checksum		& 16		& bits	&\\\hline
+	Reserved		& 32		& bits	& Unused (0)\\\hline
+	Target Address	& 128	 	&bits		&\\\hline
+	Options		& \mc{2}{c|}{varies}	&\\\hline
 	\end{tabular}\end{minipage}\end{table}
 
 	%NDP RA																								--tab:NDP RA
 	\begin{table}[H]
 	\centering
 	\caption{NDP RA \label{tab:NDP RA}}
-	\begin{tabular}{| l | c | r |}\hline
-	Type				& 8 bits	& Message Type (134)\\\hline
-	Code				& 8 bits	& Message Subtype (0)\\\hline
-	Checksum			& 16 bits	&\\\hline
-	Current Hop Limit	& 8 bits	& Default IPv6 Hop Count Value\\\hline
-	Managed Address Flag	& 1 bit 	& Indicates DHCPv6 Address Services\\\hline
-	Other Config Flag		& 1 bit 	& Indicates DHCPv6 Other Services\\\hline
-	Reserved			& 6 bits	& Unused (0)\\\hline
-	Router Lifetime		& 16 bits	& Default Router Lifetime\\\hline
-	Reachable Time		& 32 bits	& Neighbor Unreachability Detection\\\hline
-	Retransmit Time		& 32 bits	& Time between NS message retransmissions (ms)\\\hline
-	Options			& varies	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Type				& 8	& bits		& Message Type (134)\\\hline
+	Code				& 8	& bits		& Message Subtype (0)\\\hline
+	Checksum			& 16	& bits		&\\\hline
+	Current Hop Limit	& 8	& bits		& Default IPv6 Hop Count Value\\\hline
+	Managed Address Flag	& 1	& bit 			& Indicates DHCPv6 Address Services\\\hline
+	Other Config Flag		& 1	& bit 			& Indicates DHCPv6 Other Services\\\hline
+	Reserved			& 6	& bits		& Unused (0)\\\hline
+	Router Lifetime		& 16	& bits		& Default Router Lifetime\\\hline
+	Reachable Time		& 32	& bits		& Neighbor Unreachability Detection\\\hline
+	Retransmit Time		& 32	& bits		& Time between NS message retransmissions (ms)\\\hline
+	Options			& \mc{2}{c|}{varies}	&\\\hline
 	\end{tabular}\end{table}
 
 	%NDP NA 																								--tab:NDP NA
 	\begin{table}[H]
 	\centering
 	\caption{NDP NA \label{tab:NDP NA}}
-	\begin{tabular}{| l | c | r |}\hline
-	Type				& 8 bits	& Message Type (136)\\\hline
-	Code				& 8 bits	& Message Subtype (0)\\\hline
-	Checksum			& 16 bits	&\\\hline
-	From Router Flag		& 1 bit 	& Identifies sender as router\\\hline
-	Solicited Flag		& 1 bit 	& Indicates solicitation by NDP NS\\\hline
-	Override Flag		& 1 bit 	& Overrides existing cache entry\\\hline
-	Reserved			& 29 bits	& Unused (0)\\\hline
-	Target Address		& 128 bits	&\\\hline
-	Options			& varies	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Type				& 8		& bits	& Message Type (136)\\\hline
+	Code				& 8		& bits	& Message Subtype (0)\\\hline
+	Checksum			& 16		& bits	&\\\hline
+	From Router Flag		& 1		& bit 		& Identifies sender as router\\\hline
+	Solicited Flag		& 1		& bit 		& Indicates solicitation by NDP NS\\\hline
+	Override Flag		& 1		& bit 		& Overrides existing cache entry\\\hline
+	Reserved			& 29		& bits	& Unused (0)\\\hline
+	Target Address		& 128		& bits	&\\\hline
+	Options			& \mc{2}{c|}{varies}	&\\\hline
 	\end{tabular}\end{table}
 	\note{Goldenrod} Unlike IPv4 ARP, ICMPv6 NDP messages are encapsulated within an IPv6 packet.
 
@@ -946,15 +951,15 @@
 	\begin{table}[H]
 	\centering
 	\caption{OSPF Link-State Advertisement (LSA) Header \label{tab:OSPF LSA}}
-	\begin{tabular}{| l | c | r |}\hline
-	LS Age			& 2 Bytes	& Seconds since LSA originated\\\hline
-	Options			& 1 Byte	&\\\hline
-	LS Type			& 1 Byte	& LSA Type (\Cref{tab:OSPF LSA TYPES})\\\hline
-	Link-State ID		& 4 Bytes	& Determined by \texttt{LS Type}\\\hline
-	Advertising Router	& 4 Bytes	& Advertising Router \texttt{RID}\\\hline
-	LS Sequence Number	& 4 Bytes	& Used by routers to judge LSAs\\\hline
-	LS Checksum		& 2 Bytes	& Checksum of LSA (excluding \texttt{LS Age})\\\hline
-	Length			& 2 Bytes	& LSA + Header Length in Bytes\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	LS Age			& 2	& Bytes	& Seconds since LSA originated\\\hline
+	Options			& 1	& Byte	&\\\hline
+	LS Type			& 1	& Byte	& LSA Type (\Cref{tab:OSPF LSA TYPES})\\\hline
+	Link-State ID		& 4	& Bytes	& Determined by \texttt{LS Type}\\\hline
+	Advertising Router	& 4	& Bytes	& Advertising Router \texttt{RID}\\\hline
+	LS Sequence Number	& 4	& Bytes	& Used by routers to judge LSAs\\\hline
+	LS Checksum		& 2	& Bytes	& Checksum of LSA (excluding \texttt{LS Age})\\\hline
+	Length			& 2	& Bytes	& LSA + Header Length in Bytes\\\hline
 	\end{tabular}\end{table}
 	Each LSDB is a collection of \textit{OSPF Link-State Advertisements} (LSAs) whose contents describe the internetwork according to their LSA type (\Cref{tab:OSPF LSA TYPES}). Note that the number of OSPF routers, OSPF areas, and other variables determine the number and type of LSAs within the LSDB.
 
@@ -962,23 +967,23 @@
 	\begin{table}[H]
 	\centering
 	\caption{OSPF Hello \label{tab:OSPF HELLO}}
-	\begin{tabular}{| l | c | r |}\hline
-	Version				& 1 Byte	& OSPF Version (2)\\\hline
-	Type					& 1 Byte	& OSPF Packet Type (1)\\\hline
-	Packet Length			& 2 Bytes	& Header + Packet Length in Bytes\\\hline
-	Router ID				& 4 Bytes	& Advertising Router \texttt{RID}\\\hline
-	Area ID				& 4 Bytes	& Advertising Router's Area ID\\\hline
-	Checksum				& 2 Bytes	&\\\hline
-	AuType				& 2 Bytes	& OSPF Authentication Type (0-2)\\\hline
-	Authentication			& 8 Bytes	& Determined by \texttt{AuType}\\\hline
-	Network Mask			& 4 Bytes	& Sending interface's netmask\\\hline
-	Hello Interval			& 2 Bytes	& OSPF \texttt{Hello} Interval\\\hline
-	Options				& 1 Byte	&\\\hline
-	Rtr Pri				& 1 Byte	& Interface OSPF Priority\\\hline
-	Router Dead Interval		& 4 Bytes	& OSPF \texttt{Dead} Interval\\\hline
-	Designated Router		& 4 Bytes	& OSPF DR IP Address\\\hline
-	Backup Designated Router	& 4 Bytes	& OSPF BDR IP Address\\\hline
-	Neighbor				& varies	& Known Neighbor \texttt{RID}(s)\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Version				& 1	& Byte		& OSPF Version (2)\\\hline
+	Type					& 1	& Byte		& OSPF Packet Type (1)\\\hline
+	Packet Length			& 2	& Bytes		& Header + Packet Length in Bytes\\\hline
+	Router ID				& 4	& Bytes		& Advertising Router \texttt{RID}\\\hline
+	Area ID				& 4	& Bytes		& Advertising Router's Area ID\\\hline
+	Checksum				& 2	& Bytes		&\\\hline
+	AuType				& 2	& Bytes		& OSPF Authentication Type (0-2)\\\hline
+	Authentication			& 8	& Bytes		& Determined by \texttt{AuType}\\\hline
+	Network Mask			& 4	& Bytes		& Sending interface's netmask\\\hline
+	Hello Interval			& 2	& Bytes		& OSPF \texttt{Hello} Interval\\\hline
+	Options				& 1	& Byte		&\\\hline
+	Rtr Pri				& 1	& Byte		& Interface OSPF Priority\\\hline
+	Router Dead Interval		& 4	& Bytes		& OSPF \texttt{Dead} Interval\\\hline
+	Designated Router		& 4	& Bytes		& OSPF DR IP Address\\\hline
+	Backup Designated Router	& 4	& Bytes		& OSPF BDR IP Address\\\hline
+	Neighbor				& \mc{2}{c|}{varies}	& Known Neighbor \texttt{RID}(s)\\\hline
 	\end{tabular}\end{table}
 	OSPF Hello packets are used for neighbor discovery and maintenance. OSPF routers use it to learn each other's \texttt{RID} in neighbor state \textbf{INIT} and determine whether they are OSPF-compatible.
 	
@@ -990,23 +995,23 @@
 	\begin{table}[H]
 	\centering
 	\caption{OSPF Database Description (DD) \label{tab:OSPF DD}}
-	\begin{tabular}{| l | c | r |}\hline
-	Version			& 1 Byte	& OSPF Version (2)\\\hline
-	Type				& 1 Byte	& OSPF Packet Type (2)\\\hline
-	Packet Length		& 2 Bytes	& Header + Packet Length in Bytes\\\hline
-	Router ID			& 4 Bytes	& Advertising Router \texttt{RID}\\\hline
-	Area ID			& 4 Bytes	& Advertising Router's Area ID\\\hline
-	Checksum			& 2 Bytes	&\\\hline
-	AuType			& 2 Bytes	& OSPF Authentication Type (0-2)\\\hline
-	Authentication		& 8 Bytes	& Determined by \texttt{AuType}\\\hline
-	Interface MTU		& 2 Bytes	& IP MTU in Bytes\\\hline
-	Options			& 1 Byte	&\\\hline
-	Reserved			& 5 bits	& 0\\\hline
-	Initial				& 1 bit 	& 1 indicates first DD packet\\\hline 
-	More				& 1 bit 	& 1 indicates more DD packets follow\\\hline
-	Master/Slave		& 1 bit 	& 1 indicates master, 0 indicates slave\\\hline
-	DD Sequence Number	& 4 Bytes	& sequence number of DD packets\\\hline
-	LSA Headers		& varies	& LSA header(s) (\Cref{tab:OSPF LSA})\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Version			& 1	& Byte		& OSPF Version (2)\\\hline
+	Type				& 1	& Byte		& OSPF Packet Type (2)\\\hline
+	Packet Length		& 2	& Bytes		& Header + Packet Length in Bytes\\\hline
+	Router ID			& 4	& Bytes		& Advertising Router \texttt{RID}\\\hline
+	Area ID			& 4	& Bytes		& Advertising Router's Area ID\\\hline
+	Checksum			& 2	& Bytes		&\\\hline
+	AuType			& 2	& Bytes		& OSPF Authentication Type (0-2)\\\hline
+	Authentication		& 8	& Bytes		& Determined by \texttt{AuType}\\\hline
+	Interface MTU		& 2	& Bytes		& IP MTU in Bytes\\\hline
+	Options			& 1	& Byte		&\\\hline
+	Reserved			& 5	& bits		& 0\\\hline
+	Initial				& 1	& bit 			& 1 indicates first DD packet\\\hline 
+	More				& 1	& bit 			& 1 indicates more DD packets follow\\\hline
+	Master/Slave		& 1	& bit 			& 1 indicates master, 0 indicates slave\\\hline
+	DD Sequence Number	& 4	& Bytes		& sequence number of DD packets\\\hline
+	LSA Headers		& \mc{2}{c|}{varies}	& LSA header(s) (\Cref{tab:OSPF LSA})\\\hline
 	\end{tabular}\end{table}
 	OSPF DD packets are used by both routers to summarize and compare their local LSDBs. The \textit{master router} (higher \texttt{RID}) enters neighbor state \textbf{EXSTART} by sending an OSPF DD packet, which initializes the LSDB exchange process. The \textit{slave router} (lower \texttt{RID}) enters neighbor state \textbf{EXCHANGE} by responding with its own OSPF DD packet.
 
@@ -1014,51 +1019,51 @@
 	\begin{table}[H]
 	\centering
 	\caption{OSPF Link-State Request (LSR) \label{tab:OSPF LSR}}
-	\begin{tabular}{| l | c | r |}\hline
-	Version			& 1 Byte	& OSPF Version (2)\\\hline
-	Type				& 1 Byte	& OSPF Packet Type (3)\\\hline
-	Packet Length		& 2 Bytes	& Header + Packet Length in Bytes\\\hline
-	Router ID			& 4 Bytes	& Advertising Router \texttt{RID}\\\hline
-	Area ID			& 4 Bytes	& Advertising Router's Area ID\\\hline
-	Checksum			& 2 Bytes	&\\\hline
-	AuType			& 2 Bytes	& OSPF Authentication Type (0-2)\\\hline
-	Authentication		& 8 Bytes	& Determined by \texttt{AuType}\\\hline
-	LS Type			& 4 Bytes	& Requested LSA Type (\Cref{tab:OSPF LSA TYPES})\\\hline
-	Link-State ID		& 4 Bytes	& Determined by \texttt{LS Type}\\\hline
-	Advertising Router	& 4 Bytes	& Sending Router's \texttt{RID}\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Version			& 1	& Byte	& OSPF Version (2)\\\hline
+	Type				& 1	& Byte	& OSPF Packet Type (3)\\\hline
+	Packet Length		& 2	& Bytes	& Header + Packet Length in Bytes\\\hline
+	Router ID			& 4	& Bytes	& Advertising Router \texttt{RID}\\\hline
+	Area ID			& 4	& Bytes	& Advertising Router's Area ID\\\hline
+	Checksum			& 2	& Bytes	&\\\hline
+	AuType			& 2	& Bytes	& OSPF Authentication Type (0-2)\\\hline
+	Authentication		& 8	& Bytes	& Determined by \texttt{AuType}\\\hline
+	LS Type			& 4	& Bytes	& Requested LSA Type (\Cref{tab:OSPF LSA TYPES})\\\hline
+	Link-State ID		& 4	& Bytes	& Determined by \texttt{LS Type}\\\hline
+	Advertising Router	& 4	& Bytes	& Sending Router's \texttt{RID}\\\hline
 	\end{tabular}\end{table}
 
 	%OSPF LSU Packet 																						--tab:OSPF LSU
 	\begin{table}[H]
 	\centering
 	\caption{OSPF Link-State Update (LSU) \label{tab:OSPF LSU}}
-	\begin{tabular}{| l | c | r |}\hline
-	Version		& 1 Byte	& OSPF Version (2)\\\hline
-	Type			& 1 Byte	& OSPF Packet Type (4)\\\hline
-	Packet Length	& 2 Bytes	& Header + Packet Length in Bytes\\\hline
-	Router ID		& 4 Bytes	& Advertising Router \texttt{RID}\\\hline
-	Area ID		& 4 Bytes	& Advertising Router's Area ID\\\hline
-	Checksum		& 2 Bytes	&\\\hline
-	AuType		& 2 Bytes	& OSPF Authentication Type (0-2)\\\hline
-	Authentication	& 8 Bytes	& Determined by \texttt{AuType}\\\hline
-	Number of LSAs	& 4 Bytes	&\\\hline
-	LSAs			& varies	& LSA(s)\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Version		& 1	& Byte		& OSPF Version (2)\\\hline
+	Type			& 1	& Byte		& OSPF Packet Type (4)\\\hline
+	Packet Length	& 2	& Bytes		& Header + Packet Length in Bytes\\\hline
+	Router ID		& 4	& Bytes		& Advertising Router \texttt{RID}\\\hline
+	Area ID		& 4	& Bytes		& Advertising Router's Area ID\\\hline
+	Checksum		& 2	& Bytes		&\\\hline
+	AuType		& 2	& Bytes		& OSPF Authentication Type (0-2)\\\hline
+	Authentication	& 8	& Bytes		& Determined by \texttt{AuType}\\\hline
+	Number of LSAs	& 4	& Bytes		&\\\hline
+	LSAs			& \mc{2}{c|}{varies}	& LSA(s)\\\hline
 	\end{tabular}\end{table}
 
 	%OSPF LSAck Packet 																						--tab:OSPF LSACK
 	\begin{table}[H]
 	\centering
 	\caption{OSPF Link-State Acknowledgment (LSAck) \label{tab:OSPF LSACK}}
-	\begin{tabular}{| l | c | r |}\hline
-	Version		& 1 Byte	& OSPF Version (2)\\\hline
-	Type			& 1 Byte	& OSPF Packet Type (5)\\\hline
-	Packet Length	& 2 Bytes	& Header + Packet Length in Bytes\\\hline
-	Router ID		& 4 Bytes	& Advertising Router \texttt{RID}\\\hline
-	Area ID		& 4 Bytes	& Advertising Router's Area ID\\\hline
-	Checksum		& 2 Bytes	&\\\hline
-	AuType		& 2 Bytes	& OSPF Authentication Type (0-2)\\\hline
-	Authentication	& 8 Bytes	& Determined by \texttt{AuType}\\\hline
-	LSA Headers	& varies	& Acknowledged LSA header(s) (\Cref{tab:OSPF LSA})\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Version		& 1	& Byte		& OSPF Version (2)\\\hline
+	Type			& 1	& Byte		& OSPF Packet Type (5)\\\hline
+	Packet Length	& 2	& Bytes		& Header + Packet Length in Bytes\\\hline
+	Router ID		& 4	& Bytes		& Advertising Router \texttt{RID}\\\hline
+	Area ID		& 4	& Bytes		& Advertising Router's Area ID\\\hline
+	Checksum		& 2	& Bytes		&\\\hline
+	AuType		& 2	& Bytes		& OSPF Authentication Type (0-2)\\\hline
+	Authentication	& 8	& Bytes		& Determined by \texttt{AuType}\\\hline
+	LSA Headers	& \mc{2}{c|}{varies}	& Acknowledged LSA header(s) (\Cref{tab:OSPF LSA})\\\hline
 	\end{tabular}\end{table}
 	Both routers enter neighbor state \textbf{LOADING} after the LSDB exchange process has been initiated. The master router requests certain LSAs using OSPF LSR packets (\Cref{tab:OSPF LSR}). The slave router responds with OSPF LSU packets (\Cref{tab:OSPF LSU}) containing the requested LSAs, which the master router acknowledges using OSPF LSAck packets (\Cref{tab:OSPF LSACK}). This process then reverses, with the slave router requesting LSAs that the master router supplies. Routers which complete the LSDB exchange process enter neighbor state \textbf{FULL} and are \textit{fully-adjacent OSPF neighbors}.
 
@@ -1075,7 +1080,7 @@
 	\begin{minipage}[t]{.45\linewidth}
 	\centering
 	\caption{Well-Known Ports \label{tab:L4 PORTS KNOWN}}
-	\begin{tabular}{| r r | r |}\hline
+	\begin{tabular}{| r @{ } r | r |}\hline
 	TCP	& 20		& FTP Data\\
 	TCP	& 21		& FTP Control\\\hline
 	TCP	& 22		& SSH / SFTP\\\hline
@@ -1100,7 +1105,7 @@
 	\begin{minipage}[t]{.45\linewidth}
 	\centering
 	\caption{Registered Ports \label{tab:L4 PORTS REGISTERED}}
-	\begin{tabular}{| c r | r |}\hline
+	\begin{tabular}{| c @{ } r | r |}\hline
 	UDP	& 1812	& RADIUS Auth\\
 	UDP	& 1813	& RADIUS Accounting\\\hline
 	TCP	& 1985	& Cisco HSRP\\\hline
@@ -1114,12 +1119,12 @@
 	\subsection[RFC 768 UDP]{\RFC{768} User Datagram Protocol (UDP) \label{subsec:UDP}}
 	\begin{table}[H]
 	\centering
-	\begin{tabular}{| l | c | r |}\hline
-	Source Port		& 2 Bytes	& \Cref{tab:L4 PORTS KNOWN,tab:L4 PORTS REGISTERED}\\\hline
-	Destination Port	& 2 Bytes	& \Cref{tab:L4 PORTS KNOWN,tab:L4 PORTS REGISTERED}\\\hline
-	Length		& 2 Bytes	& Header + Data Length in Bytes\\\hline
-	Checksum		& 2 Bytes	&\\\hline
-	Data			& varies	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Source Port		& 2	& Bytes		& \Cref{tab:L4 PORTS KNOWN,tab:L4 PORTS REGISTERED}\\\hline
+	Destination Port	& 2	& Bytes		& \Cref{tab:L4 PORTS KNOWN,tab:L4 PORTS REGISTERED}\\\hline
+	Length		& 2	& Bytes		& Header + Data Length in Bytes\\\hline
+	Checksum		& 2	& Bytes		&\\\hline
+	Data			& \mc{2}{c|}{varies}	&\\\hline
 	\end{tabular}\end{table}
 	UDP is a \textit{connectionless} protocol offering port-based multiplexing without any delivery guarantee. This is optimal for latency-sensitive applications which are fault-tolerant or implement their own error recovery mechanisms, such as VoIP, DNS, DHCP, TFTP, SNMP, Syslog, QUIC, and others.
 
@@ -1128,18 +1133,18 @@
 	\subsection[RFC 793 TCP]{\RFC{793} Transmission Control Protocol (TCP) \label{subsec:TCP}}
 	\begin{table}[H]
 	\centering
-	\begin{tabular}{| l | c | r |}\hline
-	Source Port		& 2 Bytes	& \Cref{tab:L4 PORTS KNOWN,tab:L4 PORTS REGISTERED}\\\hline
-	Destination Port	& 2 Bytes	& \Cref{tab:L4 PORTS KNOWN,tab:L4 PORTS REGISTERED}\\\hline
-	SEQ Number	& 4 Bytes	& Windowing / Flow Control (SEQ flag)\\\hline
-	ACK Number	& 4 Bytes	& Windowing / Flow Control (ACK flag)\\\hline
-	Data Offset		& 4 bits	&\\\hline
-	Reserved		& 6 bits	& Future Use (0)\\\hline
-	Flags			& 6 bits	& Connection Management\\\hline
-	Window		& 2 Bytes	& Connection Window Size\\\hline
-	Checksum		& 2 Bytes	&\\\hline
-	Urgent		& 2 Bytes	& Last urgent data byte (URG flag)\\\hline
-	Data			& varies	&\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Source Port		& 2	& Bytes		& \Cref{tab:L4 PORTS KNOWN,tab:L4 PORTS REGISTERED}\\\hline
+	Destination Port	& 2	& Bytes		& \Cref{tab:L4 PORTS KNOWN,tab:L4 PORTS REGISTERED}\\\hline
+	SEQ Number	& 4	& Bytes		& Windowing / Flow Control (SEQ flag)\\\hline
+	ACK Number	& 4	& Bytes		& Windowing / Flow Control (ACK flag)\\\hline
+	Data Offset		& 4	& bits		&\\\hline
+	Reserved		& 6	& bits		& Future Use (0)\\\hline
+	Flags			& 6	& bits		& Connection Management\\\hline
+	Window		& 2	& Bytes		& Connection Window Size\\\hline
+	Checksum		& 2	& Bytes		&\\\hline
+	Urgent		& 2	& Bytes		& Last urgent data byte (URG flag)\\\hline
+	Data			& \mc{2}{c|}{varies}	&\\\hline
 	\end{tabular}\end{table}
 	TCP is a \textit{connection-oriented} protocol offering \textbf{error recovery}, \textbf{flow control}, \textbf{connection establishment/termination}, and \textbf{ordered data transfer / segmentation} features at the cost of additional overhead.
 
@@ -1167,25 +1172,25 @@
 	\subsection[RFC 2131 DHCP]{\RFC{2131} Dynamic Host Configuration Protocol (DHCP) \label{subsec:DHCP}}
 	\begin{table}[H]
 	\centering
-	\begin{tabular}{| l | c | r |}\hline
-	Message Type		& 1 Byte	& Message Type (request/reply)\\\hline
-	HTYPE			& 1 Byte	& L2 Protocol (1 for Ethernet)\\\hline
-	HLEN				& 1 Byte	& L2 Address Length in Bytes\\\hline
-	Hops				& 1 Byte	& Optionally boot via relay agent\\\hline
-	Transaction ID		& 4 Bytes	& Identifies client-server exchange (random)\\\hline
-	Seconds			& 2 Bytes	& Time since client began request\\\hline
-	Broadcast Flag		& 1 bit 	& broadcast/unicast replies\\\hline
-	Reserved			& 15 bits	& Future Use (0)\\\hline
-	Client IP			& 4 Bytes	& Current Client IP\\\hline
-	Your IP			& 4 Bytes	& Your Client IP\\\hline
-	Next Server IP		& 4 Bytes	& Next server in bootstrap process\\\hline
-	Relay Agent IP		& 4 Bytes	& Boot via relay agent\\\hline
-	CHADDR			& 16 Bytes	& Client Hardware Address\\\hline
-	Server Name		& 64 Bytes	& Optional Server Hostname\\\hline
-	File Name			& 128 Bytes	& Optional Boot File\\\hline
-	Magic Cookie		& 4 Bytes	& Identifies DHCP over Bootp\\
-					&		& (\texttt{0x63.82.53.63})\\\hline
-	Options			& varies	& One or more option headers (\Cref{tab:DHCP OPTIONS})\\\hline
+	\begin{tabular}{| l | r @{ } l | r |}\hline
+	Message Type		& 1		& Byte		& Message Type (request/reply)\\\hline
+	HTYPE			& 1		& Byte		& L2 Protocol (1 for Ethernet)\\\hline
+	HLEN				& 1		& Byte		& L2 Address Length in Bytes\\\hline
+	Hops				& 1		& Byte		& Optionally boot via relay agent\\\hline
+	Transaction ID		& 4		& Bytes		& Identifies client-server exchange (random)\\\hline
+	Seconds			& 2		& Bytes		& Time since client began request\\\hline
+	Broadcast Flag		& 1		& bit 			& broadcast/unicast replies\\\hline
+	Reserved			& 15		& bits		& Future Use (0)\\\hline
+	Client IP			& 4		& Bytes		& Current Client IP\\\hline
+	Your IP			& 4		& Bytes		& Your Client IP\\\hline
+	Next Server IP		& 4		& Bytes		& Next server in bootstrap process\\\hline
+	Relay Agent IP		& 4		& Bytes		& Boot via relay agent\\\hline
+	CHADDR			& 16		& Bytes		& Client Hardware Address\\\hline
+	Server Name		& 64		& Bytes		& Optional Server Hostname\\\hline
+	File Name			& 128		& Bytes		& Optional Boot File\\\hline
+	\mr{2}{Magic Cookie}	& \mr{2}{4}	& \mr{2}{Bytes}	& Identifies DHCP over Bootp\\
+					&		&			& (\texttt{0x63.82.53.63})\\\hline
+	Options			& \mc{2}{c|}{varies}		& One or more option headers (\Cref{tab:DHCP OPTIONS})\\\hline
 	\end{tabular}\end{table}
 
 	\begin{minipage}{.4\linewidth}
@@ -1317,8 +1322,8 @@
 	\textbf{QoS Standard} 			& \textbf{Protocol Field(s)}		& \textbf{Notes}\\\hline
 	IEEE 802.1p (CoS)				& 802.1Q \texttt{PCP/DEI} 		& \Cref{tab:802.1Q}\\\hline
 							& 802.11 \texttt{QoS Control} 		& \Cref{subsec:802.11 WLANS}\\\hline
-	\RFC{791} IPP (CS)			& IPv4 \texttt{ToS Byte} (OLD) 	& \Cref{subsec:IPV4}\\
-	RFC \rfc{2474}/\rfc{3168} (DSCP)	& IPv4 \texttt{DS Field} (NEW) 	& \Cref{subsec:IPV4}\\\hline
+	\RFC{791} IPP (CS)			& IPv4 \texttt{ToS Byte} (OLD) 	& \mr{2}{\Cref{subsec:IPV4}}\\
+	RFC \rfc{2474}/\rfc{3168} (DSCP)	& IPv4 \texttt{DS Field} (NEW) 	&\\\hline
 	\RFC{2460} (DSCP)			& IPv6 \texttt{Traffic Class} 		& \Cref{subsec:IPV6}\\\hline
 	RFC \rfc{3032}/\rfc{5462}		& MPLS \texttt{EXP}			& \Cref{sec:MPLS}\\\hline
 	\end{tabular}\end{table}
@@ -1418,22 +1423,22 @@
 	\centering
 	\caption{Protocol Timers \label{tab:DEFAULT TIMERS}}
 	\begin{tabular}{@{} l r r @{}}\hline
-	\textbf{Protocol}		& \textbf{Timer}	& \textbf{Default Value}\\\hline
-	MAC Table 			& Aging-Time	& 300 s\\\hline
-	STP				& Hello		& 2 s\\
-					& Forward Delay	& 15 s\\
-					& Max Age		& 20 s ($10*$ \texttt{Hello})\\\hline
-	RSTP				& Hello		& 2 s\\
-					& Max Age		& 6 s ($3*$ \texttt{Hello})\\\hline
-	CDP				& Update		& 60 s\\
-					& Hold		& 180 s ($3*$ \texttt{Update})\\\hline
-	LLDP				& Send		& 30 s\\
-					& Hold		& 120 s ($4*$ \texttt{Send})\\\hline
-	Errdisable			& Recovery 	& 300 s\\\hline
-	Port Security		& Aging		& 300 s\\\hline
-	OSPF				& Hello		& 10 s\\
-					& Dead		& 40 s ($4*$ \texttt{Hello})\\
-					& LSA Age		& 30 mins per-LSA\\\hline
+	\textbf{Protocol}	& \textbf{Timer}	& \textbf{Default Value}\\\hline
+	MAC Table 		& Aging-Time	& 300 s\\\hline
+	\mr{3}{STP}		& Hello		& 2 s\\
+				& Forward Delay	& 15 s\\
+				& Max Age		& 20 s ($10*$ \texttt{Hello})\\\hline
+	\mr{2}{RSTP}	& Hello		& 2 s\\
+				& Max Age		& 6 s ($3*$ \texttt{Hello})\\\hline
+	\mr{2}{CDP}	& Update		& 60 s\\
+				& Hold		& 180 s ($3*$ \texttt{Update})\\\hline
+	\mr{2}{LLDP}	& Send		& 30 s\\
+				& Hold		& 120 s ($4*$ \texttt{Send})\\\hline
+	Errdisable		& Recovery 	& 300 s\\\hline
+	Port Security	& Aging		& 300 s\\\hline
+	\mr{3}{OSPF}	& Hello		& 10 s\\
+				& Dead		& 40 s ($4*$ \texttt{Hello})\\
+				& LSA Age		& 30 mins per-LSA\\\hline
 	\end{tabular}\end{minipage}\hfill
 	%Default Priority Values 																			--tab:DEFAULT PRIORITIES
 	\begin{minipage}[t]{.45\linewidth}
