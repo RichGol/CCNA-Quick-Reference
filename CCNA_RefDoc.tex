@@ -1397,19 +1397,17 @@
 
 
 
-%%--sec:SDN
+%%SDN																										--sec:SDN
 %\section{Software-Defined Networking (SDN) \label{sec:SDN}}
-%Traditional network functionality is separated among the \textit{Data Plane}, \textit{Control Plane}, and \textit{Management Plane}. The data plane is normally distributed among all networking devices via \textit{Application-Specific Integrated Circuit} (ASIC) and \textit{Ternary Content-Addressible Memory} (TCAM) hardware. The control plane is normally distributed among devices via control plane protocols; networking devices coordinate through protocol overhead messaging.
+%\textit{Software-Defined Networking} (SDN) is a new approach to building and controlling an IP-based network using a centralized control plane and \textit{SDN Controller} (controller) software. This controller may be placed anywhere within the network. \textit{Southbound Interface(s)} (SBIs) enable communication with networking devices, while \textit{Northbound Interface(s)} (NBIs) enable the use of network management applications on the controller. An SDN model often supports multiple SBIs/NBIs; each interface is defined by a communication protocol (OpenFlow, NetConf, PCEP, SSH, Telnet) and an API (REST).
 %
-%SDN offers another approach to building and controlling an IP-based network. It uses an \textit{SDN Controller} (controller), running as server software or a VM, to centralize control plane functionality. The degree and type of control varies depending on the implemented SDN model. The controller may be placed anywhere in the network so long as it has IP reachability to all networking devices. It uses a \textit{Southbound Interface} (SBI) to communicate with networking devices and a \textit{Northbound Interface} (NBI) to communicate with network management applications. Each SBI/NBI is defined by an SDN communication protocol (OpenFlow, NetConf, PCEP, SSH, Telnet, etc) and API (REST); many models support multiple SBIs/NBIs.
+%SDN interfaces enable \textit{network programmability} (automated network control via application software) and network data analysis through the controller. \textit{Configuration Management} features interact with device configurations (version control). \textit{Operational Management} features monitor the network and alert to potential issues (configuration drift).
 %
-%The SBI/NBI enable the controller to collect data from the entire network for analysis and presentation to external applications. This allows for \textit{network programmability}: automated control of the network via application software. Controllers offer a mix of *configuration management* and *operational management* features. Configuration management features interact with device configurations. Operational management features monitor, gather data, and report/alert to potential issues (e.g. configuration drift).
+%The \textit{Open Networking Foundation} (ONF) consortium helps define protocols, SBIs/NBIs, and visions within the SDN marketplace. They created the \textit{OpenSDN} model and \textit{OpenFlow} SBI for a completely centralized control plane. An OpenSDN controller knows the network topology and individual device configurations, enabling it to directly program device tables. OpenSDN switches offer feature flexibility beyond that of traditional Layer 2 / 3 switches.
 %
-%The \textit{Open Networking Foundation} (ONF) user/vendor consortium helps define protocols, SBIs/NBIs, and SDN visions to establish SDN within the marketplace. They created the \textit{OpenSDN} model and the \textit{OpenFlow} SBI, which completely centralizes the control plane. The controller knows the network topology and per-device configuration details, allowing it to program each device's table entries. This gives OpenSDN switches feature flexibility beyond traditional Layer 2 / Layer 3 switch models.
+%Enterprise SDN consolidation during the 2010s resulted in the open-source \textit{OpenDaylight} (ODL) controller. Under the Linux Foundation, vendors are allowed to use the ODL controller as a basis for their own SDN controllers. Cisco used it to build their proprietary \textit{OpenSDN Controller} (OSC), which has since been discontinued.
 %
-%OpenSDN is compatible with dozens of controllers, partially because of enterprise SDN consolidation taking place in the 2010s. It resulted in the open-source \textit{OpenDaylight} (ODL) controller, which supports many SBIs and still exists today under the Linux Foundation. Vendors can use ODL as the basis of their own SDN controllers.
-%
-%The Cisco-proprietary \textit{OpenSDN Controller} (OSC) was built on ODL, but was discontinued in favor of Cisco's \textit{Intent-Based Networking} (IBN) approach. Cisco IBN offers \textit{Application Centric Infrastructure} (ACI) for data centers, \textit{Software-Defined Access} (SDA) for enterprise campus LANs, and \textit{Software-Defined WAN} (SD-WAN) for enterprise WANs. See \href{https://developer.cisco.com}{Cisco Devnet} and \href{https://dcloud.cisco.com}{Cisco dCloud} to learn more about Cisco IBN offerings.
+%Cisco \textit{Intent-Based Networking} (IBN) approach to SDN offers \textit{Application Centric Infrastructure} (ACI) for data centers, \textit{Software-Defined Access} (SDA) for enterprise campus LANs, and \textit{Software-Defined WAN} (SD-WAN) for enterprise WANs. See \href{https://developer.cisco.com}{Cisco Devnet} and \href{https://dcloud.cisco.com}{Cisco dCloud} to learn more about Cisco IBN offerings.
 
 
 
@@ -1635,47 +1633,6 @@ show vlan id VLAN_ID
 show vtp {status | password}
 	\end{lstlisting}
 
-	\textbf{Link Aggregation Configuration}
-	\begin{lstlisting}
-configure terminal
-	port-channel load-balance {src-mac | dst-mac | src-dst-mac | src-ip | dst-ip | src-dst-ip | src-port | dst-port | src-dst-port}
-	interface range F0/13 - 16
-		[no] switchport
-		[no] shutdown
-		channel-group 1 mode {on | desirable | auto | active | passive}
-	interface Po1
-		[no] switchport
-		[no] shutdown
-
-show etherchannel [CHANNEL] {summary | port-channel}
-show etherchannel load-balance
-test etherchannel load-balance interface INT mac SRC_MAC DST_MAC
-	\end{lstlisting}
-
-	\textbf{Port Security Configuration}
-	\begin{lstlisting}
-configure terminal
-	errdisable recovery cause psecure-violation
-	errdisable recovery interval SECS
-	interface range F0/2 - 12
-		switchport mode {access | trunk}
-		switchport port-security violation {protect | restrict | shutdown}
-		switchport port-security maximum MAX
-		switchport port-security mac-address {MAC | sticky}
-		switchport port-security aging type {absolute | inactivity}
-		switchport port-security aging time MINS
-		switchport port-security aging static
-		switchport port-security
-	mac address-table aging-time SECS [vlan VLAN_ID]
-
-show errdisable recovery
-show interfaces [INT] [status]
-show port-security [interface INT]
-show mac address-table aging-time
-show mac address-table [static | secure] [vlan VLAN_ID | interface INT]
-clear mac address-table dynamic [vlan VLAN_ID | interface INT | address MAC]
-	\end{lstlisting}
-
 	\textbf{CDP / LLDP Configuration}
 	\begin{lstlisting}
 configure terminal
@@ -1716,6 +1673,23 @@ show spanning-tree [bridge | summary]
 show spanning-tree [vlan VLAN_LIST | interface INT]
 	\end{lstlisting}
 
+	\textbf{Link Aggregation Configuration}
+	\begin{lstlisting}
+configure terminal
+	port-channel load-balance {src-mac | dst-mac | src-dst-mac | src-ip | dst-ip | src-dst-ip | src-port | dst-port | src-dst-port}
+	interface range F0/13 - 16
+		[no] switchport
+		[no] shutdown
+		channel-group 1 mode {on | desirable | auto | active | passive}
+	interface Po1
+		[no] switchport
+		[no] shutdown
+
+show etherchannel [CHANNEL] {summary | port-channel}
+show etherchannel load-balance
+test etherchannel load-balance interface INT mac SRC_MAC DST_MAC
+	\end{lstlisting}
+
 	\textbf{Authenticated NTP Configuration}
 	\begin{lstlisting}
 configure terminal
@@ -1728,7 +1702,7 @@ configure terminal
 	ntp authentication-key 1 md5 PASSWORD
 	ntp trusted-key 1
 	ntp master STRATUM
-	ntp {peer | server} {A.B.C.D | HOSTNAME} key 1
+	ntp {peer | server} {A.B.C.D | HOSTNAME} [key 1] [prefer]
 	ntp update-calendar
 	ntp source loopback 0
 
@@ -1747,6 +1721,7 @@ configure terminal
 	logging [host] {A.B.C.D | HOSTNAME}
 	logging trap {0-7 | emergency | alert | critical | error | warning | notification | informational | debug}
 	[no] service {timestamps | sequence-numbers}
+	logging source-interface INT
 	snmp-server community PASSWORD {ro | rw}
 	snmp-server contact TEXT
 	snmp-server location TEXT
@@ -1755,6 +1730,30 @@ configure terminal
 
 {show | clear} logging
 show snmp {community | contact | location | host}
+	\end{lstlisting}
+
+	\textbf{Port Security Configuration}
+	\begin{lstlisting}
+configure terminal
+	errdisable recovery cause psecure-violation
+	errdisable recovery interval SECS
+	interface range F0/2 - 12
+		switchport mode {access | trunk}
+		switchport port-security violation {protect | restrict | shutdown}
+		switchport port-security maximum MAX
+		switchport port-security mac-address {MAC | sticky}
+		switchport port-security aging type {absolute | inactivity}
+		switchport port-security aging time MINS
+		switchport port-security aging static
+		switchport port-security
+	mac address-table aging-time SECS [vlan VLAN_ID]
+
+show errdisable recovery
+show interfaces [INT] [status]
+show port-security [interface INT]
+show mac address-table aging-time
+show mac address-table [static | secure] [vlan VLAN_ID | interface INT]
+clear mac address-table dynamic [vlan VLAN_ID | interface INT | address MAC]
 	\end{lstlisting}
 
 	\textbf{DHCP Snooping and DAI Configuration}
@@ -1823,6 +1822,12 @@ configure terminal
 		[no] passive-interface {INT | default}
 		[no] network A.B.C.D W.W.W.W area AREA
 		[no] shutdown
+		area AREA authentication message-digest
+	key chain NAME
+		key KEY_ID
+			key-string PASSWORD
+			cryptographic-algorithm {hmac-sha-1 | hmac-sha-256 | hmac-sha-384 | hmac-sha-512 | md5}
+			send-lifetime START_TIME {infinite | END_TIME | duration SECS}
 	interface S0/0/0
 		ip ospf 1 area AREA
 		ip ospf network {point-to-point | broadcast}
@@ -1830,9 +1835,8 @@ configure terminal
 		ip ospf priority 0-255
 		ip ospf hello-interval SECS
 		ip ospf dead-interval SECS
-		ip ospf authentication message-digest
 		ip ospf message-digest-key 1 md5 PASSWORD
-		ip ospf authentication-key 1
+		ip ospf authentication {message-digest | key-chain NAME}
 	router rip
 		version 2
 		no auto-summary
@@ -1899,24 +1903,6 @@ show vrrp [brief | GROUP_ID]
 show vrrp interface INT [brief]
 	\end{lstlisting}
 
-	\textbf{DHCP Services Configuration}
-	\begin{lstlisting}
-configure terminal
-	service dhcp
-	ip dhcp excluded-address FIRST_IP [LAST_IP]
-	ip dhcp pool POOL_NAME
-		network A.B.C.D {M.M.M.M | /CIDR}
-		domain-name TEXT
-		default-router A.B.C.D
-		dns-server A.B.C.D
-		lease {DAYS HRS MINS | infinite}
-		option 43 ip WLC_IP
-		option 66 ip TFTP_IP
-
-show ip dhcp pool POOL_NAME
-show ip dhcp binding
-	\end{lstlisting}
-
 	\textbf{ACL Configuration}
 	\begin{lstlisting}
 configure terminal
@@ -1942,21 +1928,65 @@ show access-lists
 show ip access-lists
 	\end{lstlisting}
 
-	\textbf{NAT Services Configuration}
+	\textbf{Login Security Configuration}
 	\begin{lstlisting}
 configure terminal
-	interface F0/0
-		ip nat inside
-	interface S0/0/0
-		ip nat outside
-	ip nat inside source static INSIDE_LOCAL INSIDE_GLOBAL
-	ip nat pool POOL_NAME FIRST_IP LAST_IP netmask M.M.M.M
-	access-list 1 permit A.B.C.D [W.W.W.W]
-	ip nat inside source list 1 pool POOL_NAME [overload]
-	ip nat inside source list 1 interface S0/0/0 overload
+	hostname NAME
+	ip domain-name NAME
+	ip default-gateway A.B.C.D
+	crypto key zeroize rsa
+	crypto key generate rsa general-keys modulus LENGTH
+	[no] ip ssh version {1 | 2}
+	ip ssh time-out SECS
+	ip ssh authentication-retries COUNT
+	service password-encryption
+	security passwords min-length LEN
+	enable [algorithm-type {md5 | scrypt | sha256}] secret PASSWORD
+	username NAME [algorithm-type {md5 | scrypt | sha256}] secret PASSWORD
+	banner motd DELIMITER TEXT DELIMITER
+	login block-for SECS attempts COUNT within SECS
+	login quiet-mode access-class {ACL_ID | ACL_NAME}
+	login delay SECS
+	login {on-success | on-failure} log [every COUNT]
+	security authentication failure rate THRESHOLD log
+	line {vty 0 15 | console 0}
+		[no] exec-timeout MINS [SECS]
 
-show ip nat translations
-show ip nat statistics
+show crypto key mypubkey rsa
+show ip ssh
+show login [failures]
+	\end{lstlisting}
+
+	\textbf{AAA Configuration}
+	\begin{lstlisting}
+configure terminal
+	aaa new-model
+	radius-server host A.B.C.D
+	radius-server key PASSWORD
+	tacacs-server host A.B.C.D [key PASSWORD] [timeout SECS] [port PORT] [single-connection]
+	tacacs-server key PASSWORD
+	radius server NAME
+		address ipv4 A.B.C.D [auth-port PORT] [acct-port PORT]
+		key PASSWORD
+		timeout SECS
+	tacacs server NAME
+		address ipv4 A.B.C.D
+		key PASSWORD
+		timeout SECS
+		port PORT
+		single-connection
+	ip radius source-interface INT
+	ip tacacs source-interface INT
+	aaa group server {radius | tacacs+} AAA_GROUP
+		server A.B.C.D
+	aaa authentication login {default | AUTH_LIST} {[none] [local] [local-case] [enable] [group {radius | tacacs+ | AAA_GROUP}]}
+	aaa local authentication attempts max-fail COUNT
+	line vty 0 15
+		login authentication {default | AUTH_LIST}
+
+{show | clear} aaa local user lockout
+show aaa user
+show aaa sessions
 	\end{lstlisting}
 
 	\textbf{QoS Configuration}
@@ -1971,8 +2001,55 @@ configure terminal
 			bandwidth percent BANDWIDTH
 	interface F0/0
 		service-policy {input | output} PMAP_NAME
-		
+
 show run | section policy-map
+	\end{lstlisting}
+
+	\textbf{DHCP Services Configuration}
+	\begin{lstlisting}
+configure terminal
+	service dhcp
+	ip dhcp excluded-address FIRST_IP [LAST_IP]
+	ip dhcp pool POOL_NAME
+		network A.B.C.D {M.M.M.M | /CIDR}
+		domain-name TEXT
+		default-router A.B.C.D
+		dns-server A.B.C.D
+		lease {DAYS HRS MINS | infinite}
+		option 43 ip WLC_IP
+		option 66 ip TFTP_IP
+	ipv6 dhcp pool POOL_NAME
+		address prefix PREFIX/LENGTH [lifetime {VALID_TIME PREF_TIME | infinite}]
+		domain-name TEXT
+		dns-server ADDRESS
+	interface INT
+		ipv6 dhcp server POOL_NAME
+		ipv6 nd other-config-flag
+		ipv6 nd managed-config-flag
+		ipv6 dhcp relay destination ADDRESS
+
+show {ip | ipv6} dhcp binding
+show ip dhcp pool POOL_NAME
+show ipv6 dhcp pool
+show ip dhcp server statistics
+	\end{lstlisting}
+
+	\textbf{NAT Services Configuration}
+	\begin{lstlisting}
+configure terminal
+	interface F0/0
+		ip nat inside
+	interface S0/0/0
+		ip nat outside
+	ip nat inside source static INSIDE_LOCAL INSIDE_GLOBAL
+	ip nat pool POOL_NAME FIRST_IP LAST_IP netmask M.M.M.M
+	access-list 1 permit A.B.C.D [W.W.W.W]
+	ip nat inside source list 1 pool POOL_NAME [overload]
+	ip nat inside source list 1 interface S0/0/0 overload
+	ip nat inside source static {tcp | udp} INSIDE_LOCAL LOCAL_PORT INSIDE_GLOBAL GLOBAL_PORT [extendable] [stateless]
+
+show ip nat translations
+show ip nat statistics
 	\end{lstlisting}
 
 	\textbf{WLC WLAN Configuration}\hrule
