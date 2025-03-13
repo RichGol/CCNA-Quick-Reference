@@ -37,3 +37,7 @@ I created this project shortly after becoming CCNA certified in order to more le
 `CCNA_RefDoc.tex`: The LaTeX markup language "source code", which can be typeset by a TeX editor to create a searchable PDF.
 
 `images`: A folder containing all images used by the project.
+
+## Disclaimers
+
+*This supplementary document is designed for CCNA-certified professionals and those seeking their CCNA certification. It is NOT a replacement for official computer network and/or Cisco training.* <b>DO NOT</b> *execute Cisco IOS commands within a production network, or on devices which you do not own, without express permission and full understanding of each command's impact to the system/network.*

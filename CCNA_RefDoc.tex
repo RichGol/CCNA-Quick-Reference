@@ -12,9 +12,10 @@
 \usepackage{parskip}										% left-aligns text with no indentation
 \usepackage{float}										% provide [H] option to table/figure/graphics environments
 \usepackage{array}										% provide advanced table formatting
-\usepackage{multirow}
+\usepackage{multirow}										% provide multi-row table cells
 \usepackage[justification=raggedright,font=bf,position=bottom]{caption}	% provide caption formatting
 \usepackage[dvipsnames]{xcolor}								% provide \textcolor, \colorbox, and predefined colors
+\usepackage{enumitem}									% provide itemize/enumerate formatting
 
 \usepackage{titlesec}										% provide title formatting
 \titlespacing*{\section}{0pt}{1ex}{1ex}
@@ -421,7 +422,7 @@
 	100 Mbps			& 10				& 19					& 200,000\\
 	1 Gbps			& 1				& 4					& 20,000\\
 	10 Gbps			& 1				& 2					& 2,000\\
-	100 Gbps			& - 				& - 					& 200\\
+	100 Gbps			& - 				& 1 					& 200\\
 	1 Tbps			& - 				& - 					& 20\\
 	10 Tbps			& - 				& - 					& 2\\\hline
 	\end{tabular}\end{table}
@@ -441,29 +442,29 @@
 
 	%STP ELECTIONS 																					--itm:STP CONVERGENCE
 	\textbf{The \textit{STP Convergence} Process:}
-	\begin{enumerate}
+	\begin{enumerate}[leftmargin=*]
 		\label{itm:STP CONVERGENCE}
 		\item{\textbf{Elect Root Bridge:}}
-		\begin{enumerate} \itemsep -5pt
+		\begin{enumerate}[leftmargin=*, itemsep=-5pt]
 			\item{Lowest received BPDU \texttt{Root ID: Base Priority}}
 			\item{Tiebreaker: lowest received BPDU \texttt{Root ID: System ID}}
 		\end{enumerate}
 		\item{\textbf{Elect \textit{Root Ports} (RPs):}}
-		\begin{enumerate} \itemsep -5pt
+		\begin{enumerate}[leftmargin=*, itemsep=-5pt]
 			\item{Lowest received BPDU \texttt{Root Path Cost} + local Port Cost (\Cref{tab:STP PORT COSTS})}
 			\item{Tiebreaker: lowest received BPDU \texttt{BID}}
 			\item{Tiebreaker: lowest received BPDU \texttt{Port ID: Prio.Nbr}}
 			\item{Other RSTP link-type point-to-point ports become \textit{Alternate Ports} (APs)}
 		\end{enumerate}
 		\item{\textbf{Elect \textit{Designated Ports} (DPs):}}
-		\begin{enumerate} \itemsep -5pt
+		\begin{enumerate}[leftmargin=*, itemsep=-5pt]
 			\item{Lowest advertised BPDU \texttt{Root Path Cost}}
 			\item{Tiebreaker: lowest advertised BPDU \texttt{BID}}
 			\item{Tiebreaker: lowest advertised BPDU \texttt{Port ID: Prio.Nbr}}
 			\item{Other RSTP link-type shared ports on the same bridge become \textit{Backup Ports} (BPs)}
 		\end{enumerate}
 		\item{\textbf{Other Ports:}}
-		\begin{enumerate} \itemsep -5pt
+		\begin{enumerate}[leftmargin=*, itemsep=-5pt]
 			\item{Working ports become STP \textit{Nondesignated Ports} (NDs)}
 			\item{Nonworking and disabled ports become STP disabled ports}
 		\end{enumerate}
@@ -471,7 +472,7 @@
 
 	%STP FEATURES 																						--itm:STP FEATURES
 	\textbf{Optional STP Features:}
-	\begin{itemize}
+	\begin{itemize}[leftmargin=*,label=]
 		\label{itm:STP FEATURES}
 		\item{\textbf{PortFast:} Locally or globally configured ports immediately enter Forwarding state on edge ports. BPDUs are sent, but received BPDUs disable the feature.}
 		\item{\textbf{BPDU Guard:} Locally or globally configured (PortFast) ports prevent unauthorized devices from altering the STP topology. BPDUs are sent, but received BPDUs err-disable the port. Compatible with globally-configured BPDU Filter.}
@@ -522,6 +523,8 @@
 	
 	The original IEEE 802.11-1997 standard uses \textit{Frequency Hopping Spread Spectrum} (FHSS) encoding in the 2.4-GHz band without channels; each consecutive transmission uses a slightly different frequency to minimize collision risk. Modern IEEE 802.11 standards use either \textit{Direct Sequence Spread Spectrum} (DSSS) or \textit{Orthogonal Frequency Division Multiplexing} (OFDM) encoding. DSSS uses the 2.4-GHz band with a 22 MHz channel width; OFDM uses either band with a 20 MHz channel width.
 
+	WLANs use a \textit{Wi-Fi Protected Access} (WPA) standard to ensure message privacy and integrity for wireless-frames in-transit. Devices authenticate with the AP during the association process. Clients authenticate using either a \textit{Pre-Shared Key} (PSK) or IEEE 802.1x Access Control with an IEEE 802.11i \textit{Extensible Authentication Protocol} (EAP) framework. See \Cref{tab:WIRELESS SECURITY} for details.
+
 	%IEEE 802.11 WLAN Standards 																			--tab:802.11 STANDARDS
 	\begin{table}[H]
 	\centering
@@ -571,7 +574,7 @@
 
 	%Autonomous APs 																					--itm:AUTONOMOUS AP
 	\textbf{Autonomous AP Modes:}
-	\begin{itemize} \itemsep -5pt
+	\begin{itemize}[leftmargin=*, itemsep=-5pt, label=]
 		\label{itm:AUTONOMOUS AP}
 		\item{\textbf{Infrastructure:} Offer BSS' on an RF Channel}
 		\item{\textbf{Repeater:} Extend a BSA via retransmission}
@@ -582,7 +585,7 @@
 
 	%Lightweight APs 																					--itm:LIGHTWEIGHT AP
 	\textbf{Lightweight AP (LAP) Modes:}
-	\begin{itemize} \itemsep -5pt
+	\begin{itemize}[leftmargin=*, itemsep=-5pt, label=]
 		\label{itm:LIGHTWEIGHT AP}
 		\item{\textbf{Local:} Offer BSS' on an RF Channel}
 		\item{\textbf{Monitor:} Monitor for IDS events / rogue APs, determine STA positions}
@@ -785,7 +788,7 @@
 
 	%Modified EUI-64 																							--itm:EUI64
 	\textbf{Modified EUI-64 Process for Unique Address Generation:}
-	\begin{enumerate} \itemsep -5pt
+	\begin{enumerate}[leftmargin=*, itemsep=-5pt]
 		\label{itm:EUI64}
 		\item{Split the interface MAC address into two 24-bit parts.}
 		\item{Insert \texttt{0xfffe} between the two parts, creating a 64-bit Interface ID.}
@@ -847,7 +850,7 @@
 
 	%NDP SLAAC 																							--itm:NDP SLAAC
 	\textbf{The SLAAC Process:}
-	\begin{enumerate} \itemsep -5pt
+	\begin{enumerate}[leftmargin=*, itemsep=-5pt]
 		\label{itm:NDP SLAAC}
 		\item{The IPv6 host learns the IPv6 prefix used on the link, from any router, using NDP RS/RA messages.}
 		\item{The IPv6 host builds an IPv6 unicast address using the learned prefix and a random/EUI-64 generated interface ID.}
@@ -856,7 +859,7 @@
 
 	%NDP DAD 																							--itm:NDP DAD
 	\textbf{The DAD Process:}
-	\begin{enumerate} \itemsep -5pt
+	\begin{enumerate}[leftmargin=*, itemsep=-5pt]
 		\label{itm:NDP DAD}
 		\item{The IPv6 host sends an NDP NS message, listing its own IPv6 unicast address as the \texttt{Target Address}.}
 		\item{If no other IPv6 host uses that address, then no host should reply with an NDP NA message; the host is safe to use that address on the IPv6 network.}
@@ -1203,6 +1206,7 @@
 	1			& Subnet Mask\\
 	3			& Default Router\\
 	6			& DNS Server\\
+	12			& Client Hostname\\
 	28			& Broadcast Address\\
 	43			& WLC IP Address\\
 	50			& Requested IP Address\\
@@ -1220,7 +1224,7 @@
 	\begin{minipage}{.6\linewidth}
 	\centering
 	\textbf{The DHCP Lease Process:}
-	\begin{enumerate} \itemsep 5pt
+	\begin{enumerate}[itemsep=5pt]
 		\item{The DHCP client broadcasts a \texttt{DHCP Discover} message to any local DHCP servers.}
 		\item{The DHCP server replies with a \texttt{DHCP Offer} message containing configuration information.}
 		\item{The client broadcasts a \texttt{DHCP Request} message to accept or a \texttt{DHCP Decline} message deny an offer.}
@@ -1330,7 +1334,7 @@
 	\textit{Quality of Service} (QoS) is defined across several standards to provide preferential treatment for certain traffic. They define groups of QoS markings (shown above) as well as header fields used to mark QoS traffic. QoS-configured devices employ \textit{Classification} to identify QoS traffic and apply specifically configured actions, including \textit{Marking}, \textit{Queuing}, \textit{Policing}, \textit{Shaping}, and/or \textit{Congestion Avoidance} features. Marking is typically done by an initial device, simplifying Classification for downstream devices. QoS characterizes network traffic according to the following metrics:
 
 	%QOS METRICS 																						--itm:QOS METRICS
-	\begin{itemize}
+	\begin{itemize}[leftmargin=*, label=]
 		\label{itm:QOS METRICS}
 		\item{\textbf{Bandwidth:} The speed of a link in \textit{bits-per-second} (bps), or the capacity of the link to send a number of bits per-second.}
 		\item{\textbf{One-Way Delay:} The time between sending one packet and that same packet arriving at the destination host.}
@@ -1503,8 +1507,8 @@
 	59	& 91	& 123		& 0x3b	& 0x5b	& 0x7b	& ;		& [			& \{\\
 	60	& 92	& 124		& 0x3c	& 0x5c	& 0x7c	& $<$	& \textbackslash	& $\vert$\\
 	61	& 93	& 125		& 0x3d	& 0x5d	& 0x7d	& =		& ]			& \}\\
-	62	& 94	& 126		& 0x3e	& 0x5e	& 0x7e	& $>$	& \^{}		& \~{}\\
-	63	& 95	& 127		& 0x3f	& 0x5f	& 0x7f	& ?		& \_			& DEL\\
+	62	& 94	& 126		& 0x3e	& 0x5e	& 0x7e	& $>$	& \verb|^|		& $\sim$\\
+	63	& 95	& 127		& 0x3f	& 0x5f	& 0x7f	& ?		& \verb|_|		& DEL\\
 	\end{tabular}\end{minipage}\hfill
 	%SI Prefixes																								--tab:SI PREFIXES
 	\begin{minipage}[t]{.45\linewidth}
@@ -1541,12 +1545,31 @@
 	Ki	& Kibi	& $2^{10}$\\\hline
 	\end{tabular}\end{minipage}\end{table}
 
-	%IEEE 802.1x / 802.11i Wireless Security 																		--fig:WIRELESS SECURITY
-	\begin{figure}[H]
+	%IEEE 802.1x / 802.11i Wireless Security 																	--tab:WIRELESS SECURITY
+	\begin{table}[H]
 	\centering
-	\caption{IEEE 802.1x/IEEE 802.11i Extensible Authentication Protocol (EAP) \label{fig:WIRELESS SECURITY}}
-	\includegraphics[width=\textwidth,height=7cm]{Wireless_Security}
-	\end{figure}
+	\caption{IEEE 802.1x/IEEE 802.11i Extensible Authentication Protocol (EAP) \label{tab:WIRELESS SECURITY}}
+	\begin{tabular}{| m{2.75cm} | m{2.75cm} | W{c}{6cm} | W{c}{4.5cm} |}\hline
+	\multirow{8}{=}{Authentication}	& \mc{2}{c|}{Open Authentication (Open)}				& 802.11 compliance\\\cline{2-4}
+		& \mc{2}{c|}{Wired Equivalent Privacy (WEP)}									& Static WEP Keys\\\cline{2-4}
+		& \multirow{6}{=}{IEEE 802.1x / 802.11i EAP}	& Lightweight EAP (LEAP)				& Dynamic WEP Keys\\\cline{3-4}
+			&& EAP Flexible Authentication by										& Protected Access\\
+			&& Secure Tunneling (EAP-FAST)										& Credential (PAC)\\\cline{3-4}
+			&& Protected EAP (PEAP)											& Digital Certificate (AS)\\\cline{3-4}
+			&& EAP Transport Layer Security										& Digital Certificate\\
+			&& (EAP-TLS)													& (AS + Client)\\\hline
+	\multirow{6}{=}{Privacy and Integrity}	& \mc{2}{c|}{\mr{2}{Temporal Key Integrity Protocol (TKIP)}}	& WPA Personal\\
+		& \mc{2}{c|}{}														& WPA Enterprise\\\cline{2-4}
+		& \mc{2}{c|}{\mr{2}{AES Counter/CBC-MAC Protocol (CCMP)}}						& WPA2 Personal\\
+		& \mc{2}{c|}{}														& WPA2 Enterprise\\\cline{2-4}
+		& \mc{2}{c|}{\mr{2}{AES Galois/Counter Mode Protocol (CCMP)}}						& WPA3 Personal\\
+		& \mc{2}{c|}{}														& WPA3 Enterprise\\\hline
+	\end{tabular}\end{table}
+%	\begin{figure}[H]
+%	\centering
+%	\caption{IEEE 802.1x/IEEE 802.11i Extensible Authentication Protocol (EAP) \label{fig:WIRELESS SECURITY}}
+%	\includegraphics[width=\textwidth,height=7cm]{Wireless_Security}
+%	\end{figure}
 
 
 	%Official Standards 																					--subsec:STANDARDS
@@ -1565,8 +1588,8 @@
 	IEEE 802.1s MSTP				&					&\\
 	IEEE 802.3AD LACP			& Cisco PAgP			&\\
 	IEEE 802.11 WLANs			& Wi-Fi Alliance			& \Cref{subsec:802.11 WLANS}\\
-	IEEE 802.11i EAP				&					& \Cref{fig:WIRELESS SECURITY}\\
-	IEEE 802.1x Access Control		&					& \Cref{fig:WIRELESS SECURITY}\\
+	IEEE 802.11i EAP				&					& \Cref{tab:WIRELESS SECURITY}\\
+	IEEE 802.1x Access Control		&					& \Cref{tab:WIRELESS SECURITY}\\
 	ITU HDLC / cHDLC			& \RFC{1661} PPP			& \Cref{subsec:ITU HDLC,subsec:IETF PPP}\\\hline
 	RFC \rfc{791}/\rfc{1918} IPv4		& \RFC{2460} IPv6		& \Cref{subsec:IPV4,subsec:IPV6}\\
 	\RFC{792} ICMP				& \RFC{4443} ICMPv6		& \Cref{subsec:ICMP}\\
@@ -1800,10 +1823,19 @@ configure terminal
 		{ipv6 enable | ipv6 address {ADDRESS/PREFIX_LENGTH [link-local | anycast] | PREFIX/64 eui-64 | dhcp | autoconfig}}
 		[no] shutdown
 		ip helper-address DHCP_SERVER
+	interface S0/0/0
+		encapsulation {hdlc | frame-relay | ppp}
+		ppp authentication {[chap] [pap]}
+		clock rate BPS
+		bandwidth KBPS
+		ip address {A.B.C.D M.M.M.M | dhcp}
+		{ipv6 enable | ipv6 address {ADDRESS/PREFIX_LENGTH [link-local | anycast] | PREFIX/64 eui-64 | dhcp | autoconfig}}
+		[no] shutdown
 
 show sdm prefer
 show {ip | ipv6} interface [brief | INT]
 show interfaces [INT] [switchport | trunk]
+show controllers [INT]
 show protocols [INT]
 show dhcp lease
 show ip default-gateway
@@ -1865,6 +1897,7 @@ show ip ospf interface [INT | brief]
 show ip ospf neighbor
 show ip ospf database
 clear ip ospf [PROCESS_ID] process
+show key chain NAME
 show {ip | ipv6} route [connected | local | static | ospf | ...] [ADDR]
 show ip arp
 show ipv6 neighbors
@@ -2024,8 +2057,7 @@ configure terminal
 		dns-server ADDRESS
 	interface INT
 		ipv6 dhcp server POOL_NAME
-		ipv6 nd other-config-flag
-		ipv6 nd managed-config-flag
+		ipv6 nd {other-config-flag | managed-config-flag}
 		ipv6 dhcp relay destination ADDRESS
 
 show {ip | ipv6} dhcp binding
@@ -2053,26 +2085,26 @@ show ip nat statistics
 	\end{lstlisting}
 
 	\textbf{WLC WLAN Configuration}\hrule
-	\begin{enumerate}
+	\begin{enumerate}[leftmargin=*]
 		\item{Create a new WLC Dynamic Interface:}
-		\begin{itemize} \itemsep -5pt
+		\begin{itemize}[leftmargin=*, itemsep=-5pt]
 			\item{\texttt{Name}\hfill(31 or fewer ASCII characters)}
 			\item{\texttt{VLAN ID}\hfill(Integer value 1-1001, 1007-4094 inclusive)}
 		\end{itemize}
 		\item{Create a new WLC WLAN:}
-		\begin{itemize} \itemsep -5pt
+		\begin{itemize}[leftmargin=*, itemsep=-5pt]
 			\item{\texttt{Profile Name}\hfill(32 or fewer ASCII characters)}
 			\item{\texttt{SSID}\hfill(32 or fewer ASCII characters)}
 			\item{\texttt{WLAN ID}\hfill(Integer value 1-512 inclusive)}
 		\end{itemize}
 		\item{Configure the new WLAN:}
-		\begin{itemize} \itemsep -5pt
+		\begin{itemize}[leftmargin=*, itemsep=-5pt]
 			\item{Bind the Dynamic Interface to the WLAN.}
 			\item{Enable the WLAN on the WLC.}
 			\item{Enable broadcasting of the WLAN SSID by APs.}
 		\end{itemize}
 		\item{Secure the new WLAN:}
-		\begin{itemize} \itemsep -5pt
+		\begin{itemize}[leftmargin=*, itemsep=-5pt]
 			\item{Set \texttt{Layer 2 Security} to \textbf{WPA+WPA2}, enabling the \texttt{WPA2} checkbox.}
 			\item{Set \texttt{WPA2 Encryption} to \textbf{AES/TKIP/CCMP/GCMP}.}
 			\item{Enable the \texttt{PSK} checkbox.}
