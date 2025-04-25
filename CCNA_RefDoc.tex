@@ -82,7 +82,7 @@
 	7		& \textcolorbf{Mahogany}{Brown-White}	& \textcolorbf{Mahogany}{Brown-White}\\
 	8		& \textcolorbf{Mahogany}{Brown}		& \textcolorbf{Mahogany}{Brown}\\\hline
 	\end{tabular}\end{table}
-	Two standard T568 pinouts exist for the \textit{Medium-Dependent Interface} (MDI) and \textit{MDI Crossover} (MDI-X) port standards. Computers, routers, and Layer 3 devices use the MDI standard; switches, hubs, and other Layer 2 devices use the MDI-X standard. Connections between MDI and MDI-X ports use a \textit{straight-through} cable, where the same T568 standard terminates each end of the cable. Connections between two MDI (or two MDI-X) ports use a \textit{crossover} cable, where different T568 standards terminate each end of the cable. Most new equipment incorporates \textit{Auto-MDIX} circuitry to allow either cable type.
+	Two standard T568 pinouts exist for the \textit{Medium-Dependent Interface} (MDI) and \textit{MDI Crossover} (MDI-X) port standards. Computers, routers, and Layer 3 devices use the MDI standard; hubs and Layer 2 devices generally use the MDI-X standard. Connections between MDI and MDI-X ports use a \textit{straight-through} cable, where the same T568 standard terminates each end of the cable. Connections between two MDI (or two MDI-X) ports use a \textit{crossover} cable, where different T568 standards terminate each end of the cable. Most new equipment incorporates \textit{Auto-MDIX} circuitry to allow either cable type.
 
 	\note{Goldenrod} The T568B standard is more commonly used for straight-through cables in North America.
 
@@ -125,10 +125,10 @@
 	\caption{ANSI/TIA-598 Fiber Standards \label{tab:802.3 FIBER}}
 	\begin{tabular}{| l | c | c | r |}\hline
 	\textbf{Type}	& \textbf{Polish}	& \textbf{Jacket/Connector}								& \textbf{Usage}\\\hline
-	\mr{2}{OS1/OS2}	& UPC		& \textcolorbf{Dandelion}{yellow}/\textcolorbf{Cyan}{blue}		& \mr{2}{indoor/outdoor}\\\cline{2-3}
+	\mr{2}{OS1/OS2}	& UPC		& \textcolorbf{Dandelion}{yellow}/\textcolorbf{Cyan}{blue}			& \mr{2}{indoor/outdoor}\\\cline{2-3}
 				& APC		& \textcolorbf{Dandelion}{yellow}/\textcolorbf{Green}{green}		&\\\hline
 	\mr{2}{OM1}	& \mr{2}{UPC}	& \textcolorbf{orange}{orange}/\textcolorbf{Tan}{beige}			& \mr{2}{100 Mbps}\\
-				&			& \textcolorbf{orange}{orange}/\textcolorbf{darkgray}{gray}		&\\\hline
+				&			& \textcolorbf{orange}{orange}/\textcolorbf{darkgray}{gray}			&\\\hline
 	OM2			& UPC		& \textcolorbf{orange}{orange}/\textbf{black}					& 1 Gbps\\\hline
 	OM3/OM4		& UPC		& \textcolorbf{Aquamarine}{aqua}/\textcolorbf{Aquamarine}{aqua}	& 10/40/100 Gbps\\\hline
 	OM5			& UPC		& \textcolorbf{LimeGreen}{lime}/\textcolorbf{LimeGreen}{lime}		& 10/40/100 Gbps\\\hline
@@ -139,8 +139,8 @@
 	\centering
 	\caption{Power over Ethernet (PoE) \label{tab:POE}}
 	\begin{tabular}{| l l | r r | l |}\hline
-	Cisco Inline Power	& ILP			& 7.5W	&		& 2 wire pairs\\\hline
-	IEEE 802.3af			& Type 1 PoE	& 15W 	&44-57v	& 2 wire pairs $\ge$ CAT3\\\hline
+	Cisco Inline Power	& ILP			& 7.5W	&48v		& 2 wire pairs\\\hline
+	IEEE 802.3af			& Type 1 PoE	& 15.4W 	&44-57v	& 2 wire pairs $\ge$ CAT3\\\hline
 	IEEE 802.3at			& Type 2 PoE+	& 30W	&50-57v	& 2 wire pairs $\ge$ CAT5\\\hline
 	\mr{2}{IEEE 802.3bt}	& Type 3 UPoE	& 60W 	&50-57v 	& \mr{2}{4 wire pairs $\ge$ CAT5}\\
 					& Type 4 UPoE+	& 100W 	&52-57v	&\\\hline
@@ -183,7 +183,8 @@
 	0007.b40X.XXYY		& Cisco GLBP\\\hline
 	0100.5eXX.XXXX		& IPv4 Multicast\\
 	3333.XXXX.XXXX		& IPv6 Multicast\\\hline
-	0100.0ccc.cccc	 	& Cisco CDP / VTP / UDLD\\\hline
+	0100.0ccc.cccc	 	& Cisco PAgP / CDP / VTP\\\hline
+	0180.c200.0002		& IEEE 802.3ad LACP\\\hline
 	0180.c200.000e	 	& IEEE 802.1AB LLDP\\\hline
 	0100.0ccc.cccd		& Cisco PVST+ / PVRST\\\hline
 	\mr{2}{0180.c200.0000}	& IEEE 802.1D STP\\
@@ -676,7 +677,7 @@
 	\end{tabular}\end{minipage}\end{table}
 	\note{Goldenrod} Each Layer 3 multicast address maps to a corresponding Layer 2 multicast address which may be used in the L2PDU.
 
-	The routing table is populated based on each route's \textit{Administrative Distance} (AD). Route metric is calculated by the routing protocol and acts as a tiebreaker for multiple routes to the same destination via the same routing protocol. Some routing protocols are capable of multi-path load-balancing, resulting in multiple valid routes to the same destination under specific conditions.
+	The \textit{Routing Information Base} (RIB, routing table) is populated based on each route's \textit{Administrative Distance} (AD). Route metric is calculated by the routing protocol and acts as a tiebreaker for multiple routes to the same destination via the same routing protocol. Some routing protocols are capable of multi-path load-balancing, resulting in multiple valid routes to the same destination under specific conditions.
 
 	%Route Types 																							--tab:ROUTE TYPES
 	\begin{table}[H]
@@ -725,13 +726,13 @@
 	\begin{table}[H]
 	\centering
 	\caption{\RFC{791} / \RFC{1918} Addressing \label{tab:ADDRESSING IPV4}}
-	\begin{tabular}{@{} c l c r @{}}\hline
-	\textbf{\RFC{791}}	& \textbf{First Octet}		& \textbf{Address Block}		& \textbf{\RFC{1918} Block}\\\hline
-	Class A 			& \texttt{0XXX XXXX}		& 0.0.0.0 - 127.0.0.0 /8			& 10.0.0.0 /8\\
-	Class B 			& \texttt{10XX XXXX}		& 128.0.0.0 - 191.255.0.0 /16		& 172.16.0.0 /12\\
-	Class C 			& \texttt{110X XXXX}		& 192.0.0.0 - 223.255.255.0 /24 	& 192.168.0.0 /16\\\hline
-	Class D 			& \texttt{1110 XXXX}		& 224.0.0.0 - 239.255.255.255		&\\\hline
-	Class E 			& \texttt{1111 XXXX}		& 240.0.0.0 - 255.255.255.255		&\\\hline
+	\begin{tabular}{@{} c l r @{ - } l r @{}}\hline
+	\textbf{\RFC{791}}	& \textbf{First Octet}		& \mc{2}{l}{\textbf{Address Block}}	& \textbf{\RFC{1918} Block}\\\hline
+	Class A 			& \texttt{0XXX XXXX}		& 0.0.0.0	& 127.0.0.0 /8		& 10.0.0.0 /8\\
+	Class B 			& \texttt{10XX XXXX}		& 128.0.0.0	& 191.255.0.0 /16		& 172.16.0.0 /12\\
+	Class C 			& \texttt{110X XXXX}		& 192.0.0.0	& 223.255.255.0 /24	& 192.168.0.0 /16\\\hline
+	Class D 			& \texttt{1110 XXXX}		& 224.0.0.0	& 239.255.255.255		&\\\hline
+	Class E 			& \texttt{1111 XXXX}		& 240.0.0.0	& 255.255.255.255		&\\\hline
 	\end{tabular}\end{table}
 
 	%Subnetting Magic Numbers																					--tab:SUBNETTING
@@ -744,6 +745,7 @@
 	\textbf{Addresses}	& 128	& 64	& 32	& 16	& 8	& 4	& 2	& 1\\
 	\textbf{Octet Wildcard}	& 127	& 63	& 31 	& 15	& 7	& 3	& 1	& 0\\\hline
 	\end{tabular}\end{table}
+	\note{Goldenrod} \RFC{3927} reserves block 169.254.0.0/16 for IPv4 Link-Local Addressing.
 
 	IPv4 hosts use an \textit{ARP Table} (mapping Layer 2/3 addresses) and Layer 3 forwarding logic to send packets. Local traffic is forwarded directly; external traffic is forwarded to the default gateway address.
 
@@ -777,7 +779,7 @@
 	Unicast			&					& \mc{1}{r!{\hphantom{+}}}{8 bits} & \mc{1}{r!{\hphantom{+}}}{40 bits} & \mc{1}{r!{\hphantom{+}}}{16 bits} & 64 bits\\\hline
 	Link-Local			& \mr{2}{\texttt{fe80::/64}}	& \mc{3}{r!{+}}{\texttt{fe80:0:0:0}}									& Interface ID\\
 	Unicast			&					& \mc{3}{r!{\hphantom{+}}}{64 bits}									& 64 bits\\\hline
-	Multicast			& \texttt{ff00::/12}		& \mc{4}{r@{}}{\texttt{ff02::1:ffXX:XXXX/104} Solicited-Node Multicast}\\
+	Multicast			& \texttt{ff00::/12}		& \mc{4}{r@{}}{\texttt{ff02::1:ffXX:XXXX/104} Solicited-Node}\\
 					& \texttt{ff01::/16}		& \mc{4}{r@{}}{Interface/Node-Local}\\
 					& \texttt{ff02::/16}		& \mc{4}{r@{}}{Link-Local}\\
 					& \texttt{ff05::/16}		& \mc{4}{r@{}}{Site-Local}\\
@@ -1139,14 +1141,15 @@
 	\begin{tabular}{| l | r @{ } l | r |}\hline
 	Source Port		& 2	& Bytes		& \Cref{tab:L4 PORTS KNOWN,tab:L4 PORTS REGISTERED}\\\hline
 	Destination Port	& 2	& Bytes		& \Cref{tab:L4 PORTS KNOWN,tab:L4 PORTS REGISTERED}\\\hline
-	SEQ Number	& 4	& Bytes		& Windowing / Flow Control (SEQ flag)\\\hline
-	ACK Number	& 4	& Bytes		& Windowing / Flow Control (ACK flag)\\\hline
+	SEQ Number	& 4	& Bytes		& Windowing / Flow Control\\\hline
+	ACK Number	& 4	& Bytes		& Windowing / Flow Control\\\hline
 	Data Offset		& 4	& bits		&\\\hline
-	Reserved		& 6	& bits		& Future Use (0)\\\hline
-	Flags			& 6	& bits		& Connection Management\\\hline
+	Reserved		& 4	& bits		& Future Use (0)\\\hline
+	Flags			& 8	& bits		& Connection Management\\\hline
 	Window		& 2	& Bytes		& Connection Window Size\\\hline
 	Checksum		& 2	& Bytes		&\\\hline
-	Urgent		& 2	& Bytes		& Last urgent data byte (URG flag)\\\hline
+	Urgent		& 2	& Bytes		& Last urgent data byte\\\hline
+	Options		& \mc{2}{c|}{varies}	& $\le$ 40 Bytes of Optional Fields\\\hline
 	Data			& \mc{2}{c|}{varies}	&\\\hline
 	\end{tabular}\end{table}
 	TCP is a \textit{connection-oriented} protocol offering \textbf{error recovery}, \textbf{flow control}, \textbf{connection establishment/termination}, and \textbf{ordered data transfer / segmentation} features at the cost of additional overhead.
@@ -1454,7 +1457,7 @@
 	VRRP				& 1 - 254			& 100\\
 	NTP				& 1 - 15			& 8\\\hline
 	\end{tabular}\end{minipage}\end{table}
-	\note{Goldenrod} The MAC Table is also referred to as the \textit{Forwarding Information Base} (FIB) or \textit{Content Addressable Memory} (CAM) table.
+	\note{Goldenrod} The MAC Address Table is also called the \textit{Bridging} table or \textit{Content Addressable Memory} (CAM) table.
 
 	%Cisco Encryption																				--tab:CISCO ENCRYPTION	
 	\begin{table}[H]
@@ -1774,8 +1777,8 @@ configure terminal
 show errdisable recovery
 show interfaces [INT] [status]
 show port-security [interface INT]
-show mac address-table aging-time
-show mac address-table [static | secure] [vlan VLAN_ID | interface INT]
+show mac address-table [aging-time | count | learning]
+show mac address-table [dynamic | secure | static] [address MAC | interface INT | vlan VLAN_ID]
 clear mac address-table dynamic [vlan VLAN_ID | interface INT | address MAC]
 	\end{lstlisting}
 
@@ -2111,6 +2114,98 @@ show ip nat statistics
 			\item{Set the \texttt{PSK Format} to \textbf{ASCII} and enter the PSK value.}
 		\end{itemize}
 	\end{enumerate}
+
+
+	\subsection{Advanced Cisco IOS Configuration}
+	\textbf{Layer 2 Forwarding}
+	\begin{lstlisting}
+configure terminal
+	mac address-table aging-time SECS [vlan VLAN_LIST]
+	[no] mac address-table learning [vlan VLAN_LIST]
+	mac address-table static MAC vlan VLAN_ID {interface INT | drop}
+	\end{lstlisting}
+
+	\textbf{Layer 3 Forwarding}
+	\begin{lstlisting}
+configure terminal
+	interface INT
+		ip address A.B.C.D M.M.M.M [secondary]
+		ip directed-broadcast
+
+show ip interface [INT | brief]
+debug ip icmp
+	\end{lstlisting}
+
+	\textbf{ARP Configuration}
+	\begin{lstlisting}
+configure terminal
+	arp A.B.C.D MAC arpa
+	[no] ip arp proxy disable
+	interface INT
+		[no] ip proxy-arp
+		[no] ip local-proxy-arp
+		arp timeout SECS
+
+show ip interface INT
+show [ip] arp
+show arp [A.B.C.D detail]
+clear arp
+debug arp
+	\end{lstlisting}
+
+	\textbf{GRE Tunneling / MTU / MSS Configuration}
+	\begin{lstlisting}
+configure terminal
+	system mtu [jumbo | routing] BYTES
+	ip tcp mss BYTES
+	interface L0
+		ip address 1.1.1.1 255.255.255.255
+	interface F0/0
+		mtu BYTES
+		{ip | ipv6} mtu BYTES
+		no ip unreachables
+	interface tunnel0
+		ip address 192.168.1.1 255.255.255.252
+		tunnel source F0/0
+		tunnel destination A.B.C.D
+		tunnel path-mpu-discovery
+		ip tcp adjust-mss BYTES
+	ip route 2.2.2.2 255.255.255.255 192.168.1.2
+
+show interfaces INT
+show ip interface INT
+show ip traffic interface INT
+show system mtu
+show tcp
+debug ip tcp {adjust-mss | transactions}
+	\end{lstlisting}
+
+	\textbf{CEF / dCEF Configuration}
+	\begin{lstlisting}
+configure terminal
+	[no] {ip | ipv6} cef [distributed]
+	ip cef load-sharing algorithm {dpi | include-ports | original | tunnel | universal}
+	interface F0/0
+		ip load-sharing {per-destination | per-packet}
+
+show processes cpu
+show running-config all
+show cef [interface INT]
+show ip cef [A.B.C.D[/CIDR] | INT] [detail]
+clear cef table ipv4
+show adjacency [detail]
+	\end{lstlisting}
+
+	\textbf{BGP Routing Configuration}
+	\begin{lstlisting}
+configure terminal
+	router bgp LOCAL_AS
+		neighbor A.B.C.D remote-as AS_VALUE
+		network A.B.C.D M.M.M.M
+
+show ip bgp
+	\end{lstlisting}
+
 
 %DOCEND
 \end{document}
