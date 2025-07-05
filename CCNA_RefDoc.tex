@@ -42,7 +42,7 @@
 	breakatwhitespace=true,
 	postbreak={\hbox{\textcolor{\ifcolor red\else gray\fi}{>\space}}},
 %	keepspaces=true,
-	tabsize=2
+	tabsize=2,
 }
 \lstset{style=mystyle}
 
@@ -137,13 +137,13 @@
 	%Power over Ethernet (PoE)																						--tab:POE
 	\begin{table}[H]
 	\centering
-	\caption{Power over Ethernet (PoE) \label{tab:POE}}
-	\begin{tabular}{| l l | r r | l |}\hline
-	Cisco Inline Power	& ILP			& 7.5W	&48v		& 2 wire pairs\\\hline
-	IEEE 802.3af			& Type 1 PoE	& 15.4W 	&44-57v	& 2 wire pairs $\ge$ CAT3\\\hline
-	IEEE 802.3at			& Type 2 PoE+	& 30W	&50-57v	& 2 wire pairs $\ge$ CAT5\\\hline
-	\mr{2}{IEEE 802.3bt}	& Type 3 UPoE	& 60W 	&50-57v 	& \mr{2}{4 wire pairs $\ge$ CAT5}\\
-					& Type 4 UPoE+	& 100W 	&52-57v	&\\\hline
+	\caption{Power over Ethernet (PoE) Standards \label{tab:POE}}
+	\begin{tabular}{| l l | r @{ } r r | l @{ } l |}\hline
+	Cisco Inline Power	& ILP			& 		& 7.5W	& 48v		&				& Mode B\\\hline
+	IEEE 802.3af			& Type 1 PoE	& class 0-3	& 15.4W	& 44-57v	& $\ge$ CAT3		& Mode A/B\\\hline
+	IEEE 802.3at			& Type 2 PoE+	& class 0-4	& 30W	& 50-57v	& $\ge$ CAT5		& Mode A/B\\\hline
+	\mr{2}{IEEE 802.3bt}	& Type 3 UPoE	& class 0-6	& 60W	& 50-57v	& \mr{2}{$\ge$ CAT5}	& \mr{2}{4Pair PoE}\\
+					& Type 4 UPoE+	& class 0-8	& 100W	& 52-57v	&				& \\\hline
 	\end{tabular}\end{table}
 	IEEE \textit{Active PoE} negotiates power delivery via LLDP. Nonstandard \textit{Passive PoE} provides a constant voltage that may \textcolorbf{Red}{damage} equipment. \textbf{Mode A} PoE energizes the 2 data wire pairs; \textbf{Mode B} PoE energizes the 2 spare wire pairs; \textbf{4Pair} PoE energizes all 4 wire pairs.
 
@@ -179,16 +179,16 @@
 	\begin{tabular}{| >{\ttfamily}l | r |}\hline
 	0000.0c07.acXX		& Cisco HSRPv1\\
 	0000.0c9f.fXXX		& Cisco HSRPv2\\\hline
-	0000.5e00.01XX 		& IETF VRRP\\\hline
+	0000.5e00.01XX 		& \RFC{5798} VRRP\\\hline
 	0007.b40X.XXYY		& Cisco GLBP\\\hline
 	0100.5eXX.XXXX		& IPv4 Multicast\\
 	3333.XXXX.XXXX		& IPv6 Multicast\\\hline
 	0100.0ccc.cccc	 	& Cisco PAgP / CDP / VTP\\\hline
-	0180.c200.0002		& IEEE 802.3ad LACP\\\hline
-	0180.c200.000e	 	& IEEE 802.1AB LLDP\\\hline
 	0100.0ccc.cccd		& Cisco PVST+ / PVRST\\\hline
 	\mr{2}{0180.c200.0000}	& IEEE 802.1D STP\\
 					& IEEE 802.1w RSTP\\\hline
+	0180.c200.0002		& IEEE 802.3ad LACP\\\hline
+	0180.c200.000e 		& IEEE 802.1AB LLDP\\\hline
 	\end{tabular}\end{minipage}\end{table}
 	\note{Goldenrod} \texttt{0180.c200.000X} multicast addresses are not forwarded by 802.1D-compliant bridges. Not all Layer 2 protocols support multicast.
 
@@ -198,8 +198,8 @@
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | r @{ } l | r |}\hline
-	Preamble		& 7		& Bytes		& 10101010\\\hline
-	SFD 			& 1		& Byte		& 10101011\\\hline
+	Preamble		& 7		& Bytes		& 10101010 (\texttt{0xaa})\\\hline
+	SFD 			& 1		& Byte		& 10101011 (\texttt{0xab})\\\hline
 	Destination MAC	& 6		& Bytes		&\\\hline
 	Source MAC	& 6		& Bytes		&\\\hline
 	Type (Ethernet II)	& \mr{2}{2}	& \mr{2}{Bytes}	& EtherType (\Cref{tab:ETHERTYPE})\\
@@ -248,7 +248,7 @@
 	\centering
 	\caption{Cisco InterSwitch Link (ISL) \label{tab:CISCO ISL}}
 	\begin{tabular}{| l | r @{ } l | r |}\hline
-	Destination Address	& 40	& bits		& Multicast (\texttt{0100.0c00.00} / \texttt{0300.0c00.00})\\\hline
+	Destination Address	& 40	& bits		& Multicast \texttt{0100.0c00.00} or \texttt{0300.0c00.00}\\\hline
 	Type				& 4	& bits		& Frame Type\\\hline
 	User				& 4	& bits		& Priority Handling\\\hline
 	Source Address		& 48	& bits		& Sending Switchport MAC\\\hline
@@ -386,11 +386,11 @@
 	\begin{table}[H]
 	\centering
 	\begin{tabular}{| l | r @{ } l | r |}\hline
-	Protocol Identifier		& 2		& Bytes		& 0 for STP / PVST+\\\hline
-	\mr{2}{Version}		& \mr{2}{1}	& \mr{2}{Byte}	& 0 for STP / PVST+\\
-					&		&			& 2 for RSTP / PVRST\\\hline
+	Protocol Identifier		& 2		& Bytes		& STP / PVST+ (\texttt{0x0000})\\\hline
+	\mr{2}{Version}		& \mr{2}{1}	& \mr{2}{Byte}	& STP / PVST+ (\texttt{0x00})\\
+					&		&			& RSTP / PVRST (\texttt{0x02})\\\hline
 	\mr{2}{Message Type}	& \mr{2}{1}	& \mr{2}{Byte}	& Identify Configuration / TCN BPDUs\\
-					&		&			& (\texttt{0x02} for RSTP/MSTP)\\\hline
+					&		&			& RSTP/MSTP (\texttt{0x02})\\\hline
 	Flags				& 1		& Byte		& Signals TC / TCA bits\\\hline
 	Root ID			& 8		& Bytes		& The sender's Root BID (\Cref{tab:BID})\\\hline
 	Root Path Cost		& 4		& Bytes		& The sender's cost to Root\\\hline
@@ -493,10 +493,10 @@
 	HLEN		& 8	& bits	& L2 Address Length in Bytes\\\hline
 	PLEN		& 8	& bits	& L3 Address Length in Bytes\\\hline
 	Operation	& 16	& bits	& Message Type (1 for Request, 2 for Reply)\\\hline
-	Origin HW 	& 48	& bits	& Source MAC\\\hline
-	Origin IP	& 32	& bits	& Source IP\\\hline
-	Target HW 	& 48	& bits	& Destination MAC\\\hline
-	Target IP	& 32	& bits	& Destination IP\\\hline
+	Origin HW 	& 48	& bits	& Source L2 Address\\\hline
+	Origin IP	& 32	& bits	& Source L3 Address\\\hline
+	Target HW 	& 48	& bits	& Destination L2 Address\\\hline
+	Target IP	& 32	& bits	& Destination L3 Address\\\hline
 	\end{tabular}\end{table}
 	\note{Goldenrod} As a Layer 2 protocol, all ARP messages are encapsulated directly within an Ethernet frame.
 
@@ -672,7 +672,7 @@
 	\texttt{ff02::9}	&					& RIPng\\\hline
 	224.0.0.10		& All-EIGRP-Routers		& EIGRP\\
 	\texttt{ff02::a}	& All-EIGRPv6-Routers		& EIGRPv6\\\hline
-	224.0.0.18		& IETF VRRP			&\\\hline
+	224.0.0.18		& \RFC{5798} VRRP		&\\\hline
 	224.0.0.102		& Cisco HSRPv2 / GLBP		&\\\hline
 	\end{tabular}\end{minipage}\end{table}
 	\note{Goldenrod} Each Layer 3 multicast address maps to a corresponding Layer 2 multicast address which may be used in the L2PDU.
@@ -779,7 +779,7 @@
 	Unicast			&					& \mc{1}{r!{\hphantom{+}}}{8 bits} & \mc{1}{r!{\hphantom{+}}}{40 bits} & \mc{1}{r!{\hphantom{+}}}{16 bits} & 64 bits\\\hline
 	Link-Local			& \mr{2}{\texttt{fe80::/64}}	& \mc{3}{r!{+}}{\texttt{fe80:0:0:0}}									& Interface ID\\
 	Unicast			&					& \mc{3}{r!{\hphantom{+}}}{64 bits}									& 64 bits\\\hline
-	Multicast			& \texttt{ff00::/12}		& \mc{4}{r@{}}{\texttt{ff02::1:ffXX:XXXX/104} Solicited-Node}\\
+	Multicast			& \texttt{ff00::/8}			& \mc{4}{r@{}}{\texttt{ff02::1:ffXX:XXXX/104} Solicited-Node}\\
 					& \texttt{ff01::/16}		& \mc{4}{r@{}}{Interface/Node-Local}\\
 					& \texttt{ff02::/16}		& \mc{4}{r@{}}{Link-Local}\\
 					& \texttt{ff05::/16}		& \mc{4}{r@{}}{Site-Local}\\
@@ -823,6 +823,9 @@
 	9.0	& Router Advertisement\\
 	10.0	& Router Solicitation\\\hline
 	11.X 	& Time Exceeded\\\hline
+	30.0	& Traceroute\\\hline
+	42.0	& Extended Echo Request\\\hline
+	43.X 	& Extended Echo Reply\\\hline
 	\end{tabular}\end{minipage}\hfill
 	%ICMPv6 Type.Code 																					--tab:ICMPV6 VALUES
 	\begin{minipage}[t]{.45\linewidth}
@@ -950,7 +953,7 @@
 	Type 7 NSSA		& ASBRs			& 1 per AS-External network (stub area)\\\hline
 	\end{tabular}\end{table}
 	
-	A \textit{Stub Area} is a non-backbone OSPF area with a Type 3 Default and Type 3 Summary LSAs. A \textit{Not-So-Stubby Area} is a stub area with Type 7 LSAs. A \textit{Totally Stubby Area} is a stub area with no Type 3 Summary LSAs. A \textit{Totally NSSA} is a totally stubby area with Type 7 LSAs.
+	A \textit{Stub Area} is a non-backbone OSPF area with Type 3 Default and Type 3 Summary LSAs. A \textit{Totally Stubby Area} is a stub area with no Type 3 Summary LSAs. A \textit{Not-So-Stubby Area} (NSSA) is a stub area with Type 7 LSAs. A \textit{Totally NSSA} is a totally stubby area with Type 7 LSAs.
 
 	%OSPF LSA Packet																						--tab:OSPF LSA
 	\begin{table}[H]
@@ -1244,7 +1247,7 @@
 	\subsection[RFC 7230 HTTP]{\RFC{7230} HyperText Transfer Protocol (HTTP) \label{subsec:HTTP}}
 	\note{Goldenrod} See RFCs \rfc{9110}/\rfc{9111} plus the \href{https://www.iana.org/assignments/http-fields/http-fields.xhtml#field-names}{IANA Field Name Registry} and \href{https://www.iana.org/assignments/message-headers/message-headers.xml#perm-headers}{IANA Message Headers} for HTTP header fields and their names.
 
-	HTTP manages file transfers between web clients (browsers) and web servers over TCP. Client requests specify a \textit{Uniform Resource Identifier} (URI, \RFC{7595}) adhering to the \texttt{SCHEME://AUTHORITY/PATH} format (typically \texttt{PROTOCOL://SERVER\_NAME/OBJECT} for web pages). Requests also specify an \textit{HTTP Verb}, typically corresponding to a \textit{CRUD} action. Web servers respond to client requests with an \textit{HTTP Return Code} and any relevant data.
+	HTTP manages file transfers between web clients (browsers) and web servers over TCP. Client requests specify a \textit{Uniform Resource Identifier} (URI, \RFC{7595}) in \texttt{SCHEME://AUTHORITY/PATH} format (typically \texttt{PROTOCOL://SERVER\_NAME/OBJECT} for web pages). Requests also specify an \textit{HTTP Verb}, typically corresponding to a \textit{CRUD} action. Web servers respond to client requests with an \textit{HTTP Return Code} and any relevant data.
 
 	%HTTP CRUD Verbs 																						--tab:HTTP VERBS
 	\begin{table}[H]
@@ -1590,13 +1593,13 @@
 	IEEE 802.1D/w STP/RSTP			& Cisco PVST+/PVRST		& \Cref{subsec:802.1D/w}\\
 	IEEE 802.1s MSTP				&					&\\
 	IEEE 802.3AD LACP			& Cisco PAgP			&\\
+	\RFC{826} ARP				& \RFC{4861} NDP		& \Cref{subsec:ARP,subsec:NDP}\\
 	IEEE 802.11 WLANs			& Wi-Fi Alliance			& \Cref{subsec:802.11 WLANS}\\
 	IEEE 802.11i EAP				&					& \Cref{tab:WIRELESS SECURITY}\\
 	IEEE 802.1x Access Control		&					& \Cref{tab:WIRELESS SECURITY}\\
 	ITU HDLC / cHDLC			& \RFC{1661} PPP			& \Cref{subsec:ITU HDLC,subsec:IETF PPP}\\\hline
 	RFC \rfc{791}/\rfc{1918} IPv4		& \RFC{2460} IPv6		& \Cref{subsec:IPV4,subsec:IPV6}\\
 	\RFC{792} ICMP				& \RFC{4443} ICMPv6		& \Cref{subsec:ICMP}\\
-	\RFC{826} ARP				& \RFC{4861} NDP		& \Cref{subsec:ARP,subsec:NDP}\\
 	\RFC{2328} OSPFv2			& EIGRP / RIP / BGP / ...		& \Cref{subsec:OSPF}\\
 	\RFC{5798} VRRP				& Cisco HSRP / GLBP		&\\
 	RFC \rfc{1631}/\rfc{3022} NAT		&					&\\
@@ -1749,8 +1752,7 @@ configure terminal
 	[no] service {timestamps | sequence-numbers}
 	logging source-interface INT
 	snmp-server community PASSWORD {ro | rw}
-	snmp-server contact TEXT
-	snmp-server location TEXT
+	snmp-server {contact | location | chassis-id} TEXT
 	snmp-server host {A.B.C.D | HOSTNAME} [trap | inform] version 2c PASSWORD
 	snmp-server enable traps TRAPS_LIST
 
@@ -1959,6 +1961,7 @@ configure terminal
 		ip access-group {ACL_ID | ACL_NAME} {in | out}
 	line vty 0 15
 		access-class {ACL_ID | ACL_NAME} {in | out}
+	ip access-list resequence {ACL_ID | ACL_NAME} START STEP
 
 show access-lists
 show ip access-lists
@@ -2011,10 +2014,9 @@ configure terminal
 		timeout SECS
 		port PORT
 		single-connection
-	ip radius source-interface INT
-	ip tacacs source-interface INT
+	ip {radius | tacacs} source-interface INT
 	aaa group server {radius | tacacs+} AAA_GROUP
-		server A.B.C.D
+		server {A.B.C.D [auth-port PORT] [acct-port PORT] | name NAME}
 	aaa authentication login {default | AUTH_LIST} {[none] [local] [local-case] [enable] [group {radius | tacacs+ | AAA_GROUP}]}
 	aaa local authentication attempts max-fail COUNT
 	line vty 0 15
@@ -2024,6 +2026,61 @@ configure terminal
 show aaa user
 show aaa sessions
 	\end{lstlisting}
+
+%	\textbf{IEEE 802.1x Configuration}
+%	\begin{lstlisting}
+%configure terminal
+%	radius-server dead-criteria time SECS tries COUNT
+%	radius-server deadtime MINS
+%	radius-server vsa send {authentication | accounting}
+%	radius-server attribute 6 on-for-login-auth
+%	radius-server attribute 8 include-in-access-req
+%	radius-server attribute 25 access-request include
+%	ip device tracking
+%	ip device tracking probe delay SECS
+%	aaa authentication dot1x default group AAA_GROUP
+%	aaa authorization network default group AAA_GROUP
+%	aaa accounting dot1x default start-stop group AAA_GROUP
+%	dot1x system-auth-control
+%	interface INT
+%		switchport {access | voice} vlan VLAN_ID
+%		switchport mode access
+%		authentication port-control {auto | force-authorized | force-unauthorized}				!-- enable dot1x closed mode
+%		dot1x pae authenticator													!-- act as a dot1x authenticator
+%		mab																!-- enable MAC Auth Bypass (MAB)
+%		dot1x timeout quiet-period SECS 											!-- configure delay between auth attempts
+%		authentication host-mode {[single-host | multi-host | multi-domain | multi-auth] [mab]}		!-- configure dot1x host mode and MAB
+%		authentication {order | priority} {[dot1x] [mab]}									!-- configure the auth-type order and preemption
+%
+%		authentication periodic													!-- configure periodic re-auth
+%		authentication timer reauthenticate {SECS | server}								!-- configure re-auth timer 
+%
+%		authentication {open | closed}												!-- configure dot1x monitor / closed mode
+%		ip access-group PRE-AUTH in 												!-- configure dot1x low-impact mode (with dot1x monitor)
+%		authentication event fail action next-method
+%		authentication event server dead action authorize {vlan VLAN_ID | voice}					!-- configure critical data VLAN / enable critical voice VLAN
+%		authentication event server alive action reinitialize								!-- configure reinitialization when RADIUS server recovers
+%
+%show authentication sessions [interface INT]
+%	\end{lstlisting}
+%
+%	\textbf{Telephony Services Configuration}
+%	\begin{lstlisting}
+%configure terminal
+%	telephony-service															!-- configure telephony services
+%		max-ephones COUNT													!-- set max allowed VoIP Phones
+%		max-dn COUNT														!-- set max allowed DNs
+%		ip source-address A.B.C.D port PORT										!-- source traffic via ip A.B.C.D on TCP PORT
+%		load MODEL FIRMWARE												!-- set MODEL phones to download FIRMWARE from flash: via tftp
+%		create cnf-files														!-- re-create phone configuration files
+%	ephone-dn DN															!-- configure an individual DN
+%		number EXT														!-- set an extension EXT for the DN
+%	ephone PHONE_ID														!-- configure a single VoIP Phone
+%		mac-address MAC													!-- map the VoIP Phone MAC to a PHONE_ID
+%		type MODEL														!-- specify the phone model number
+%		button1:DN															!-- map the VoIP Phone and PHONE_ID to a DN
+%show telephony-service														!-- view telephony-serivce configuration
+%	\end{lstlisting}
 
 	\textbf{QoS Configuration}
 	\begin{lstlisting}
@@ -2064,6 +2121,7 @@ configure terminal
 		ipv6 dhcp relay destination ADDRESS
 
 show {ip | ipv6} dhcp binding
+clear ip dhcp binding {A.B.C.D | *}
 show ip dhcp pool POOL_NAME
 show ipv6 dhcp pool
 show ip dhcp server statistics
@@ -2149,8 +2207,7 @@ configure terminal
 show ip interface INT
 show [ip] arp
 show arp [A.B.C.D detail]
-clear arp
-debug arp
+{clear | debug} arp
 	\end{lstlisting}
 
 	\textbf{GRE Tunneling / MTU / MSS Configuration}
@@ -2163,7 +2220,7 @@ configure terminal
 	interface F0/0
 		mtu BYTES
 		{ip | ipv6} mtu BYTES
-		no ip unreachables
+		no ip {redirects | unreachables}
 	interface tunnel0
 		ip address 192.168.1.1 255.255.255.252
 		tunnel source F0/0
@@ -2204,6 +2261,23 @@ configure terminal
 		network A.B.C.D M.M.M.M
 
 show ip bgp
+	\end{lstlisting}
+
+	\textbf{Multicast Configuration}
+	\begin{lstlisting}
+configure terminal
+	{ip | ipv6} multicast-routing
+	{ip | ipv6} pim rp-address A.B.C.D
+	ip pim send-rp-announce INT scope TTL
+	ip pim send-rp-discovery scope TTL
+	interface F0/0
+		ip pim {dense-mode | sparse-mode | sparse-dense-mode}
+	interface F0/1
+		ip igmp join-group A.B.C.D
+
+show ip mroute
+show ip pim rp
+ping A.B.C.D repeat COUNT
 	\end{lstlisting}
 
 
